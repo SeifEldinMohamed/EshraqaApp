@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.seif.eshraqaapp.SplashFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.seif.eshraqaapp.IntroFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.seif.eshraqaapp.SignUpFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.seif.eshraqaapp.HomeFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/azkarFragment"
-        android:name="com.seif.eshraqaapp.AzkarFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.AzkarFragment"
         android:label="fragment_azkar"
         tools:layout="@layout/fragment_azkar" />
 </navigation>
