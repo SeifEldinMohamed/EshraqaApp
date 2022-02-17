@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.seif.eshraqaapp.data.models.Azkar
 
 const val DATABASE_NAME = "eshraka database"
 @Database(entities = [Azkar::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class EshrakaDatabase: RoomDatabase() {
     abstract fun myDao(): EshrakaDatabaseDao
     companion object{

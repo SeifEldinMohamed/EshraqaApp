@@ -9,8 +9,7 @@ import kotlin.collections.HashMap
 data class Azkar(
     @PrimaryKey(autoGenerate = true)
     var id :Int,
-    var date: Date,
     var azkar: HashMap<String, Boolean>,
-    var checkDate: Date,
+    var checkDate: MyDate,
     var score: Int
 )
