@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/azkar.xml" value="0.179" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_calendar.xml" value="0.1095" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/prayer.xml" value="0.1095" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/quran.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
       </map>
     </option>
   </component>
