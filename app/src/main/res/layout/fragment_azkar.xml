@@ -1,14 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AzkarFragment">
+    tools:context=".ui.fragments.AzkarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:background="@drawable/azkar_card_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/azkarImage">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/upper_card_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/saturday"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/text_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/score"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/sabah_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_30sdp"
+            android:text="@string/sabah_azkar"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <CheckBox
+            android:id="@+id/masaa_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_33sdp"
+            android:text="@string/masaa_azkar"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="@+id/sabah_check"
+            app:layout_constraintTop_toBottomOf="@+id/sabah_check" />
+
+        <CheckBox
+            android:id="@+id/sleep_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_42sdp"
+            android:text="@string/sleep_azkar"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="@+id/masaa_check"
+            app:layout_constraintTop_toBottomOf="@+id/masaa_check" />
+
+        <CheckBox
+            android:id="@+id/after_prayer_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_7sdp"
+            android:text="@string/after_prayer_azkar"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="@+id/sleep_check"
+            app:layout_constraintTop_toBottomOf="@+id/sleep_check" />
+
+        <CheckBox
+            android:id="@+id/wrd_hamd_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_53sdp"
+            android:text="@string/hamd_wrd"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/after_prayer_check"
+            app:layout_constraintTop_toBottomOf="@+id/after_prayer_check" />
+
+        <CheckBox
+            android:id="@+id/wrd_tkber_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_49sdp"
+            android:text="@string/tkber_wrd"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/wrd_hamd_check"
+            app:layout_constraintTop_toBottomOf="@+id/wrd_hamd_check" />
+
+        <CheckBox
+            android:id="@+id/wrd_tsbe7_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="@string/tsbe7_wrd"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/wrd_tkber_check"
+            app:layout_constraintTop_toBottomOf="@+id/wrd_tkber_check" />
+
+        <CheckBox
+            android:id="@+id/wrd_estegphar_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_32sdp"
+            android:text="@string/wrd_estghphar"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/wrd_tsbe7_check"
+            app:layout_constraintTop_toBottomOf="@+id/wrd_tsbe7_check" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/azkarImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/eshraka_charchter_describtion"
+        android:src="@drawable/eshraka_azkar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

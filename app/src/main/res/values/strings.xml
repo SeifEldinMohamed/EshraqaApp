@@ -12,4 +12,15 @@
     <string name="prayer">الصلاة</string>
     <string name="growth">نطوير الذات</string>
     <string name="azkar">الأذكار</string>
+    <string name="saturday">السبت</string>
+    <string name="score">0/4</string>
+    <string name="sabah_azkar">أذكار الصباح</string>
+    <string name="masaa_azkar">أذكار المساء</string>
+    <string name="sleep_azkar">أذكار النوم</string>
+    <string name="after_prayer_azkar">أذكار بعد الصلاة</string>
+    <string name="hamd_wrd">ورد حمد</string>
+    <string name="tkber_wrd">ورد تكبير</string>
+    <string name="tsbe7_wrd">ورد تسبيح</string>
+    <string name="wrd_estghphar">ورد استغفار</string>
+    <string name="eshraka_charchter_describtion">eshraka charchter</string>
 </resources>

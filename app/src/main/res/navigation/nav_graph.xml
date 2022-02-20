@@ -46,12 +46,15 @@
     <fragment
         android:id="@+id/azkarFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.AzkarFragment"
-        android:label="fragment_azkar"
-        tools:layout="@layout/fragment_azkar" />
+        tools:layout="@layout/fragment_azkar" >
+        <argument
+            android:name="azkar"
+            app:argType="com.seif.eshraqaapp.data.models.Azkar" />
+    </fragment>
     <fragment
         android:id="@+id/daysFragment"
         android:name="com.seif.eshraqaapp.DaysFragment"
-        android:label="fragment_days"
+        android:label="جدول الأذكار"
         tools:layout="@layout/fragment_days" >
         <action
             android:id="@+id/action_daysFragment_to_azkarFragment"

@@ -3,7 +3,10 @@ package com.seif.eshraqaapp.ui.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.seif.eshraqaapp.DaysFragmentDirections
+import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
 
@@ -16,6 +19,10 @@ class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
                 binding.txtDate.text = azkar[position].date
                 binding.txtDay.text = azkar[position].day
                 binding.txtScore.text = "${azkar[position].score} / ${azkar[position].azkar.size}"
+                binding.itemRowDays.setOnClickListener {
+                 val action = DaysFragmentDirections.actionDaysFragmentToAzkarFragment(azkar[position])
+                    itemView.findNavController().navigate(action)
+                }
             }
     }
 

@@ -27,7 +27,7 @@ abstract class EshrakaDatabase: RoomDatabase() {
                         context,
                         EshrakaDatabase::class.java,
                         DATABASE_NAME
-                    ).fallbackToDestructiveMigration()
+                    ).fallbackToDestructiveMigration() // If you don’t want to provide migrations and you specifically want your database to be cleared when you upgrade the version
                         .build()
                 }
             }

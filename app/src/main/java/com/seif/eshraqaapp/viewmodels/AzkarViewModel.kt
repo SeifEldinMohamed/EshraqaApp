@@ -64,7 +64,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 1,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
                 daysOfWeek[0],
                 0
@@ -72,7 +74,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 2,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
                 daysOfWeek[1],
                 0
@@ -80,7 +84,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 3,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
                 daysOfWeek[2],
                 0
@@ -88,7 +94,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 4,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
                 daysOfWeek[3],
                 0
@@ -96,7 +104,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 5,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
                 daysOfWeek[4],
                 0
@@ -104,7 +114,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 6,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
                 daysOfWeek[5],
                 0
@@ -112,7 +124,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             Azkar(
                 7,
                 azkarHashMap,
-                updateStatusDate,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
                 "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
                 daysOfWeek[6],
                 0

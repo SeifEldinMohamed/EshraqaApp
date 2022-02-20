@@ -6,14 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.seif.eshraqaapp.data.models.MyDate
 
 class Converter {
-    @TypeConverter
-    fun fromDateToGson(myDate: MyDate): String {
-        return Gson().toJson(myDate)
-    }
-    @TypeConverter
-    fun fromJsonToDate(myDate: String): MyDate {
-        return Gson().fromJson(myDate, MyDate::class.java)
-    }
+
     @TypeConverter
     fun fromMapToGson(azkar: HashMap<String, Boolean>): String {
         return Gson().toJson(azkar)
