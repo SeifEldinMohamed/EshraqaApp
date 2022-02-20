@@ -17,15 +17,19 @@ abstract class EshrakaDatabase: RoomDatabase() {
        private var instance : EshrakaDatabase? = null
 
         fun getInstance(context: Context): EshrakaDatabase {
-            instance?.let {
-                return it
-            }?:
-            synchronized(this) { // to prevent any thread to deal with it until this thread unlock it
-                return Room.databaseBuilder(
-                    context,
-                    EshrakaDatabase::class.java,
-                    DATABASE_NAME
-                ).build()
+
+            return if (instance != null) {
+                instance!!
+            }
+            else {
+                synchronized(this) { // to prevent any thread to deal with it until this thread unlock it
+                    Room.databaseBuilder(
+                        context,
+                        EshrakaDatabase::class.java,
+                        DATABASE_NAME
+                    ).fallbackToDestructiveMigration()
+                        .build()
+                }
             }
         }
     }

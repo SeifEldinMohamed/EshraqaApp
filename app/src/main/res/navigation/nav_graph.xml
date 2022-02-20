@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -41,12 +40,21 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_azkarFragment"
-            app:destination="@id/azkarFragment" />
+            android:id="@+id/action_homeFragment_to_daysFragment"
+            app:destination="@id/daysFragment" />
     </fragment>
     <fragment
         android:id="@+id/azkarFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.AzkarFragment"
         android:label="fragment_azkar"
         tools:layout="@layout/fragment_azkar" />
+    <fragment
+        android:id="@+id/daysFragment"
+        android:name="com.seif.eshraqaapp.DaysFragment"
+        android:label="fragment_days"
+        tools:layout="@layout/fragment_days" >
+        <action
+            android:id="@+id/action_daysFragment_to_azkarFragment"
+            app:destination="@id/azkarFragment" />
+    </fragment>
 </navigation>
