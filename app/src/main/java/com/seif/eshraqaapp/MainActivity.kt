@@ -13,8 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navController = findNavController(R.id.navHost)
         setupActionBarWithNavController(navController)
-
-
+        
     }
 
     override fun onSupportNavigateUp(): Boolean {

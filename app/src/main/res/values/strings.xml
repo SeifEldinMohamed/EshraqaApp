@@ -23,4 +23,9 @@
     <string name="tsbe7_wrd">ورد تسبيح</string>
     <string name="wrd_estghphar">ورد استغفار</string>
     <string name="eshraka_charchter_describtion">eshraka charchter</string>
+    <string name="save_menu">save</string>
+    <string name="end_of_week">نهاية الاسبوع</string>
+    <string name="end_of_week_confirmation">هل ترغب في بداية اسبوع جديد و حفظ درجات هذا الاسبوع ؟</string>
+    <string name="back">رجوع</string>
+    <string name="yes">نعم</string>
 </resources>

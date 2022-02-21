@@ -32,6 +32,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun updateZekr(azkar: Azkar){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateZekr(azkar)
+        }
+    }
 
     fun isAppFirstTimeRun(context: Context) {
         shared = context.getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
@@ -154,5 +159,6 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         azkarHashMap["أذكار بعد الصلاة"] = false
         return azkarHashMap
     }
+
 
 }

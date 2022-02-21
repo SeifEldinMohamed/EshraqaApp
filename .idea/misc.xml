@@ -12,11 +12,15 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/score_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/upper_card_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/confirmation_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/days_item_row.xml" value="0.4" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/eshraka_message_dialog.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_azkar.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_days.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_splash.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/menu/azkar_menu.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/menu/days_menu.xml" value="0.20833333333333334" />
       </map>
     </option>
   </component>

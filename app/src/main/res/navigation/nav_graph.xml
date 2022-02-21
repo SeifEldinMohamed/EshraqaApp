@@ -37,7 +37,6 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.HomeFragment"
-        android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_daysFragment"
@@ -50,6 +49,11 @@
         <argument
             android:name="azkar"
             app:argType="com.seif.eshraqaapp.data.models.Azkar" />
+        <action
+            android:id="@+id/action_azkarFragment_to_daysFragment"
+            app:destination="@id/daysFragment"
+            app:popUpTo="@id/azkarFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/daysFragment"

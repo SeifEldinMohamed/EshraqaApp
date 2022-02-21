@@ -1,10 +1,7 @@
 package com.seif.eshraqaapp.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.seif.eshraqaapp.data.models.Azkar
 
 @Dao
@@ -15,4 +12,7 @@ interface EshrakaDatabaseDao {
 
     @Query("SELECT * FROM azkar_table")
     fun getAllData(): LiveData<List<Azkar>>
+
+    @Update
+    suspend fun updateZekr(zekr:Azkar)
 }
