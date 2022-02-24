@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_frame_message"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_370sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:contentDescription="@string/frame_image_for_dialog_message"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/zahra_frame_dialog" />
+
+        <TextView
+            android:id="@+id/txt_message_end_of_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:gravity="center"
+            android:text="@string/first_week_azkar_message"
+            android:textColor="@color/black"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintEnd_toEndOf="@+id/character_image_end_of_month"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/character_image_end_of_month"
+            app:layout_constraintTop_toTopOf="@+id/img_frame_message" />
+
+        <ImageView
+            android:id="@+id/character_image_end_of_month"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:contentDescription="@string/image_for_message_dialog_description"
+            app:layout_constraintEnd_toEndOf="@+id/img_frame_message"
+            app:layout_constraintHorizontal_bias="0.338"
+            app:layout_constraintStart_toStartOf="@+id/img_frame_message"
+            app:layout_constraintTop_toBottomOf="@+id/txt_message_end_of_month"
+            app:srcCompat="@drawable/zahra_normal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ok_message_end_of_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/yes"
+            android:textSize="@dimen/_18ssp"
+            app:backgroundTint="@color/pink"
+            app:layout_constraintBottom_toBottomOf="@+id/img_frame_message"
+            app:layout_constraintEnd_toEndOf="@+id/character_image_end_of_month"
+            app:layout_constraintTop_toBottomOf="@+id/txt_add_or_delete_message"
+            tools:ignore="TextContrastCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/noo"
+            android:textSize="@dimen/_18ssp"
+            app:backgroundTint="@color/pink"
+            app:layout_constraintBottom_toBottomOf="@+id/img_frame_message"
+            app:layout_constraintStart_toStartOf="@+id/character_image_end_of_month"
+            app:layout_constraintTop_toBottomOf="@+id/txt_add_or_delete_message"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/txt_add_or_delete_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:gravity="center"
+            android:text="@string/add_new_azkar_to_your_schedule"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="@+id/character_image_end_of_month"
+            app:layout_constraintStart_toStartOf="@+id/character_image_end_of_month"
+            app:layout_constraintTop_toBottomOf="@+id/character_image_end_of_month" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

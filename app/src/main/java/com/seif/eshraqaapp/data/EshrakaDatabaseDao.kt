@@ -15,4 +15,10 @@ interface EshrakaDatabaseDao {
 
     @Update
     suspend fun updateZekr(zekr:Azkar)
+
+    @Query("SELECT score FROM azkar_table")
+    fun getAllWeekScore(): LiveData<List<Int>>
+
+    @Query("DELETE FROM azkar_table")
+    suspend fun deleteAllAzkar()
 }

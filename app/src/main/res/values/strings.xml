@@ -28,4 +28,30 @@
     <string name="end_of_week_confirmation">هل ترغب في بداية اسبوع جديد و حفظ درجات هذا الاسبوع ؟</string>
     <string name="back">رجوع</string>
     <string name="yes">نعم</string>
+    <string name="first_week_prayer_message">أول أسبوع لك في جدول الصلاة أسال الله ان يوفقك</string>
+    <string name="first_week_azkar_message">أول شهر لك في جدول الأذكار أسال الله ان يوفقك</string>
+    <string name="frame_image_for_dialog_message">frame image for dialog message description</string>
+    <string name="image_for_message_dialog_description">image for message dialog description</string>
+    <string name="ask_god_for_success">اسأل الله التوفيق</string>
+
+    <string name="success_message1_azkar">أبشر بطمأنينة القلب وانشراح الصدر، وحفظ الله لك من الهم والغم ومكائد الشيطان.</string>
+    <string name="success_message2_azkar">بشرك الله بالجنة، وبقصور مشيدة وبساتين مزروعة، وبدوام صلة القلب بالله إن شاء الله.</string>
+    <string name="success_message3_azkar">شخص آخر كلامه قبل النوم ذكر، وأول ما يقوله بعد الاستيقاظ ذكر، هو حتمََا قلب موصول بالله ويحبهُ الله.</string>
+    <string name="success_message4_azkar">أرى أن لسانك رطبٌ دائمًا بذكر الله، رزقك الله حبه وقربه والأنس به.</string>
+
+    <string name="medium_message1_azkar">بأذكارك تكسر شوكة الشيطان وتقمعه وتخرجه من حياتك، فهلا التزمت بها بشكل أفضل؟</string>
+    <string name="medium_message2_azkar">أراك تقصّر فى أذكارك دبر كل صلاة، لا تتكاسل، إشراقة ستساعدك بالتذكير، جاهد ليبقى لسانك ذاكرًا لله دومًا.</string>
+    <string name="medium_message3_azkar">أحاديثٌ كثيرة تخبرنا بفضائل عظيمة، كقراءة سورة الملك قبل النوم تخاصم عن صاحبها حتى تدخله الجنة، آية الكرسي تحميك من مكر الشياطين، فلا تهمل أذكار نومك، أنت بحاجة إليها دائمًا.</string>
+    <string name="medium_message4_azkar">إن كان قلبك موصولٌ بالله  وروحك تأنس بالله، ولسانك دائمُ الذكر، أتخشى شيئًا من الدنيا؟! فلا تتكاسل عن أذكارك.</string>
+
+    <string name="fail_message1_azkar">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيل! الله بعظمته يذكرك حين تذكره، فلا تهمل أذكارك.</string>
+    <string name="fail_message2_azkar">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
+    <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك واستودعها في ودائع الرحمن.</string>
+    <string name="fail_message4_azkar">مثل الذى يذكر الله والذى لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره فى قلبك وعلى لسانك.</string>
+    <string name="noo">لا</string>
+    <string name="add_new_azkar_to_your_schedule">هل ترغب في إضافة المزبد من البنود إلي جدولك ؟</string>
+    <string name="delete_azkar_from_your_schedule">هل ترغب في تقليل عدد البنود من جدولك ؟</string>
+    <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها</string>
+    <string name="save">حفظ</string>
+
 </resources>

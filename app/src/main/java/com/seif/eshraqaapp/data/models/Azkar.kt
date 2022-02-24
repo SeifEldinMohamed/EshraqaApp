@@ -17,6 +17,9 @@ data class Azkar(
     var checkMonth: String,
     var checkYear: String,
     var date: String,
-    var day: String,
+    var currentDay:Int,
+    var currentMonth:Int,
+    var currentYear:Int,
+    var dayName: String,
     var score: Int
 ): Parcelable

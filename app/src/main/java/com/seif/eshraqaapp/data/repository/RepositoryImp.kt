@@ -16,4 +16,12 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
     override suspend fun updateZekr(zekr: Azkar) {
         eshrakaDatabaseDao.updateZekr(zekr)
     }
+
+    override  fun getAllWeekScore(): LiveData<List<Int>> {
+       return eshrakaDatabaseDao.getAllWeekScore()
+    }
+
+    override suspend fun deleteAllAzkar() {
+        eshrakaDatabaseDao.deleteAllAzkar()
+    }
 }

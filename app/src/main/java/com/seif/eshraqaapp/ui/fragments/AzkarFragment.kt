@@ -2,6 +2,8 @@ package com.seif.eshraqaapp.ui.fragments
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -21,6 +23,8 @@ class AzkarFragment : Fragment() {
     private lateinit var viewModel: AzkarViewModel
     private var score = 0
     private var azkarHashMap = HashMap<String, Boolean>()
+    private lateinit var pref: SharedPreferences
+    private lateinit var edit: SharedPreferences.Editor
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,16 +48,44 @@ class AzkarFragment : Fragment() {
         azkarHashMap["أذكار النوم"] = fromBundle(requireArguments()).azkar.azkar["أذكار النوم"] ?: false
         azkarHashMap["أذكار بعد الصلاة"] = fromBundle(requireArguments()).azkar.azkar["أذكار بعد الصلاة"] ?: false
 
+
         // first initialization for check boxes
         binding.sabahCheck.isChecked = azkarHashMap["أذكار الصباح"] ?: false
         binding.masaaCheck.isChecked = azkarHashMap["أذكار المساء"] ?: false
         binding.sleepCheck.isChecked = azkarHashMap["أذكار النوم"] ?: false
         binding.afterPrayerCheck.isChecked = azkarHashMap["أذكار بعد الصلاة"] ?: false
+
+
+        pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
+       if(pref.getBoolean("hamd",false)){
+           binding.wrdHamdCheck.visibility = View.VISIBLE
+           azkarHashMap["ورد حمد"] = fromBundle(requireArguments()).azkar.azkar["ورد حمد"] ?: false
+           binding.wrdHamdCheck.isChecked = azkarHashMap["ورد حمد"]?: false
+
+       }
+        if(pref.getBoolean("tsbeh",false)){
+            azkarHashMap["ورد تسبيح"] = fromBundle(requireArguments()).azkar.azkar["ورد تسبيح"] ?: false
+            binding.wrdTsbe7Check.visibility = View.VISIBLE
+            binding.wrdTsbe7Check.isChecked = azkarHashMap["ورد تسبيح"]?: false
+        }
+        if(pref.getBoolean("tkber",false)){
+            binding.wrdTkberCheck.visibility = View.VISIBLE
+            azkarHashMap["ورد تكبير"] = fromBundle(requireArguments()).azkar.azkar["ورد تكبير"] ?: false
+            binding.wrdTkberCheck.isChecked = azkarHashMap["ورد تكبير"]?: false
+
+        }
+        if(pref.getBoolean("estgh",false)){
+            binding.wrdEstegpharCheck.visibility = View.VISIBLE
+            azkarHashMap["ورد استغفار"] = fromBundle(requireArguments()).azkar.azkar["ورد استغفار"] ?: false
+            binding.wrdEstegpharCheck.isChecked = azkarHashMap["ورد استغفار"]?: false
+        }
+
+
         // set Menu
         setHasOptionsMenu(true)
         // show text day and score from coming data
         val numberOfAzkar = fromBundle(requireArguments()).azkar.azkar.size
-        binding.textDay.text = fromBundle(requireArguments()).azkar.day
+        binding.textDay.text = fromBundle(requireArguments()).azkar.dayName
         binding.textScore.text = "${fromBundle(requireArguments()).azkar.score}/$numberOfAzkar"
 
         binding.sabahCheck.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -101,31 +133,47 @@ class AzkarFragment : Fragment() {
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdHamdCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (isChecked){
                 score++
-            else
+                azkarHashMap["ورد حمد"] = true
+            }
+            else{
                 score--
+                azkarHashMap["ورد حمد"] = false
+            }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdTkberCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (isChecked){
                 score++
-            else
+                azkarHashMap["ورد تكبير"] = true
+            }
+            else{
                 score--
+                azkarHashMap["ورد تكبير"] = false
+            }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdTsbe7Check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (isChecked){
                 score++
-            else
+                azkarHashMap["ورد تسبيح"] = true
+            }
+            else{
                 score--
+                azkarHashMap["ورد تسبيح"] = false
+            }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdEstegpharCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (isChecked){
                 score++
-            else
+                azkarHashMap["ورد استغفار"] = true
+            }
+            else{
                 score--
+                azkarHashMap["ورد استغفار"] = false
+            }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
 
@@ -137,14 +185,9 @@ class AzkarFragment : Fragment() {
     private fun showEshrakaMessageDialog() {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.confirmation_dialog)
-        val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-        val btnBack = dialog.findViewById<Button>(R.id.btn_back)
+        dialog.setContentView(R.layout.zahra_message_dialog)
+        val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
         btnOk.setOnClickListener {
-            // logic to start new week and save score of prev week
-
-        }
-        btnBack.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
@@ -169,7 +212,10 @@ class AzkarFragment : Fragment() {
             fromBundle(requireArguments()).azkar.checkMonth,
             fromBundle(requireArguments()).azkar.checkYear,
             fromBundle(requireArguments()).azkar.date,
-            fromBundle(requireArguments()).azkar.day,
+            fromBundle(requireArguments()).azkar.currentDay,
+            fromBundle(requireArguments()).azkar.currentMonth,
+            fromBundle(requireArguments()).azkar.currentYear,
+            fromBundle(requireArguments()).azkar.dayName,
             score
         )
         viewModel.updateZekr(zekr)

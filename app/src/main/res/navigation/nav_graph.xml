@@ -52,7 +52,7 @@
         <action
             android:id="@+id/action_azkarFragment_to_daysFragment"
             app:destination="@id/daysFragment"
-            app:popUpTo="@id/azkarFragment"
+            app:popUpTo="@id/daysFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -62,6 +62,7 @@
         tools:layout="@layout/fragment_days" >
         <action
             android:id="@+id/action_daysFragment_to_azkarFragment"
-            app:destination="@id/azkarFragment" />
+            app:destination="@id/azkarFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>

@@ -22,8 +22,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     private val eshrakaDatabaseDao = EshrakaDatabase.getInstance(application).myDao()
     val repository = RepositoryImp(eshrakaDatabaseDao)
     val azkar: LiveData<List<Azkar>> = repository.getAllData()
+    private lateinit var weekDate : ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
-
+    // private lateinit var  scoreList:List<Int>
+    private lateinit var pref: SharedPreferences
+    private lateinit var edit: SharedPreferences.Editor
 
     fun addZekr(azkar: List<Azkar>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,9 +35,15 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    fun updateZekr(azkar: Azkar){
+
+    fun updateZekr(azkar: Azkar) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateZekr(azkar)
+        }
+    }
+    fun deleteAllAzkar(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllAzkar()
         }
     }
 
@@ -42,6 +51,10 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         shared = context.getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             val azkar = getSevenDaysData()
+            pref = context.getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
+            edit = pref.edit()
+            edit.putInt("nweek",1)
+            edit.apply()
             addZekr(azkar)
             val editor = shared.edit()
             editor.putBoolean("check", false)
@@ -50,8 +63,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getSevenDaysData(): List<Azkar> {
+
         val currentDate = Calendar.getInstance()
-        val weekDate = ArrayList<MyDate>()
+         weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
 
         for (i in 0..6 step 1) {
@@ -62,6 +76,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
             currentDate.add(Calendar.DATE, 1)
         }
+
         val azkarHashMap: HashMap<String, Boolean> = createAzkarHashMap()
         val updateStatusDate = getUpdateStatusDate()
 
@@ -73,6 +88,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
+                weekDate[0].day.toInt(),
+                weekDate[0].month.toInt(),
+                weekDate[0].year.toInt(),
                 daysOfWeek[0],
                 0
             ),
@@ -83,6 +101,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
+                weekDate[1].day.toInt(),
+                weekDate[1].month.toInt(),
+                weekDate[1].year.toInt(),
                 daysOfWeek[1],
                 0
             ),
@@ -93,6 +114,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
+                weekDate[2].day.toInt(),
+                weekDate[2].month.toInt(),
+                weekDate[2].year.toInt(),
                 daysOfWeek[2],
                 0
             ),
@@ -103,6 +127,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
+                weekDate[3].day.toInt(),
+                weekDate[3].month.toInt(),
+                weekDate[3].year.toInt(),
                 daysOfWeek[3],
                 0
             ),
@@ -113,6 +140,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
+                weekDate[4].day.toInt(),
+                weekDate[4].month.toInt(),
+                weekDate[4].year.toInt(),
                 daysOfWeek[4],
                 0
             ),
@@ -123,6 +153,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
+                weekDate[5].day.toInt(),
+                weekDate[5].month.toInt(),
+                weekDate[5].year.toInt(),
                 daysOfWeek[5],
                 0
             ),
@@ -133,11 +166,27 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.month,
                 updateStatusDate.year,
                 "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
+                weekDate[6].day.toInt(),
+                weekDate[6].month.toInt(),
+                weekDate[6].year.toInt(),
                 daysOfWeek[6],
                 0
             )
         )
     }
+
+    fun getAllWeekScore(): LiveData<List<Int>> {
+        return repository.getAllWeekScore()
+    }
+
+    fun getSumOfWeekScore(scoreList: List<Int>): Int {
+        var totalWeekScore = 0
+        scoreList.forEach {
+            totalWeekScore += it
+        }
+        return totalWeekScore
+    }
+
 
     private fun getUpdateStatusDate(): MyDate {
         val currentDate = Calendar.getInstance()
@@ -160,5 +209,121 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return azkarHashMap
     }
 
+    fun createNewWeekSchedule(lastAzkarDay: Azkar, newAzkarHashMap:HashMap<String, Boolean>):List<Azkar> {
+        deleteAllAzkar()
+        val currentDate = Calendar.getInstance()
+            currentDate.set(lastAzkarDay.currentYear, lastAzkarDay.currentMonth, lastAzkarDay.currentDay+1)
+        val weekDate = ArrayList<MyDate>()
+        val daysOfWeek = ArrayList<String>()
 
+        for (i in 0..6 step 1) {
+            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
+            val month = currentDate.get(Calendar.MONTH).toString()
+            val year = currentDate.get(Calendar.YEAR).toString()
+            weekDate.add(MyDate(day, month, year))
+            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+            currentDate.add(Calendar.DATE, 1)
+            Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
+        }
+        val hashMap = HashMap<String, Boolean>()
+        newAzkarHashMap.forEach { (key, value) ->
+             hashMap[key] = false
+        }
+        val azkarHashMap: HashMap<String, Boolean> = hashMap
+        val updateStatusDate = MyDate(lastAzkarDay.checkDay, lastAzkarDay.checkMonth, lastAzkarDay.checkYear)
+
+        return listOf(
+            Azkar(
+                1,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
+                weekDate[0].day.toInt(),
+                weekDate[0].month.toInt(),
+                weekDate[0].year.toInt(),
+                daysOfWeek[0],
+                0
+            ),
+            Azkar(
+                2,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
+                weekDate[1].day.toInt(),
+                weekDate[1].month.toInt(),
+                weekDate[1].year.toInt(),
+                daysOfWeek[1],
+                0
+            ),
+            Azkar(
+                3,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
+                weekDate[2].day.toInt(),
+                weekDate[2].month.toInt(),
+                weekDate[2].year.toInt(),
+                daysOfWeek[2],
+                0
+            ),
+            Azkar(
+                4,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
+                weekDate[3].day.toInt(),
+                weekDate[3].month.toInt(),
+                weekDate[3].year.toInt(),
+                daysOfWeek[3],
+                0
+            ),
+            Azkar(
+                5,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
+                weekDate[4].day.toInt(),
+                weekDate[4].month.toInt(),
+                weekDate[4].year.toInt(),
+                daysOfWeek[4],
+                0
+            ),
+            Azkar(
+                6,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
+                weekDate[5].day.toInt(),
+                weekDate[5].month.toInt(),
+                weekDate[5].year.toInt(),
+                daysOfWeek[5],
+                0
+            ),
+            Azkar(
+                7,
+                azkarHashMap,
+                updateStatusDate.day,
+                updateStatusDate.month,
+                updateStatusDate.year,
+                "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
+                weekDate[6].day.toInt(),
+                weekDate[6].month.toInt(),
+                weekDate[6].year.toInt(),
+                daysOfWeek[6],
+                0
+            )
+        )
+    }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_frame_message"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_370sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:contentDescription="@string/frame_image_for_dialog_message"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/zahra_frame_dialog" />
+
+        <TextView
+            android:id="@+id/txt_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:gravity="center"
+            android:text="@string/first_week_azkar_message"
+            android:textColor="@color/black"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintEnd_toEndOf="@+id/characterImage"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/characterImage"
+            app:layout_constraintTop_toTopOf="@+id/img_frame_message" />
+
+        <ImageView
+            android:id="@+id/characterImage"
+            android:layout_width="@dimen/_210sdp"
+            android:layout_height="@dimen/_170sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:contentDescription="@string/image_for_message_dialog_description"
+            app:layout_constraintEnd_toEndOf="@+id/img_frame_message"
+            app:layout_constraintHorizontal_bias="0.338"
+            app:layout_constraintStart_toStartOf="@+id/img_frame_message"
+            app:layout_constraintTop_toBottomOf="@+id/txt_message"
+            app:srcCompat="@drawable/zahra_normal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ok_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/ask_god_for_success"
+            android:textSize="@dimen/_18ssp"
+            app:backgroundTint="@color/pink"
+            app:layout_constraintBottom_toBottomOf="@+id/img_frame_message"
+            app:layout_constraintEnd_toEndOf="@+id/characterImage"
+            app:layout_constraintStart_toStartOf="@+id/characterImage"
+            app:layout_constraintTop_toBottomOf="@+id/characterImage"
+            tools:ignore="TextContrastCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
