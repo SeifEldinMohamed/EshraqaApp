@@ -110,9 +110,21 @@ class DaysFragment : Fragment() {
             Log.d("days", "number of azkar $numberOfAzkar")
             val totalValueOfWeek = numberOfAzkar * 7
 
+            var previousTotalNumberAzkar = pref.getLong("totalNumberAzkar", 0L)
+            edit.putLong("totalNumberAzkar",(previousTotalNumberAzkar + totalValueOfWeek))
+            Log.d("days","previousTotalNumberAzkar: $previousTotalNumberAzkar" +
+                    "+ totalValueOfWeek $totalValueOfWeek")
+            previousTotalNumberAzkar+= totalValueOfWeek
+            var previousTotalScore = pref.getLong("totalScore", 0L)
+            edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
+            Log.d("days","previousTotalScore: $previousTotalScore" +
+                    "+ totalScore $totalWeekScore")
+            previousTotalScore+= totalWeekScore
+            edit.apply()
+
             Log.d("days", "total number of azkar $totalValueOfWeek")
             val scoreWeekPercentage =
-                ((totalWeekScore.toDouble() / totalValueOfWeek.toDouble()) * 100).toInt()
+                ((previousTotalScore.toDouble() / previousTotalNumberAzkar.toDouble()) * 100).toInt()
 
             /**
              * My I need to save total week score (user grade) and number of total score(4(size of azkar hashMap)*7) in shared prefernce
@@ -124,9 +136,10 @@ class DaysFragment : Fragment() {
             when (scoreWeekPercentage) {
                 in 80..100 -> {
                     if (isEndOfMonth) {
+                        val message = generateRandomSuccessMessage()////////////////////////////
                         showEndMonthCongratulationMessage(
                             getString(R.string.add_new_azkar_to_your_schedule),
-                            getString(R.string.success_message1_azkar),
+                            message,
                             R.drawable.zahra_happy
                         )
                     } else {
@@ -148,7 +161,7 @@ class DaysFragment : Fragment() {
                 in 0..64 -> {
                     if (isEndOfMonth) {
                         showEndMonthCongratulationMessage(
-                            getString(R.string.delete_azkar_from_your_schedule),
+                            getString(R.string.add_new_azkar_to_your_schedule),
                             getString(R.string.fail_message1_azkar),
                             R.drawable.zahra_sad
                         )
@@ -286,6 +299,15 @@ class DaysFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+    fun generateRandomSuccessMessage():String{
+        val strings = ArrayList<String>()
+        strings.add(getString(R.string.success_message1_azkar))
+        strings.add(getString(R.string.success_message2_azkar))
+        strings.add(getString(R.string.success_message3_azkar))
+        strings.add(getString(R.string.success_message4_azkar))
+        strings.random()
+       return strings[0]
     }
 
 }

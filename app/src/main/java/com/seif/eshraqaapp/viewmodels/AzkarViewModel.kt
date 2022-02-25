@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.EshrakaDatabase
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.data.models.MyDate
@@ -27,6 +28,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
+     var message = application.getString(R.string.first_week_azkar_message)
 
     fun addZekr(azkar: List<Azkar>) {
         viewModelScope.launch(Dispatchers.IO) {

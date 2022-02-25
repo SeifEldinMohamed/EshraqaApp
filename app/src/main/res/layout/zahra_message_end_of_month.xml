@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/img_frame_message"
             android:layout_width="@dimen/_250sdp"
-            android:layout_height="@dimen/_370sdp"
+            android:layout_height="@dimen/_375sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
             android:contentDescription="@string/frame_image_for_dialog_message"
@@ -48,7 +48,7 @@
             android:id="@+id/character_image_end_of_month"
             android:layout_width="@dimen/_180sdp"
             android:layout_height="@dimen/_150sdp"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:contentDescription="@string/image_for_message_dialog_description"
             app:layout_constraintEnd_toEndOf="@+id/img_frame_message"
             app:layout_constraintHorizontal_bias="0.338"

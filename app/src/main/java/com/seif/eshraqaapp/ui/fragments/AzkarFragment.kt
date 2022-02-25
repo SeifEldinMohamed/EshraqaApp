@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -187,6 +188,7 @@ class AzkarFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.zahra_message_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
+        val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         btnOk.setOnClickListener {
             dialog.dismiss()
         }

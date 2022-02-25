@@ -90,7 +90,7 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/choose_akar_to_add_message"
                 android:textColor="@color/mediumGreen"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

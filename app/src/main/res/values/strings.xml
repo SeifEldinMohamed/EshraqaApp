@@ -49,9 +49,9 @@
     <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك واستودعها في ودائع الرحمن.</string>
     <string name="fail_message4_azkar">مثل الذى يذكر الله والذى لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره فى قلبك وعلى لسانك.</string>
     <string name="noo">لا</string>
-    <string name="add_new_azkar_to_your_schedule">هل ترغب في إضافة المزبد من البنود إلي جدولك ؟</string>
+    <string name="add_new_azkar_to_your_schedule">هل ترغب في حذف أو إضافة بعض البنود من جدولك ؟</string>
     <string name="delete_azkar_from_your_schedule">هل ترغب في تقليل عدد البنود من جدولك ؟</string>
-    <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها</string>
+    <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها أو حذفها</string>
     <string name="save">حفظ</string>
 
 </resources>
