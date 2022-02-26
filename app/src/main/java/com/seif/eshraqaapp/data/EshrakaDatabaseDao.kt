@@ -3,6 +3,7 @@ package com.seif.eshraqaapp.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.seif.eshraqaapp.data.models.Azkar
+import com.seif.eshraqaapp.data.models.Quran
 
 @Dao
 interface EshrakaDatabaseDao {
@@ -21,4 +22,21 @@ interface EshrakaDatabaseDao {
 
     @Query("DELETE FROM azkar_table")
     suspend fun deleteAllAzkar()
+
+    // quran
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addQuran(quran: Quran)
+
+    @Query("SELECT * FROM Quran")
+    fun getAllQuranData(): LiveData<List<Quran>>
+
+    @Update
+    suspend fun updateQuran(quran:Quran)
+
+    @Query("SELECT score FROM Quran")
+    fun getAllQuranWeekScore(): LiveData<List<Int>>
+
+    @Query("DELETE FROM Quran")
+    suspend fun deleteAllQuran()
+
 }

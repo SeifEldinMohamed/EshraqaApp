@@ -25,7 +25,7 @@ class AzkarFragment : Fragment() {
     private var score = 0
     private var azkarHashMap = HashMap<String, Boolean>()
     private lateinit var pref: SharedPreferences
-    private lateinit var edit: SharedPreferences.Editor
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,13 +49,11 @@ class AzkarFragment : Fragment() {
         azkarHashMap["أذكار النوم"] = fromBundle(requireArguments()).azkar.azkar["أذكار النوم"] ?: false
         azkarHashMap["أذكار بعد الصلاة"] = fromBundle(requireArguments()).azkar.azkar["أذكار بعد الصلاة"] ?: false
 
-
         // first initialization for check boxes
         binding.sabahCheck.isChecked = azkarHashMap["أذكار الصباح"] ?: false
         binding.masaaCheck.isChecked = azkarHashMap["أذكار المساء"] ?: false
         binding.sleepCheck.isChecked = azkarHashMap["أذكار النوم"] ?: false
         binding.afterPrayerCheck.isChecked = azkarHashMap["أذكار بعد الصلاة"] ?: false
-
 
         pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
        if(pref.getBoolean("hamd",false)){
@@ -80,7 +78,6 @@ class AzkarFragment : Fragment() {
             azkarHashMap["ورد استغفار"] = fromBundle(requireArguments()).azkar.azkar["ورد استغفار"] ?: false
             binding.wrdEstegpharCheck.isChecked = azkarHashMap["ورد استغفار"]?: false
         }
-
 
         // set Menu
         setHasOptionsMenu(true)
@@ -189,6 +186,7 @@ class AzkarFragment : Fragment() {
         dialog.setContentView(R.layout.zahra_message_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
+        txtMessage.text = fromBundle(requireArguments()).azkar.weeklyUserMessage
         btnOk.setOnClickListener {
             dialog.dismiss()
         }
@@ -218,7 +216,8 @@ class AzkarFragment : Fragment() {
             fromBundle(requireArguments()).azkar.currentMonth,
             fromBundle(requireArguments()).azkar.currentYear,
             fromBundle(requireArguments()).azkar.dayName,
-            score
+            score,
+            fromBundle(requireArguments()).azkar.weeklyUserMessage
         )
         viewModel.updateZekr(zekr)
         findNavController().navigate(R.id.action_azkarFragment_to_daysFragment)

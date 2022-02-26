@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.seif.eshraqaapp.DaysFragmentDirections
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
+import com.seif.eshraqaapp.ui.fragments.DaysFragmentDirections
 
 class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
      var azkar = emptyList<Azkar>()

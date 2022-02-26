@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Eshraqa App</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="eshraka_app_description">
-إشراقة.. هي فكرة دعوية وضعت لك حُبًّا وحرصًا
-
-وفريقٌ اجتمع ليشدّ أزرك، ويأخذ بمجامع قلبك لطريقٍ ارتضاهُ لنا ربُّنا وأفنى رسولنا -صلى اللّٰه عليه وسلم- عُمره فى نشره، وأحيا فينا رابط الأُخوة لئلا يتيه عنّا أخٌ إلا أمسكنا بكلتا يديه وأرجعناه لطريقنا، رغبةً وأملًا فى أن نصل سويًّا للفردوس</string>
+    <string name="eshraka_app_description">إشراقة.. هي فكرة دعوية وضعت لك حُبًّا وحرصًا  وفريقٌ اجتمع ليشدّ أزرك، ويأخذ بمجامع قلبك لطريقٍ ارتضاهُ لنا ربُّنا وأفنى رسولنا -صلى اللّٰه عليه وسلم- عُمره فى نشره، وأحيا فينا رابط الأُخوة لئلا يتيه عنّا أخٌ إلا أمسكنا بكلتا يديه وأرجعناه لطريقنا، رغبةً وأملًا فى أن نصل سويًّا للفردوس</string>
+    <string name="welcome">أهلًا بك في إشراقة</string>
+    <string name="next">متابعة</string>
     <string name="quran">القرآن</string>
     <string name="home_background_image">home background image</string>
     <string name="eshraka_logo_home_image">eshraka logo home image</string>
@@ -53,5 +52,22 @@
     <string name="delete_azkar_from_your_schedule">هل ترغب في تقليل عدد البنود من جدولك ؟</string>
     <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها أو حذفها</string>
     <string name="save">حفظ</string>
+    <string name="software_inversion">Software Inversion</string>
+    <string name="logo_image_description">logo image description</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="birthdate">تاريخ الميلاد</string>
+    <string name="gander">الجنس</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثي</string>
+    <string name="login">تسجيل</string>
+    <string name="transparent_logo_image_description">transparent logo image description</string>
+    <string name="quran_question1">هل حفظت وردك اليوم ؟</string>
+    <string name="no">لا</string>
+    <string name="facation">إجازة</string>
+    <string name="quran_question2">هل قرأت وردك اليوم ؟</string>
+    <string name="quran_question3">هل راجعت ورد في مراجعة اليوم ؟</string>
+    <string name="quran_question5">فهم معاني الايات ؟</string>
+    <string name="quran_question4">فهم معاني الايات ؟</string>
+    <string name="vacation">إجازة</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.seif.eshraqaapp
+package com.seif.eshraqaapp.ui.fragments
 
 import android.app.Dialog
 import android.content.Context
@@ -13,10 +13,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.databinding.FragmentDaysBinding
 import com.seif.eshraqaapp.ui.adapters.AzkarAdapter
-import com.seif.eshraqaapp.ui.fragments.AzkarFragmentArgs
 import com.seif.eshraqaapp.viewmodels.AzkarViewModel
 
 
@@ -32,6 +32,7 @@ class DaysFragment : Fragment() {
     private var numberOfWeeks: Int = 1
     private var currentAzkarHashMap = HashMap<String, Boolean>()
     lateinit var afterMonthDialog: Dialog
+    private var weeklyMessage: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,11 +93,10 @@ class DaysFragment : Fragment() {
     }
 
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
-        if (isEndOfMonth){
+        if (isEndOfMonth) {
             edit.putInt("nweek", 1)
             edit.apply()
-        }
-        else{
+        } else {
             edit.putInt("nweek", numberOfWeeks + 1)
             edit.apply()
         }
@@ -111,63 +111,74 @@ class DaysFragment : Fragment() {
             val totalValueOfWeek = numberOfAzkar * 7
 
             var previousTotalNumberAzkar = pref.getLong("totalNumberAzkar", 0L)
-            edit.putLong("totalNumberAzkar",(previousTotalNumberAzkar + totalValueOfWeek))
-            Log.d("days","previousTotalNumberAzkar: $previousTotalNumberAzkar" +
-                    "+ totalValueOfWeek $totalValueOfWeek")
-            previousTotalNumberAzkar+= totalValueOfWeek
+            edit.putLong("totalNumberAzkar", (previousTotalNumberAzkar + totalValueOfWeek))
+            Log.d(
+                "days", "previousTotalNumberAzkar: $previousTotalNumberAzkar" +
+                        "+ totalValueOfWeek $totalValueOfWeek"
+            )
+            previousTotalNumberAzkar += totalValueOfWeek
             var previousTotalScore = pref.getLong("totalScore", 0L)
             edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
-            Log.d("days","previousTotalScore: $previousTotalScore" +
-                    "+ totalScore $totalWeekScore")
-            previousTotalScore+= totalWeekScore
+            Log.d(
+                "days", "previousTotalScore: $previousTotalScore" +
+                        "+ totalScore $totalWeekScore"
+            )
+            previousTotalScore += totalWeekScore
             edit.apply()
 
             Log.d("days", "total number of azkar $totalValueOfWeek")
             val scoreWeekPercentage =
                 ((previousTotalScore.toDouble() / previousTotalNumberAzkar.toDouble()) * 100).toInt()
 
-            /**
-             * My I need to save total week score (user grade) and number of total score(4(size of azkar hashMap)*7) in shared prefernce
-             * **/
-
             Log.d("days", "total week score  $totalWeekScore")
             Log.d("days", "percentage  $scoreWeekPercentage")
 
             when (scoreWeekPercentage) {
                 in 80..100 -> {
+                    weeklyMessage = generateRandomSuccessMessage()
                     if (isEndOfMonth) {
-                        val message = generateRandomSuccessMessage()////////////////////////////
+                        edit.putLong("totalScore", 0L)
+                        edit.putLong("totalNumberAzkar", 0L)
+                        edit.apply()
                         showEndMonthCongratulationMessage(
                             getString(R.string.add_new_azkar_to_your_schedule),
-                            message,
+                            weeklyMessage,
                             R.drawable.zahra_happy
                         )
                     } else {
                         showNormalCongratulationMessage(
-                            getString(R.string.success_message1_azkar),
+                            weeklyMessage,
                             R.drawable.zahra_happy
                         )
                     }
                     Log.d("days", "success")
                 }
                 in 65..79 -> {
+                    edit.putLong("totalScore", 0L)
+                    edit.putLong("totalNumberAzkar", 0L)
+                    edit.apply()
+                    weeklyMessage = generateRandomMediumMessage()
                     showNormalCongratulationMessage(
-                        getString(R.string.medium_message1_azkar),
+                        weeklyMessage,
                         R.drawable.zahra_normal
                     )
 
                     Log.d("days", "medium")
                 }
                 in 0..64 -> {
+                    weeklyMessage = generateRandomFailMessage()
                     if (isEndOfMonth) {
+                        edit.putLong("totalScore", 0L)
+                        edit.putLong("totalNumberAzkar", 0L)
+                        edit.apply()
                         showEndMonthCongratulationMessage(
                             getString(R.string.add_new_azkar_to_your_schedule),
-                            getString(R.string.fail_message1_azkar),
+                            weeklyMessage,
                             R.drawable.zahra_sad
                         )
                     } else {
                         showNormalCongratulationMessage(
-                            getString(R.string.fail_message1_azkar),
+                            weeklyMessage,
                             R.drawable.zahra_sad
                         )
                     }
@@ -182,6 +193,7 @@ class DaysFragment : Fragment() {
         dialog.show()
     }
 
+
     // show message after end of week but not end of month
     private fun showNormalCongratulationMessage(message: String, image: Int) {
         val dialog = Dialog(requireContext())
@@ -194,7 +206,13 @@ class DaysFragment : Fragment() {
         txtMessage.text = message
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-            viewModel.addZekr(viewModel.createNewWeekSchedule(lastAzkarDay, currentAzkarHashMap))
+            viewModel.addZekr(
+                viewModel.createNewWeekSchedule(
+                    lastAzkarDay,
+                    currentAzkarHashMap,
+                    weeklyMessage
+                )
+            )
             dialog.dismiss()
         }
         dialog.show()
@@ -212,8 +230,10 @@ class DaysFragment : Fragment() {
         val btnYes = afterMonthDialog.findViewById<Button>(R.id.btn_ok_message_end_of_month)
         val btnNo = afterMonthDialog.findViewById<Button>(R.id.btn_no)
         val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
-        val txtMessageAddOrDelete = afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)
-        val characterImage = afterMonthDialog.findViewById<ImageView>(R.id.character_image_end_of_month)
+        val txtMessageAddOrDelete =
+            afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)
+        val characterImage =
+            afterMonthDialog.findViewById<ImageView>(R.id.character_image_end_of_month)
         characterImage.setImageResource(image)
         // change character and frame according to male of user
         txtMessage.text = message
@@ -223,7 +243,13 @@ class DaysFragment : Fragment() {
             showAddAzkarDialog()
         }
         btnNo.setOnClickListener {
-            viewModel.addZekr(viewModel.createNewWeekSchedule(lastAzkarDay, currentAzkarHashMap))
+            viewModel.addZekr(
+                viewModel.createNewWeekSchedule(
+                    lastAzkarDay,
+                    currentAzkarHashMap,
+                    weeklyMessage
+                )
+            )
             afterMonthDialog.dismiss()
         }
 
@@ -244,12 +270,11 @@ class DaysFragment : Fragment() {
         val estghCheck = dialog.findViewById<CheckBox>(R.id.estghphar_check)
 
         pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
-        hamdCheck.isChecked =  pref.getBoolean("hamd", false)
-        tsbehCheck.isChecked =  pref.getBoolean("tsbeh", false)
-        tkberCheck.isChecked =   pref.getBoolean("tkber", false)
-        estghCheck.isChecked =  pref.getBoolean("estgh", false)
-        val txtMessage = dialog.findViewById<TextView>(R.id.txt_choose_zekr)
-        //txtMessage.text = message
+        hamdCheck.isChecked = pref.getBoolean("hamd", false)
+        tsbehCheck.isChecked = pref.getBoolean("tsbeh", false)
+        tkberCheck.isChecked = pref.getBoolean("tkber", false)
+        estghCheck.isChecked = pref.getBoolean("estgh", false)
+
         btnSave.setOnClickListener {
             // logic to start new week and save score of prev week
             edit = pref.edit()
@@ -257,41 +282,43 @@ class DaysFragment : Fragment() {
             if (hamdCheck.isChecked) {
                 currentAzkarHashMap["ورد حمد"] = false
                 edit.putBoolean("hamd", true)
-            }
-            else{
+            } else {
                 edit.putBoolean("hamd", false)
                 currentAzkarHashMap.remove("ورد حمد")
             }
 
-            if (tsbehCheck.isChecked){
+            if (tsbehCheck.isChecked) {
                 currentAzkarHashMap["ورد تسبيح"] = false
                 edit.putBoolean("tsbeh", true)
-            }
-            else{
+            } else {
                 edit.putBoolean("tsbeh", false)
                 currentAzkarHashMap.remove("ورد تسبيح")
             }
 
-            if (tkberCheck.isChecked){
+            if (tkberCheck.isChecked) {
                 currentAzkarHashMap["ورد تكبير"] = false
                 edit.putBoolean("tkber", true)
-            }
-            else{
+            } else {
                 edit.putBoolean("tkber", false)
                 currentAzkarHashMap.remove("ورد تكبير")
             }
 
-            if (estghCheck.isChecked){
+            if (estghCheck.isChecked) {
                 currentAzkarHashMap["ورد استغفار"] = false
                 edit.putBoolean("estgh", true)
-            }
-            else{
+            } else {
                 edit.putBoolean("estgh", false)
                 currentAzkarHashMap.remove("ورد استغفار")
             }
-
             edit.apply()
-            viewModel.addZekr(viewModel.createNewWeekSchedule(lastAzkarDay, currentAzkarHashMap))
+
+            viewModel.addZekr(
+                viewModel.createNewWeekSchedule(
+                    lastAzkarDay,
+                    currentAzkarHashMap,
+                    weeklyMessage
+                )
+            )
             dialog.dismiss()
             afterMonthDialog.dismiss()
         }
@@ -300,14 +327,35 @@ class DaysFragment : Fragment() {
         }
         dialog.show()
     }
-    fun generateRandomSuccessMessage():String{
+
+    fun generateRandomSuccessMessage(): String {
         val strings = ArrayList<String>()
         strings.add(getString(R.string.success_message1_azkar))
         strings.add(getString(R.string.success_message2_azkar))
         strings.add(getString(R.string.success_message3_azkar))
         strings.add(getString(R.string.success_message4_azkar))
-        strings.random()
-       return strings[0]
+
+        return strings.random()
+    }
+
+    private fun generateRandomMediumMessage(): String {
+        val strings = ArrayList<String>()
+        strings.add(getString(R.string.medium_message1_azkar))
+        strings.add(getString(R.string.medium_message2_azkar))
+        strings.add(getString(R.string.medium_message3_azkar))
+        strings.add(getString(R.string.medium_message4_azkar))
+
+        return strings.random()
+    }
+
+    private fun generateRandomFailMessage(): String {
+        val strings = ArrayList<String>()
+        strings.add(getString(R.string.fail_message1_azkar))
+        strings.add(getString(R.string.fail_message2_azkar))
+        strings.add(getString(R.string.fail_message3_azkar))
+        strings.add(getString(R.string.fail_message4_azkar))
+
+        return strings.random()
     }
 
 }

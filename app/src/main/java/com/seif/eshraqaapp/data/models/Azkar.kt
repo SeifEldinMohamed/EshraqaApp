@@ -21,5 +21,6 @@ data class Azkar(
     var currentMonth:Int,
     var currentYear:Int,
     var dayName: String,
-    var score: Int
+    var score: Int,
+    var weeklyUserMessage: String
 ): Parcelable

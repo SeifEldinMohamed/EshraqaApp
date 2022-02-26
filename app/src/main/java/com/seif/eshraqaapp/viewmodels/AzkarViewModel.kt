@@ -94,7 +94,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[0].month.toInt(),
                 weekDate[0].year.toInt(),
                 daysOfWeek[0],
-                0
+                0,
+                message
             ),
             Azkar(
                 2,
@@ -107,7 +108,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[1].month.toInt(),
                 weekDate[1].year.toInt(),
                 daysOfWeek[1],
-                0
+                0,
+                message
             ),
             Azkar(
                 3,
@@ -120,7 +122,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[2].month.toInt(),
                 weekDate[2].year.toInt(),
                 daysOfWeek[2],
-                0
+                0,
+                message
             ),
             Azkar(
                 4,
@@ -133,7 +136,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[3].month.toInt(),
                 weekDate[3].year.toInt(),
                 daysOfWeek[3],
-                0
+                0,
+                message
             ),
             Azkar(
                 5,
@@ -146,7 +150,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[4].month.toInt(),
                 weekDate[4].year.toInt(),
                 daysOfWeek[4],
-                0
+                0,
+                message
             ),
             Azkar(
                 6,
@@ -159,7 +164,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[5].month.toInt(),
                 weekDate[5].year.toInt(),
                 daysOfWeek[5],
-                0
+                0,
+                message
             ),
             Azkar(
                 7,
@@ -172,7 +178,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[6].month.toInt(),
                 weekDate[6].year.toInt(),
                 daysOfWeek[6],
-                0
+                0,
+                message
             )
         )
     }
@@ -211,7 +218,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return azkarHashMap
     }
 
-    fun createNewWeekSchedule(lastAzkarDay: Azkar, newAzkarHashMap:HashMap<String, Boolean>):List<Azkar> {
+    fun createNewWeekSchedule(lastAzkarDay: Azkar, newAzkarHashMap:HashMap<String, Boolean>, weeklyMessage:String):List<Azkar> {
         deleteAllAzkar()
         val currentDate = Calendar.getInstance()
             currentDate.set(lastAzkarDay.currentYear, lastAzkarDay.currentMonth, lastAzkarDay.currentDay+1)
@@ -246,7 +253,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[0].month.toInt(),
                 weekDate[0].year.toInt(),
                 daysOfWeek[0],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 2,
@@ -259,7 +267,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[1].month.toInt(),
                 weekDate[1].year.toInt(),
                 daysOfWeek[1],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 3,
@@ -272,7 +281,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[2].month.toInt(),
                 weekDate[2].year.toInt(),
                 daysOfWeek[2],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 4,
@@ -285,7 +295,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[3].month.toInt(),
                 weekDate[3].year.toInt(),
                 daysOfWeek[3],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 5,
@@ -298,7 +309,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[4].month.toInt(),
                 weekDate[4].year.toInt(),
                 daysOfWeek[4],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 6,
@@ -311,7 +323,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[5].month.toInt(),
                 weekDate[5].year.toInt(),
                 daysOfWeek[5],
-                0
+                0,
+                weeklyMessage
             ),
             Azkar(
                 7,
@@ -324,7 +337,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 weekDate[6].month.toInt(),
                 weekDate[6].year.toInt(),
                 daysOfWeek[6],
-                0
+                0,
+                weeklyMessage
             )
         )
     }
