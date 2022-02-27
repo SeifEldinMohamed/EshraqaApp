@@ -28,6 +28,7 @@
     <string name="back">رجوع</string>
     <string name="yes">نعم</string>
     <string name="first_week_prayer_message">أول أسبوع لك في جدول الصلاة أسال الله ان يوفقك</string>
+    <string name="first_week_quran_message">أول أسبوع لك في جدول القرآن أسال الله ان يوفقك</string>
     <string name="first_week_azkar_message">أول شهر لك في جدول الأذكار أسال الله ان يوفقك</string>
     <string name="frame_image_for_dialog_message">frame image for dialog message description</string>
     <string name="image_for_message_dialog_description">image for message dialog description</string>
@@ -69,5 +70,8 @@
     <string name="quran_question5">فهم معاني الايات ؟</string>
     <string name="quran_question4">فهم معاني الايات ؟</string>
     <string name="vacation">إجازة</string>
+    <string name="number_of_days">عدد الأيام</string>
+    <string name="follow">متابعة</string>
+    <string name="enter_number_of_days">أدخل عدد أيام العمل اسبوعيا</string>
 
 </resources>

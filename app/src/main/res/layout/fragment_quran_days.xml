@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuranDaysFragment">
+    tools:context=".ui.fragments.QuranDaysFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_quran_azkar"
+        android:id="@+id/rv_quran_days"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

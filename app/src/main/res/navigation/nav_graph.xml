@@ -45,11 +45,13 @@
         tools:layout="@layout/fragment_quran" />
     <fragment
         android:id="@+id/quranDaysFragment"
-        android:name="com.seif.eshraqaapp.QuranDaysFragment"
-        android:label="fragment_quran_days"
+        android:name="com.seif.eshraqaapp.ui.fragments.QuranDaysFragment"
+        android:label="جدول القرآن"
         tools:layout="@layout/fragment_quran_days" >
         <action
             android:id="@+id/action_quranDaysFragment_to_quranFragment"
             app:destination="@id/quranFragment" />
+        <argument android:name="numberOfWorkDays"
+            app:argType="integer" />
     </fragment>
 </navigation>

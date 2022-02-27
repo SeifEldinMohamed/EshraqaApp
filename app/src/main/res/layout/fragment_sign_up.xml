@@ -78,7 +78,8 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/birthdate"
-                    android:textDirection="rtl"
+                    android:textDirection="anyRtl"
+                    android:gravity="center"
                     android:textSize="@dimen/_15sdp"
                     tools:ignore="TextContrastCheck" />
 

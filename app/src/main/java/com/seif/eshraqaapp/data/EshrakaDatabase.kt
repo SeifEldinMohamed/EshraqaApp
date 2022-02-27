@@ -6,9 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.seif.eshraqaapp.data.models.Azkar
+import com.seif.eshraqaapp.data.models.Quran
 
 const val DATABASE_NAME = "eshraka database"
-@Database(entities = [Azkar::class], version = 5, exportSchema = false)
+@Database(entities = [Azkar::class, Quran::class], version = 6, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class EshrakaDatabase: RoomDatabase() {
     abstract fun myDao(): EshrakaDatabaseDao

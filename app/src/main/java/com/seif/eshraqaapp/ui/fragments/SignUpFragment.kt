@@ -51,14 +51,17 @@ lateinit var binding : FragmentSignUpBinding
                 if (binding.etUsername.text!!.isEmpty()) {
                     Toast.makeText(requireContext(), "Username is required ", Toast.LENGTH_SHORT)
                         .show()
+                    return@setOnClickListener
                 }
                 if (binding.etBirthdate.text!!.isEmpty()) {
                     Toast.makeText(requireContext(), "Birthdate is required ", Toast.LENGTH_SHORT)
                         .show()
+                    return@setOnClickListener
                 }
                 if (!binding.rbMale.isChecked && !binding.rbFemale.isChecked) {
                     Toast.makeText(requireContext(), "Gender is required ", Toast.LENGTH_SHORT)
                         .show()
+                    return@setOnClickListener
                 }
                 SharedPref.writeSignedUp("signed", true)
                 if (binding.rbMale.isChecked) {
