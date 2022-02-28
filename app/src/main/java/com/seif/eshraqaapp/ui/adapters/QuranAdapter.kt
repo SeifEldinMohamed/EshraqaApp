@@ -2,9 +2,12 @@ package com.seif.eshraqaapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
+import com.seif.eshraqaapp.ui.fragments.QuranDaysFragmentDirections
+
 
 class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
     private var quran = emptyList<Quran>()
@@ -13,6 +16,10 @@ class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
             binding.txtDay.text = quran[position].dayName
             binding.txtScore.text = "${quran[position].score}/${quran[position].quran.size}"
             binding.txtDate.text = "${quran[position].currentDay} / ${quran[position].currentMonth} / ${quran[position].currentYear}  "
+            binding.itemRowDays.setOnClickListener {
+                val action = QuranDaysFragmentDirections.actionQuranDaysFragmentToQuranFragment(quran[position])
+                itemView.findNavController().navigate(action)
+            }
         }
     }
 

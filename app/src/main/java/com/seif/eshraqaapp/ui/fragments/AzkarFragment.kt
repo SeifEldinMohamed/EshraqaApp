@@ -78,7 +78,7 @@ class AzkarFragment : Fragment() {
             azkarHashMap["ورد استغفار"] = fromBundle(requireArguments()).azkar.azkar["ورد استغفار"] ?: false
             binding.wrdEstegpharCheck.isChecked = azkarHashMap["ورد استغفار"]?: false
         }
-
+/////////////////////////////////////////////////////////
         // set Menu
         setHasOptionsMenu(true)
         // show text day and score from coming data

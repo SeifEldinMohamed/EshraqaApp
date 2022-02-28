@@ -62,6 +62,18 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
         }
         return false
     }
+    fun readIsFirstTimeToEnter(context: Context):Boolean {
+        shared = context.getSharedPreferences("isFirstTimeEnterQuran", Context.MODE_PRIVATE)
+        if (shared.getBoolean("check", true)) {
+            return true
+        }
+        return false
+    }
+    fun writeIsFirstTimeToEnter(){
+        val editor = shared.edit()
+        editor.putBoolean("check", false)
+        editor.apply()
+    }
     fun getSevenDaysData(numberOfDaysToRead:Int): List<Quran> {
 
         val currentDate = Calendar.getInstance()

@@ -38,7 +38,8 @@ lateinit var homeViewModel: HomeViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = IntroSharedPref.readPersonalInfo("Username","")
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "مرحبا " +
+                "${IntroSharedPref.readPersonalInfo("Username","")}"
         binding.azkarCardView.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_daysFragment)
         }
@@ -86,5 +87,4 @@ lateinit var homeViewModel: HomeViewModel
         editor.putBoolean("check", false)
         editor.apply()
     }
-
 }

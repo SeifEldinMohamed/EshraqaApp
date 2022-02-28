@@ -1,9 +1,12 @@
 package com.seif.eshraqaapp.data.models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class Quran(
     @PrimaryKey(autoGenerate = true)
     var id:Int,
@@ -13,6 +16,7 @@ data class Quran(
     var currentYear:Int,
     var dayName: String,
     var score: Int,
-    var numberOfDaysToRead: Int,
-    var weeklyUserMessage: String
-)
+    var numberOfDaysToWork: Int,
+    var weeklyUserMessage: String,
+    var firstTimeToEnter:Boolean
+): Parcelable

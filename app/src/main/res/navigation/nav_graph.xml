@@ -40,9 +40,18 @@
     </fragment>
     <fragment
         android:id="@+id/quranFragment"
-        android:name="com.seif.eshraqaapp.QuranFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.QuranFragment"
         android:label="fragment_quran"
-        tools:layout="@layout/fragment_quran" />
+        tools:layout="@layout/fragment_quran" >
+        <argument
+            android:name="quran"
+            app:argType="com.seif.eshraqaapp.data.models.Quran" />
+        <action
+            android:id="@+id/action_quranFragment_to_quranDaysFragment"
+            app:destination="@id/quranDaysFragment"
+            app:popUpTo="@id/quranDaysFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/quranDaysFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.QuranDaysFragment"
