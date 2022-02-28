@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
-import com.seif.eshraqaapp.data.SharedPref
+import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentSignUpBinding
 import java.util.*
 
@@ -63,13 +63,13 @@ lateinit var binding : FragmentSignUpBinding
                         .show()
                     return@setOnClickListener
                 }
-                SharedPref.writeSignedUp("signed", true)
+                IntroSharedPref.writeSignedUp("signed", true)
                 if (binding.rbMale.isChecked) {
-                    SharedPref.readGander("Male", true)
+                    IntroSharedPref.writeGander("Male", true)
                 } else if (binding.rbFemale.isChecked) {
-                    SharedPref.readGander("Female", true)
+                    IntroSharedPref.writeGander("Female", true)
                 }
-                SharedPref.readPersonalInfo("Username", binding.etUsername.text.toString())
+                IntroSharedPref.writePersonalInfo("Username", binding.etUsername.text.toString())
                 findNavController().navigate(R.id.action_signUpFragment_to_mainActivity)
                 requireActivity().finish()
             }

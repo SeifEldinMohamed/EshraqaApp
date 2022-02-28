@@ -1,10 +1,10 @@
-package com.seif.eshraqaapp.data
+package com.seif.eshraqaapp.data.sharedPreference
 
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
-class SharedPref {
+class IntroSharedPref {
     companion object {
         private var  mSharedPref: SharedPreferences? = null
         fun init(context: Context) {
@@ -15,7 +15,7 @@ class SharedPref {
             return mSharedPref!!.getString(key, defValue)
         }
         fun writePersonalInfo(key:String?,value:String?){
-            val prefsEditor:SharedPreferences.Editor =mSharedPref!!.edit()
+            val prefsEditor:SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putString(key,value)
             prefsEditor.apply()
 

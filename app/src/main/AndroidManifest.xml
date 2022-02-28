@@ -8,11 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:theme="@style/Theme.EshraqaApp">
+        android:theme="@style/Theme.EshraqaApp"
+    >
         <activity
             android:name=".IntroActivity"
             android:exported="true"
-            android:theme="@style/introTheme">
+            android:theme="@style/introTheme"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +26,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation">
 
         </activity>
     </application>

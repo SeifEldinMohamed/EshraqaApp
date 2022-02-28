@@ -73,5 +73,8 @@
     <string name="number_of_days">عدد الأيام</string>
     <string name="follow">متابعة</string>
     <string name="enter_number_of_days">أدخل عدد أيام العمل اسبوعيا</string>
+    <string name="_20_2_2022">20 / 2 / 2022</string>
+    <string name="day_name_item_row">السبت</string>
+    <string name="score_item_row">2 / 4</string>
 
 </resources>

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.seif.eshraqaapp.R
-import com.seif.eshraqaapp.data.SharedPref
+import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 
 
 class SplashFragment : Fragment() {
@@ -24,10 +24,10 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        SharedPref.init(requireContext())
+        IntroSharedPref.init(requireContext())
         val splashTime = 1200L
         Handler(Looper.getMainLooper()).postDelayed({
-            val signed: Boolean = SharedPref.readSignedUp("signed", false)
+            val signed: Boolean = IntroSharedPref.readSignedUp("signed", false)
             if (!signed) {
                 view.findNavController().navigate(R.id.action_splashFragment_to_introFragment)
             } else {
