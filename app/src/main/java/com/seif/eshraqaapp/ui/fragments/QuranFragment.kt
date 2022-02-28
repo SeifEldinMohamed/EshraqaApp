@@ -58,7 +58,7 @@ lateinit var binding: FragmentQuranBinding
         binding.textScore.text = "${fromBundle(requireArguments()).quran.score}/$numberOfQuran"
 
 
-        if(!quranViewModel.readIsFirstTimeToEnter(requireContext())){
+        if(!fromBundle(requireArguments()).quran.firstTimeToEnter){
             when(quranHashMap["question1"]){
                 true -> binding.radioSaveYes.isChecked = true
                 false -> binding.radioSaveNo.isChecked = true
@@ -213,7 +213,8 @@ lateinit var binding: FragmentQuranBinding
             fromBundle(requireArguments()).quran.dayName,
             score,
             fromBundle(requireArguments()).quran.numberOfDaysToWork,
-            fromBundle(requireArguments()).quran.weeklyUserMessage
+            fromBundle(requireArguments()).quran.weeklyUserMessage,
+            false
         )
         quranViewModel.updateQuran(quran)
         findNavController().navigate(R.id.action_quranFragment_to_quranDaysFragment)

@@ -102,7 +102,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[0],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 2,
@@ -113,7 +114,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[1],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 3,
@@ -124,7 +126,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[2],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 4,
@@ -135,7 +138,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[3],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 5,
@@ -146,7 +150,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[4],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 6,
@@ -157,7 +162,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[5],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             ),
             Quran(
                 7,
@@ -168,7 +174,8 @@ class QuranViewModel(application: Application): AndroidViewModel(application) {
                 daysOfWeek[6],
                 0,
                 numberOfDaysToRead,
-                message
+                message,
+                true
             )
         )
     }

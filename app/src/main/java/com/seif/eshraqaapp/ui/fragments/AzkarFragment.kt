@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
+import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentAzkarBinding
 import com.seif.eshraqaapp.ui.fragments.AzkarFragmentArgs.fromBundle
 import com.seif.eshraqaapp.viewmodels.AzkarViewModel
@@ -175,7 +176,18 @@ class AzkarFragment : Fragment() {
             binding.textScore.text = "$score/$numberOfAzkar"
         }
 
-        binding.azkarImage.setOnClickListener {
+        IntroSharedPref.init(requireContext())
+
+        if(IntroSharedPref.readGander("Male", false)){
+            binding.azkarImageZahra.visibility = View.GONE
+            binding.azkarImageGheth.visibility = View.VISIBLE
+        }
+        else{
+            binding.azkarImageZahra.visibility = View.VISIBLE
+            binding.azkarImageGheth.visibility = View.GONE
+        }
+
+        binding.azkarImageZahra.setOnClickListener {
             showEshrakaMessageDialog()
         }
     }

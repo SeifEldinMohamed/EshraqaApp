@@ -308,9 +308,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:contentDescription="@string/eshraka_charchter_describtion"
-        android:src="@drawable/ic_zahra_frame_quran"
+        android:src="@drawable/eshraka_quran"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ImageContrastCheck" />
@@ -319,11 +319,23 @@
         android:id="@+id/check_vacation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
         android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_16sdp"
         android:text="@string/vacation"
         android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toBottomOf="@+id/quran_image_zahra"
-        app:layout_constraintEnd_toStartOf="@+id/quran_image_zahra"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/quran_image_zahra" />
+
+    <ImageView
+        android:id="@+id/quran_image_gheth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:contentDescription="@string/gheth_image_description"
+        android:src="@drawable/gheth_quran"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

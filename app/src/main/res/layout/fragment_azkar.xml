@@ -9,12 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_6sdp"
         android:background="@drawable/azkar_card_background"
+        android:paddingBottom="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/azkarImage">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.249">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -59,9 +61,9 @@
             android:id="@+id/sabah_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
             android:paddingLeft="@dimen/_30sdp"
             android:text="@string/sabah_azkar"
-            android:layout_marginTop="@dimen/_6sdp"
             android:textColor="@color/mediumGreen"
             android:textDirection="rtl"
             android:textSize="@dimen/_18ssp"
@@ -159,13 +161,25 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/azkarImage"
+        android:id="@+id/azkarImageZahra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/eshraka_charchter_describtion"
         android:src="@drawable/eshraka_azkar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/azkarImageGheth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/azkar_gheth_image_descriptiion"
+        android:src="@drawable/gheth_azkar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ImageContrastCheck" />
