@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
@@ -27,6 +28,7 @@ lateinit var binding : FragmentSignUpBinding
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N) // check it again
     override fun onViewCreated(view1: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view1, savedInstanceState)
         val calender = Calendar.getInstance()
@@ -75,13 +77,15 @@ lateinit var binding : FragmentSignUpBinding
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun updateLabel(calender: Calendar) {
         val sdf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val format = "dd-MM-yyyy"
             SimpleDateFormat(format, Locale.UK)
         }
-        else {
-            TODO("VERSION.SDK_INT < N")
+        else { // check it again
+            val format = "dd-MM-yyyy"
+            SimpleDateFormat(format, Locale.UK)
         }
         binding.etBirthdate.setText(sdf.format(calender.time))
     }

@@ -11,16 +11,18 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
+import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentDaysBinding
 import com.seif.eshraqaapp.ui.adapters.AzkarAdapter
 import com.seif.eshraqaapp.viewmodels.AzkarViewModel
 
 
-class DaysFragment : Fragment() {
+class AzkarDaysFragment : Fragment() {
     lateinit var binding: FragmentDaysBinding
     private val myAdapter: AzkarAdapter by lazy { AzkarAdapter() }
     lateinit var viewModel: AzkarViewModel
@@ -131,10 +133,15 @@ class DaysFragment : Fragment() {
 
             Log.d("days", "total week score  $totalWeekScore")
             Log.d("days", "percentage  $scoreWeekPercentage")
-
+            val image :Int
             when (scoreWeekPercentage) {
                 in 80..100 -> {
-                    weeklyMessage = generateRandomSuccessMessage()
+                    image = if(IntroSharedPref.readGander("Male", false)){
+                        R.drawable.gheth_happy
+                    }else{
+                        R.drawable.zahra_happy
+                    }
+                        weeklyMessage = generateRandomSuccessMessage()
                     if (isEndOfMonth) {
                         edit.putLong("totalScore", 0L)
                         edit.putLong("totalNumberAzkar", 0L)
@@ -142,29 +149,50 @@ class DaysFragment : Fragment() {
                         showEndMonthCongratulationMessage(
                             getString(R.string.add_new_azkar_to_your_schedule),
                             weeklyMessage,
-                            R.drawable.zahra_happy
+                            image
                         )
                     } else {
                         showNormalCongratulationMessage(
                             weeklyMessage,
-                            R.drawable.zahra_happy
+                            image
                         )
                     }
                     Log.d("days", "success")
                 }
-                in 65..79 -> {
+                in 65..79 -> { // handle adding
+                    image = if(IntroSharedPref.readGander("Male", false)){
+                        R.drawable.gheth_normal
+                    }else{
+                        R.drawable.zahra_normal
+                    }
                     edit.putLong("totalScore", 0L)
                     edit.putLong("totalNumberAzkar", 0L)
                     edit.apply()
                     weeklyMessage = generateRandomMediumMessage()
-                    showNormalCongratulationMessage(
-                        weeklyMessage,
-                        R.drawable.zahra_normal
-                    )
+                    if (isEndOfMonth) {
+                        edit.putLong("totalScore", 0L)
+                        edit.putLong("totalNumberAzkar", 0L)
+                        edit.apply()
+                        showEndMonthCongratulationMessage(
+                            getString(R.string.add_new_azkar_to_your_schedule),
+                            weeklyMessage,
+                            image
+                        )
+                    }else{
+                        showNormalCongratulationMessage(
+                            weeklyMessage,
+                            image
+                        )
+                    }
 
                     Log.d("days", "medium")
                 }
                 in 0..64 -> {
+                    image = if(IntroSharedPref.readGander("Male", false)){
+                        R.drawable.gheth_sad
+                    }else{
+                        R.drawable.zahra_sad
+                    }
                     weeklyMessage = generateRandomFailMessage()
                     if (isEndOfMonth) {
                         edit.putLong("totalScore", 0L)
@@ -173,12 +201,12 @@ class DaysFragment : Fragment() {
                         showEndMonthCongratulationMessage(
                             getString(R.string.add_new_azkar_to_your_schedule),
                             weeklyMessage,
-                            R.drawable.zahra_sad
+                            image
                         )
                     } else {
                         showNormalCongratulationMessage(
                             weeklyMessage,
-                            R.drawable.zahra_sad
+                            image
                         )
                     }
                     Log.d("days", "fail")
@@ -201,7 +229,15 @@ class DaysFragment : Fragment() {
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
-        characterImage.setImageResource(image)
+        val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
+        if(IntroSharedPref.readGander("Male", false)) {
+            frameImage.setImageResource(R.drawable.gheth_frame_dialog)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+        }else{
+            frameImage.setImageResource(R.drawable.zahra_frame_dialog)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+        }
+            characterImage.setImageResource(image)
         txtMessage.text = message
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
@@ -234,6 +270,17 @@ class DaysFragment : Fragment() {
         val characterImage =
             afterMonthDialog.findViewById<ImageView>(R.id.character_image_end_of_month)
         characterImage.setImageResource(image)
+
+        val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
+        if(IntroSharedPref.readGander("Male", false)) {
+            frameImage.setImageResource(R.drawable.gheth_frame_dialog)
+            btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+            btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+        }else{
+            frameImage.setImageResource(R.drawable.zahra_frame_dialog)
+            btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+            btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+        }
         // change character and frame according to male of user
         txtMessage.text = message
         txtMessageAddOrDelete.text = addOrDeleteMessage

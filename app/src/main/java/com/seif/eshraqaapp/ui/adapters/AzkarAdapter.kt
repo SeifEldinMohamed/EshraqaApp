@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
-import com.seif.eshraqaapp.ui.fragments.DaysFragmentDirections
+import com.seif.eshraqaapp.ui.fragments.AzkarDaysFragmentDirections
 
 class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
      var azkar = emptyList<Azkar>()
@@ -19,7 +19,7 @@ class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
                 binding.txtDay.text = azkar[position].dayName
                 binding.txtScore.text = "${azkar[position].score} / ${azkar[position].azkar.size}"
                 binding.itemRowDays.setOnClickListener {
-                 val action = DaysFragmentDirections.actionDaysFragmentToAzkarFragment(azkar[position])
+                 val action = AzkarDaysFragmentDirections.actionDaysFragmentToAzkarFragment(azkar[position])
                     itemView.findNavController().navigate(action)
                 }
             }

@@ -78,5 +78,6 @@
     <string name="score_item_row">2 / 4</string>
     <string name="gheth_image_description">gheth image description</string>
     <string name="azkar_gheth_image_descriptiion">azkar gheth image descriptiion</string>
+    <string name="not_found">لا يوجد</string>
 
 </resources>

@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/daysFragment"
-        android:name="com.seif.eshraqaapp.ui.fragments.DaysFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.AzkarDaysFragment"
         android:label="جدول الأذكار"
         tools:layout="@layout/fragment_days" >
         <action

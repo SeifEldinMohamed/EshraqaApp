@@ -2,17 +2,21 @@ package com.seif.eshraqaapp.ui.fragments
 
 import android.app.Dialog
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
+import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentQuranBinding
 import com.seif.eshraqaapp.viewmodels.QuranViewModel
 import com.seif.eshraqaapp.ui.fragments.QuranFragmentArgs.fromBundle
@@ -165,6 +169,19 @@ lateinit var binding: FragmentQuranBinding
 //            binding.textScore.text = "$score/$numberOfQuran"
 //        }
 
+        if(IntroSharedPref.readGander("Male", false)){
+            binding.quranImageZahra.visibility = View.GONE
+            binding.quranImageGheth.visibility = View.VISIBLE
+        }
+        else{
+            binding.quranImageZahra.visibility = View.VISIBLE
+            binding.quranImageGheth.visibility = View.GONE
+        }
+
+        binding.quranImageGheth.setOnClickListener {
+            showEshrakaMessageDialog()
+        }
+
         binding.quranImageZahra.setOnClickListener {
             showEshrakaMessageDialog()
         }
@@ -178,6 +195,20 @@ lateinit var binding: FragmentQuranBinding
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         txtMessage.text = fromBundle(requireArguments()).quran.weeklyUserMessage
+        val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
+        val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
+
+        if(IntroSharedPref.readGander("Male", false)){
+            frameImage.setImageResource(R.drawable.gheth_frame_dialog)
+            characterImage.setImageResource(R.drawable.gheth_normal)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+        }
+        else{ // female
+            frameImage.setImageResource(R.drawable.zahra_frame_dialog)
+            characterImage.setImageResource(R.drawable.zahra_normal)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+        }
+
         btnOk.setOnClickListener {
             dialog.dismiss()
         }

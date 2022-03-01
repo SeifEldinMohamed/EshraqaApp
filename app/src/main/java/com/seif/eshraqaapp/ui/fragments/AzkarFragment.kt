@@ -7,8 +7,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -187,6 +189,9 @@ class AzkarFragment : Fragment() {
             binding.azkarImageGheth.visibility = View.GONE
         }
 
+        binding.azkarImageGheth.setOnClickListener {
+            showEshrakaMessageDialog()
+        }
         binding.azkarImageZahra.setOnClickListener {
             showEshrakaMessageDialog()
         }
@@ -199,6 +204,18 @@ class AzkarFragment : Fragment() {
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok_message)
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         txtMessage.text = fromBundle(requireArguments()).azkar.weeklyUserMessage
+        val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
+        val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
+        if(IntroSharedPref.readGander("Male", false)){
+            frameImage.setImageResource(R.drawable.gheth_frame_dialog)
+            characterImage.setImageResource(R.drawable.gheth_normal)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+        }
+        else{ // female
+            frameImage.setImageResource(R.drawable.zahra_frame_dialog)
+            characterImage.setImageResource(R.drawable.zahra_normal)
+            btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+        }
         btnOk.setOnClickListener {
             dialog.dismiss()
         }
