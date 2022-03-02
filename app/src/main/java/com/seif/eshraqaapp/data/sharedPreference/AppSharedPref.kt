@@ -19,6 +19,31 @@ class AppSharedPref {
             prefsEditor.putBoolean(key, value)
             prefsEditor.apply()
         }
+        fun readSaveCounter(key:String?, defValue:Int): Int{
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun updateSaveCounter(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+        fun readReadCounter(key:String?, defValue:Int): Int{
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun updateReadCounter(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+        fun readRevisionCounter(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun updateRevisionCounter(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)

@@ -14,135 +14,134 @@
         android:paddingBottom="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35">
+        app:layout_constraintVertical_bias="0.347">
 
         <RadioGroup
-            android:id="@+id/radioGroup4"
+            android:id="@+id/radio_group_revision"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
             android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10">
+            app:layout_constraintTop_toBottomOf="@+id/radio_group_read"
+            app:layout_constraintVertical_bias="0.076">
 
             <RadioButton
                 android:id="@+id/radio_not_found_revision"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
+                android:paddingLeft="@dimen/_20sdp"
                 android:text="@string/not_found"
                 android:textColor="@color/mediumGreen"
                 android:textDirection="rtl"
                 android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/radio_group_save"
+                app:layout_constraintEnd_toStartOf="@+id/radio_group_save"
+                app:layout_constraintTop_toTopOf="@+id/radio_group_save"
+                app:layout_constraintVertical_bias="0.0"
                 tools:ignore="DuplicateSpeakableTextCheck" />
 
             <RadioButton
-                android:id="@+id/radio_revision_no"
-                android:layout_width="match_parent"
+                android:id="@+id/radio_revision"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
                 android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/no"
+                android:paddingStart="@dimen/_9sdp"
+                android:text="@string/revision_today"
                 android:textColor="@color/mediumGreen"
                 android:textDirection="rtl"
-                android:textSize="@dimen/_12sdp"
-                tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
-
-            <RadioButton
-                android:id="@+id/radio_revision_yes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/yes"
-                android:textColor="@color/mediumGreen"
-                android:textDirection="rtl"
-                android:textSize="@dimen/_12sdp"
-                tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
-
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:text="@string/quran_question3"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
-
         <RadioGroup
-            android:id="@+id/radioGroup2"
+            android:id="@+id/radio_group_read"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            app:layout_constraintTop_toBottomOf="@+id/radio_group_save">
 
             <RadioButton
                 android:id="@+id/radio_not_found_read"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
+                android:paddingLeft="@dimen/_20sdp"
                 android:text="@string/not_found"
                 android:textColor="@color/mediumGreen"
                 android:textDirection="rtl"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/radio_group_save"
+                app:layout_constraintEnd_toStartOf="@+id/radio_group_save"
+                app:layout_constraintTop_toTopOf="@+id/radio_group_save"
+                app:layout_constraintVertical_bias="0.0" />
 
             <RadioButton
-                android:id="@+id/radio_read_no"
-                android:layout_width="match_parent"
+                android:id="@+id/radio_read"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
                 android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/no"
+                android:paddingStart="@dimen/_18sdp"
+                android:text="@string/read_today"
                 android:textColor="@color/mediumGreen"
                 android:textDirection="rtl"
-                android:textSize="@dimen/_12sdp"
-                tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
-
-            <RadioButton
-                android:id="@+id/radio_read_yes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/yes"
-                android:textColor="@color/mediumGreen"
-                android:textDirection="rtl"
-                android:textSize="@dimen/_12sdp"
-                tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
-
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/textView9"
+        <RadioGroup
+            android:id="@+id/radio_group_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:text="@string/quran_question2"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup1" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <RadioButton
+                android:id="@+id/radio_not_found_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/_20sdp"
+                android:text="@string/not_found"
+                android:textColor="@color/mediumGreen"
+                android:textDirection="rtl"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/radio_group_save"
+                app:layout_constraintEnd_toStartOf="@+id/radio_group_save"
+                app:layout_constraintTop_toTopOf="@+id/radio_group_save"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <RadioButton
+                android:id="@+id/radio_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_20sdp"
+                android:text="@string/save_today"
+                android:textColor="@color/mediumGreen"
+                android:textDirection="rtl"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -183,63 +182,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="@string/quran_question1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8">
-
-            <RadioButton
-                android:id="@+id/radio_not_found_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/not_found"
-                android:textColor="@color/mediumGreen"
-                android:textDirection="rtl"
-                android:textSize="@dimen/_14ssp" />
-
-            <RadioButton
-                android:id="@+id/radio_save_no"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_28sdp"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/no"
-                android:textColor="@color/mediumGreen"
-                android:textDirection="rtl"
-                android:textSize="@dimen/_14ssp" />
-
-            <RadioButton
-                android:id="@+id/radio_save_yes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_22sdp"
-                android:text="@string/yes"
-                android:textColor="@color/mediumGreen"
-                android:textDirection="rtl"
-                android:textSize="@dimen/_14ssp" />
-
-        </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -258,8 +200,8 @@
         android:id="@+id/check_vacation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_19sdp"
         android:paddingLeft="@dimen/_20sdp"
         android:text="@string/vacation"
         android:textSize="@dimen/_18ssp"

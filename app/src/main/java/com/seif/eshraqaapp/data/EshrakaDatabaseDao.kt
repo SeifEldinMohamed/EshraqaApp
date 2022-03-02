@@ -33,7 +33,7 @@ interface EshrakaDatabaseDao {
     @Update
     suspend fun updateQuran(quran:Quran)
 
-    @Query("SELECT score FROM Quran")
+    @Query("SELECT score FROM Quran WHERE isVacation == 0") // 0-> indicates false
     fun getAllQuranWeekScore(): LiveData<List<Int>>
 
     @Query("DELETE FROM Quran")

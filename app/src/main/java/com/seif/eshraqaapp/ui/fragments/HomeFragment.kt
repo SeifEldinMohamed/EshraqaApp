@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
-import android.widget.EditText
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -59,19 +60,61 @@ lateinit var homeViewModel: HomeViewModel
             R.layout.buttomsheet_layout,
             view?.findViewById<ConstraintLayout>(R.id.buttom_sheet)
         )
-        val numberOfDaysEditText = bottomSheetView.findViewById<EditText>(R.id.number_days_edit)
-        bottomSheetView.findViewById<Button>(R.id.btn_next).setOnClickListener {
-
-            if(numberOfDaysEditText.text.isEmpty()){
-                numberOfDaysEditText.error = "رجاء إدخخال عدد ايام العمل قبل المتابعة !"
+        val saveSpinner = bottomSheetView.findViewById<Spinner>(R.id.spinner_save)
+        val readSpinner = bottomSheetView.findViewById<Spinner>(R.id.spinner_read)
+        val revisionSpinner = bottomSheetView.findViewById<Spinner>(R.id.spinner_revision)
+        var numberOfSaveDays = ""
+        var numberOfReadDays  = ""
+        var numberOfRevisionDays  = ""
+        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+               numberOfSaveDays = parent?.getItemAtPosition(position).toString()
             }
-            else{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        readSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                numberOfReadDays = parent?.getItemAtPosition(position).toString()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        revisionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                numberOfRevisionDays = parent?.getItemAtPosition(position).toString()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        bottomSheetView.findViewById<Button>(R.id.btn_next).setOnClickListener {
                 writeSharedPref()
-                val days:Int = numberOfDaysEditText.text.toString().toInt()
-                val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(days)
+
+                val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(
+                    numberOfSaveDays.toInt(),
+                    numberOfReadDays.toInt(),
+                    numberOfRevisionDays.toInt()
+                )
                 findNavController().navigate(action)
                 bottomSheetDialog.dismiss()
-            }
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()

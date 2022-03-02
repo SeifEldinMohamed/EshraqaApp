@@ -60,7 +60,13 @@
         <action
             android:id="@+id/action_quranDaysFragment_to_quranFragment"
             app:destination="@id/quranFragment" />
-        <argument android:name="numberOfWorkDays"
+        <argument android:name="numberOfSaveDays"
+            app:argType="integer" />
+        <argument
+            android:name="numberOfReadDays"
+            app:argType="integer" />
+        <argument
+            android:name="numberOfRevisionDays"
             app:argType="integer" />
     </fragment>
 </navigation>

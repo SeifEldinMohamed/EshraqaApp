@@ -1,8 +1,8 @@
 package com.seif.eshraqaapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
+import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentQuranBinding
 import com.seif.eshraqaapp.viewmodels.QuranViewModel
@@ -27,8 +28,12 @@ class QuranFragment : Fragment() {
 lateinit var binding: FragmentQuranBinding
     private lateinit var quranViewModel: QuranViewModel
     private var score = 0
-    private var quranHashMap = HashMap<String, Boolean>()
+    private var quranHashMap = HashMap<String, String>()
     private lateinit var pref: SharedPreferences
+    private var isSaveCounterNotFoundUsed = false
+    private var isReadCounterNotFoundUsed = false
+    private var isRevisionCounterNotFoundUsed = false
+    private var isVacation = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +43,7 @@ lateinit var binding: FragmentQuranBinding
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         quranViewModel = ViewModelProvider(requireActivity())[QuranViewModel::class.java]
@@ -47,127 +53,121 @@ lateinit var binding: FragmentQuranBinding
                 "${fromBundle(requireArguments()).quran.currentYear}"
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = dayDate
 
-
         score = fromBundle(requireArguments()).quran.score
         // copy values to azkarHashMap so i can use in update azkar
-        quranHashMap["question1"] = fromBundle(requireArguments()).quran.quran["question1"] ?: false
-        quranHashMap["question2"] = fromBundle(requireArguments()).quran.quran["question2"] ?: false
-        quranHashMap["question3"] = fromBundle(requireArguments()).quran.quran["question3"] ?: false
+        quranHashMap["question1"] = fromBundle(requireArguments()).quran.quran["question1"].toString()
+        quranHashMap["question2"] = fromBundle(requireArguments()).quran.quran["question2"].toString()
+        quranHashMap["question3"] = fromBundle(requireArguments()).quran.quran["question3"].toString()
 
         // set Menu
         setHasOptionsMenu(true)
+
+        // vacation
+        isVacation = fromBundle(requireArguments()).quran.isVacation
+        binding.checkVacation.isChecked = isVacation
+
+        binding.checkVacation.setOnCheckedChangeListener { buttonView, isChecked ->
+            isVacation = isChecked
+        }
+
+
         // show text day and score from coming data
         val numberOfQuran = fromBundle(requireArguments()).quran.quran.size
         binding.textDay.text = fromBundle(requireArguments()).quran.dayName
         binding.textScore.text = "${fromBundle(requireArguments()).quran.score}/$numberOfQuran"
 
+        AppSharedPref.init(requireContext())
 
-        if(!fromBundle(requireArguments()).quran.firstTimeToEnter){
+        val saveCounter = 7 - fromBundle(requireArguments()).quran.numberOfSaveDaysToWork
+        Log.d("saveCounter", saveCounter.toString())
+        if (AppSharedPref.readSaveCounter("saveCounter",saveCounter) <= 0){
+            binding.radioNotFoundSave.visibility = View.GONE
+        }else{
+            binding.radioNotFoundSave.visibility = View.VISIBLE
+        }
+
+        val readCounter = 7 - fromBundle(requireArguments()).quran.numberOfReadDaysToWork
+        Log.d("readCounter", readCounter.toString())
+        if (AppSharedPref.readReadCounter("readCounter", readCounter) <= 0){
+            binding.radioNotFoundRead.visibility = View.GONE
+        }else{
+            binding.radioNotFoundRead.visibility = View.VISIBLE
+        }
+
+        val revisionCounter = 7 - fromBundle(requireArguments()).quran.numberOfRevisionDaysToWork
+        Log.d("revisionCounter", revisionCounter.toString())
+        if (AppSharedPref.readRevisionCounter("revisionCounter", revisionCounter) <= 0){
+            binding.radioNotFoundRevision.visibility = View.GONE
+        }else{
+            binding.radioNotFoundRevision.visibility = View.VISIBLE
+        }
+
             when(quranHashMap["question1"]){
-                true -> binding.radioSaveYes.isChecked = true
-                false -> binding.radioSaveNo.isChecked = true
-                else -> Log.d("quran", "error in question 1")
+                "yes" -> binding.radioSave.isChecked = true
+                "notFound" -> binding.radioNotFoundSave.isChecked = true
+                else -> Log.d("quran", "firstTime1")
             }
             when(quranHashMap["question2"]){
-                true -> binding.radioReadYes.isChecked = true
-                false -> binding.radioReadNo.isChecked = true
-                else -> Log.d("quran", "error in question 2")
+                "yes" -> binding.radioRead.isChecked = true
+                "notFound" -> binding.radioNotFoundRead.isChecked = true
+                else -> Log.d("quran", "firstTime2")
             }
             when(quranHashMap["question3"]){
-                true -> binding.radioRevisionYes.isChecked = true
-                false -> binding.radioRevisionNo.isChecked = true
-                else -> Log.d("quran", "error in question 3")
+                "yes" -> binding.radioRevision.isChecked = true
+                "notFound" -> binding.radioNotFoundRevision.isChecked = true
+                else -> Log.d("quran", "firstTime3")
             }
+
+
+        binding.radioSave.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                score++
+                quranHashMap["question1"] = "yes"
+            }
+            else{
+                score--
+            }
+            binding.textScore.text = "$score/$numberOfQuran"
+        }
+        binding.radioNotFoundSave.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                quranHashMap["question1"] = "notFound"
+            }
+            binding.textScore.text = "$score/$numberOfQuran"
         }
 
-        binding.radioSaveYes.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.radioRead.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
                 score++
-                quranHashMap["question1"] = true
+                quranHashMap["question2"] = "yes"
             }
             else{
                 score--
-                quranHashMap["question1"] = false
             }
             binding.textScore.text = "$score/$numberOfQuran"
         }
-        binding.radioReadYes.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.radioNotFoundRead.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                quranHashMap["question2"] = "notFound"
+            }
+            binding.textScore.text = "$score/$numberOfQuran"
+        }
+        binding.radioRevision.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
                 score++
-                quranHashMap["question2"] = true
+                quranHashMap["question3"] = "yes"
             }
             else{
                 score--
-                quranHashMap["question2"] = false
             }
             binding.textScore.text = "$score/$numberOfQuran"
         }
-        binding.radioRevisionYes.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.radioNotFoundRevision.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked){
-                score++
-                quranHashMap["question3"] = true
-            }
-            else{
-                score--
-                quranHashMap["question3"] = false
+                quranHashMap["question3"] = "notFound"
             }
             binding.textScore.text = "$score/$numberOfQuran"
         }
-//        binding.afterPrayerCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked){
-//                score++
-//                quranHashMap["أذكار بعد الصلاة"] = true
-//            }
-//            else{
-//                score--
-//                quranHashMap["أذكار بعد الصلاة"] = false
-//            }
-//            binding.textScore.text = "$score/$numberOfQuran"
-//        }
-//        binding.wrdHamdCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked){
-//                score++
-//                quranHashMap["ورد حمد"] = true
-//            }
-//            else{
-//                score--
-//                quranHashMap["ورد حمد"] = false
-//            }
-//            binding.textScore.text = "$score/$numberOfQuran"
-//        }
-//        binding.wrdTkberCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked){
-//                score++
-//                quranHashMap["ورد تكبير"] = true
-//            }
-//            else{
-//                score--
-//                quranHashMap["ورد تكبير"] = false
-//            }
-//            binding.textScore.text = "$score/$numberOfQuran"
-//        }
-//        binding.wrdTsbe7Check.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked){
-//                score++
-//                quranHashMap["ورد تسبيح"] = true
-//            }
-//            else{
-//                score--
-//                quranHashMap["ورد تسبيح"] = false
-//            }
-//            binding.textScore.text = "$score/$numberOfQuran"
-//        }
-//        binding.wrdEstegpharCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked){
-//                score++
-//                quranHashMap["ورد استغفار"] = true
-//            }
-//            else{
-//                score--
-//                quranHashMap["ورد استغفار"] = false
-//            }
-//            binding.textScore.text = "$score/$numberOfQuran"
-//        }
 
         if(IntroSharedPref.readGander("Male", false)){
             binding.quranImageZahra.visibility = View.GONE
@@ -221,11 +221,69 @@ lateinit var binding: FragmentQuranBinding
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_save ->{
-                initializeQuranData()
+                updateCounters()
                 updateQuranItem()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateCounters() {
+        if(quranHashMap["question1"] == "notFound"){
+            isSaveCounterNotFoundUsed = true
+            val saveCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfSaveDaysToWork
+            var currentSaveCounter =  AppSharedPref.readSaveCounter("saveCounter",saveCounter)
+            Log.d("saveCounter", currentSaveCounter.toString())
+            currentSaveCounter--
+            AppSharedPref.updateSaveCounter("saveCounter", currentSaveCounter)
+        }
+        else if(fromBundle(requireArguments()).quran.isSaveCounterNotFoundUsed &&
+            quranHashMap["question1"] == "yes"){
+                isSaveCounterNotFoundUsed = false
+            val saveCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfSaveDaysToWork
+            var currentSaveCounter =  AppSharedPref.readSaveCounter("saveCounter",saveCounter)
+            if (currentSaveCounter != saveCounter){
+                currentSaveCounter++
+                AppSharedPref.updateSaveCounter("saveCounter", currentSaveCounter)
+            }
+        }
+        if(quranHashMap["question2"] == "notFound"){
+            isReadCounterNotFoundUsed = true
+            val readCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfReadDaysToWork
+            var currentReadCounter =  AppSharedPref.readReadCounter("readCounter", readCounter)
+            Log.d("readCounter", currentReadCounter.toString())
+            currentReadCounter--
+            AppSharedPref.updateReadCounter("readCounter", currentReadCounter)
+        }
+        else if(fromBundle(requireArguments()).quran.isReadCounterNotFoundUsed &&
+            quranHashMap["question2"] == "yes"){
+            isReadCounterNotFoundUsed = false
+            val readCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfReadDaysToWork
+            var currentReadCounter =  AppSharedPref.readReadCounter("readCounter", readCounter)
+            if (currentReadCounter != readCounter){
+                currentReadCounter++
+                AppSharedPref.updateReadCounter("readCounter", currentReadCounter)
+            }
+        }
+
+        if(quranHashMap["question3"] == "notFound"){
+            isRevisionCounterNotFoundUsed = true
+            val revisionCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfRevisionDaysToWork
+            var currentRevisionCounter =  AppSharedPref.readRevisionCounter("revisionCounter", revisionCounter)
+            Log.d("revisionCounter", currentRevisionCounter.toString())
+            currentRevisionCounter--
+            AppSharedPref.updateReadCounter("revisionCounter", currentRevisionCounter)
+        }
+        else if(fromBundle(requireArguments()).quran.isRevisionCounterNotFoundUsed &&
+            quranHashMap["question3"] == "yes"){
+            isRevisionCounterNotFoundUsed = false
+            val revisionCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfRevisionDaysToWork
+            var currentRevisionCounter =  AppSharedPref.readReadCounter("revisionCounter", revisionCounter)
+            if (currentRevisionCounter != revisionCounter){
+                currentRevisionCounter++
+                AppSharedPref.updateReadCounter("revisionCounter", currentRevisionCounter)
+            }
+        }
     }
 
     private fun initializeQuranData() {
@@ -235,6 +293,7 @@ lateinit var binding: FragmentQuranBinding
         }
 
     private fun updateQuranItem() {
+        Log.d("quran", "update $quranHashMap")
         val quran = Quran(
             fromBundle(requireArguments()).quran.id,
             quranHashMap,
@@ -243,10 +302,16 @@ lateinit var binding: FragmentQuranBinding
             fromBundle(requireArguments()).quran.currentYear,
             fromBundle(requireArguments()).quran.dayName,
             score,
-            fromBundle(requireArguments()).quran.numberOfDaysToWork,
             fromBundle(requireArguments()).quran.weeklyUserMessage,
-            false
-        )
+            false,
+            fromBundle(requireArguments()).quran.numberOfSaveDaysToWork,
+            fromBundle(requireArguments()).quran.numberOfReadDaysToWork,
+            fromBundle(requireArguments()).quran.numberOfRevisionDaysToWork,
+            isVacation,
+            isSaveCounterNotFoundUsed,
+            isReadCounterNotFoundUsed,
+            isRevisionCounterNotFoundUsed
+            )
         quranViewModel.updateQuran(quran)
         findNavController().navigate(R.id.action_quranFragment_to_quranDaysFragment)
     }

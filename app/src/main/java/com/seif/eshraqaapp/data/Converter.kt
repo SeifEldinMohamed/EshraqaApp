@@ -16,5 +16,14 @@ class Converter {
         val listType = object : TypeToken<HashMap<String, Boolean>?>() {}.type
         return Gson().fromJson(azkar, listType)
     }
+    @TypeConverter
+    fun fromMapToGsonQuran(azkar: HashMap<String, String>): String {
+        return Gson().toJson(azkar)
+    }
+    @TypeConverter
+    fun fromJsonToMapQuran(azkar: String): HashMap<String, String> {
+        val listType = object : TypeToken<HashMap<String, String>?>() {}.type
+        return Gson().fromJson(azkar, listType)
+    }
 
 }

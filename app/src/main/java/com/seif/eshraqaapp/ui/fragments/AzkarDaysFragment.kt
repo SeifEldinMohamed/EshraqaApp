@@ -58,7 +58,6 @@ class AzkarDaysFragment : Fragment() {
                 currentAzkarHashMap = it[0].azkar
                 if (it.size == 7)
                     lastAzkarDay = it[6]
-
             }
         }
         viewModel.getAllWeekScore().observe(viewLifecycleOwner, Observer {
@@ -72,7 +71,6 @@ class AzkarDaysFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.days_menu, menu)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,7 +85,6 @@ class AzkarDaysFragment : Fragment() {
                 } else {
                     showConfirmationDialog(false)
                 }
-
             }
         }
         return super.onOptionsItemSelected(item)

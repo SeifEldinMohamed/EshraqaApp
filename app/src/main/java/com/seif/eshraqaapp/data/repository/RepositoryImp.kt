@@ -39,7 +39,7 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
     }
 
     override fun getAllQuranWeekScore(): LiveData<List<Int>> {
-        return  getAllQuranWeekScore()
+        return  eshrakaDatabaseDao.getAllQuranWeekScore()
     }
 
     override suspend fun deleteAllQuran() {
