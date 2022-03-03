@@ -131,7 +131,7 @@ class QuranDaysFragment : Fragment() {
             // logic to start new week and save score of prev week
             numberOfQuran = numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
             Log.d("days", "number of quran $numberOfQuran")
-            val totalValueOfWeek = numberOfQuran * (7 - vacationDaysNumber) // ex: 12 * 5
+            val totalValueOfWeek = numberOfQuran  // ex: 12 * 5
 
             var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
             edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
@@ -140,8 +140,8 @@ class QuranDaysFragment : Fragment() {
                         "+ totalValueOfWeek $totalValueOfWeek"
             )
             previousTotalNumberQuran += totalValueOfWeek
-            var previousTotalScore = pref.getLong("totalScore", 0L)
-            edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
+            var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+            edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
             Log.d(
                 "days", "previousTotalScore: $previousTotalScore" +
                         "+ totalScore $totalWeekScore"
@@ -187,9 +187,6 @@ class QuranDaysFragment : Fragment() {
                     } else {
                         R.drawable.zahra_normal
                     }
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
-                    edit.apply()
                     weeklyMessage = generateRandomMediumMessageQuran()
                     if (isEndOfMonth) {
                         edit.putLong("totalScoreQuran", 0L)
