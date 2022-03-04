@@ -19,5 +19,7 @@ interface Repository {
     suspend fun updateQuran(quran:Quran)
     fun getAllQuranWeekScore(): LiveData<List<Int>>
     suspend fun deleteAllQuran()
+    fun getVacationDaysNumber(): LiveData<Int>
+
 
 }

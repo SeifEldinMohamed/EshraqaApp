@@ -46,4 +46,8 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
         eshrakaDatabaseDao.deleteAllQuran()
     }
 
+    override fun getVacationDaysNumber(): LiveData<Int> {
+        return eshrakaDatabaseDao.getVacationDaysNumber()
+    }
+
 }

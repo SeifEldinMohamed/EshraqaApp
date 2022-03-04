@@ -98,6 +98,7 @@
     <string name="revision_today">مراجعة ورد اليوم</string>
     <string name="read_today">قراءة ورد اليوم</string>
     <string name="save_today">حفظ ورد اليوم</string>
+    <string name="_100">100%</string>
 
     <string-array name="numbersOfDays">
         <item>0</item>

@@ -39,4 +39,7 @@ interface EshrakaDatabaseDao {
     @Query("DELETE FROM Quran")
     suspend fun deleteAllQuran()
 
+    @Query("SELECT sum(isVacation) from quran where isVacation == 1")
+    fun getVacationDaysNumber(): LiveData<Int>
+
 }

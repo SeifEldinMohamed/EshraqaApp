@@ -30,6 +30,8 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     var message = application.getString(R.string.first_week_quran_message)
+    val vacationDaysNumber: LiveData<Int> = repository.getVacationDaysNumber()
+
 
     fun addQuran(quran: List<Quran>) {
         viewModelScope.launch(Dispatchers.IO) {

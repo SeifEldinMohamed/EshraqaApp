@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
@@ -37,11 +38,11 @@ class QuranDaysFragment : Fragment() {
     private var currentQuranHashMap = HashMap<String, String>()
     lateinit var afterMonthDialog: Dialog
     private var weeklyMessage: String = ""
-    private var vacationDaysNumber:Int = 0
+    private var vacationDaysNumber: Int = 0
 
-   private var numberOfSaveDays: Int = 0
-   private var numberOfReadDays: Int = 0
-   private var numberOfRevisionDays: Int = 0
+    private var numberOfSaveDays: Int = 0
+    private var numberOfReadDays: Int = 0
+    private var numberOfRevisionDays: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,14 +73,11 @@ class QuranDaysFragment : Fragment() {
         quranViewModel.quran.observe(viewLifecycleOwner, Observer { it ->
             myAdapter.addQuran(it)
             if (it.isNotEmpty()) {
-              //  numberOfQuran = it[0].quran.size
+                //  numberOfQuran = it[0].quran.size
                 currentQuranHashMap = it[0].quran
                 if (it.size == 7)
                     lastQuranDay = it[6]
-                it.forEach { quran->
-                    if(quran.isVacation)
-                        vacationDaysNumber++
-                }
+
                 numberOfSaveDays = it[0].numberOfSaveDaysToWork
                 numberOfReadDays = it[0].numberOfReadDaysToWork
                 numberOfRevisionDays = it[0].numberOfRevisionDaysToWork
@@ -88,6 +86,10 @@ class QuranDaysFragment : Fragment() {
         quranViewModel.getAllQuranWeekScore().observe(viewLifecycleOwner, Observer {
             totalWeekScore = quranViewModel.getSumOfQuranWeekScore(it)
         })
+        quranViewModel.vacationDaysNumber.observe(viewLifecycleOwner, Observer {
+            vacationDaysNumber = it ?: 0
+        })
+
         quranViewModel.isAppFirstTimeRun(requireContext())
         binding.rvQuranDays.adapter = myAdapter
 
@@ -129,108 +131,9 @@ class QuranDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back)
         btnOk.setOnClickListener { ////////////////////////////////////////////////////////////
             // logic to start new week and save score of prev week
-            numberOfQuran = numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
-            Log.d("days", "number of quran $numberOfQuran")
-            val totalValueOfWeek = numberOfQuran  // ex: 12 * 5
 
-            var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
-            edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
-            Log.d(
-                "days", "previousTotalNumberQuran: $previousTotalNumberQuran" +
-                        "+ totalValueOfWeek $totalValueOfWeek"
-            )
-            previousTotalNumberQuran += totalValueOfWeek
-            var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
-            edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
-            Log.d(
-                "days", "previousTotalScore: $previousTotalScore" +
-                        "+ totalScore $totalWeekScore"
-            )
-            previousTotalScore += totalWeekScore
-            edit.apply()
-
-            Log.d("days", "total number of quran $totalValueOfWeek")
-            val scoreWeekPercentage =
-                ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
-
-            Log.d("days", "total week score  $totalWeekScore")
-            Log.d("days", "percentage  $scoreWeekPercentage")
-            val image: Int
-            when (scoreWeekPercentage) {
-                in 80..200 -> {
-                    image = if (IntroSharedPref.readGander("Male", false)) {
-                        R.drawable.gheth_happy
-                    } else {
-                        R.drawable.zahra_happy
-                    }
-                    weeklyMessage = generateRandomSuccessMessageQuran()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScoreQuran", 0L)
-                        edit.putLong("totalNumberQuran", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
-                            weeklyMessage,
-                            image
-                        )
-                    } else {
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-                    Log.d("days", "success")
-                }
-                in 65..79 -> { // handle adding
-                    image = if (IntroSharedPref.readGander("Male", false)) {
-                        R.drawable.gheth_normal
-                    } else {
-                        R.drawable.zahra_normal
-                    }
-                    weeklyMessage = generateRandomMediumMessageQuran()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScoreQuran", 0L)
-                        edit.putLong("totalNumberQuran", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
-                            weeklyMessage,
-                            image
-                        )
-                    } else {
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-
-                    Log.d("days", "medium")
-                }
-                in 0..64 -> {
-                    image = if (IntroSharedPref.readGander("Male", false)) {
-                        R.drawable.gheth_sad
-                    } else {
-                        R.drawable.zahra_sad
-                    }
-                    weeklyMessage = generateRandomFailMessageQuran()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScoreQuran", 0L)
-                        edit.putLong("totalNumberQuran", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
-                            weeklyMessage,
-                            image
-                        )
-                    } else {
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-                    Log.d("days", "fail")
-                }
-            }
+            val scoreWeekPercentage = calculateScore()
+          showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
         btnBack.setOnClickListener {
@@ -239,8 +142,136 @@ class QuranDaysFragment : Fragment() {
         dialog.show()
     }
 
+    private fun showDialogAccordingToPercentage(scoreWeekPercentage:Int, isEndOfMonth: Boolean) {
+        val image: Int
+        when (scoreWeekPercentage) {
+            in 80..100 -> {
+                image = if (IntroSharedPref.readGander("Male", false)) {
+                    R.drawable.gheth_happy
+                } else {
+                    R.drawable.zahra_happy
+                }
+                weeklyMessage = generateRandomSuccessMessageQuran()
+                if (isEndOfMonth) {
+                    edit.putLong("totalScoreQuran", 0L)
+                    edit.putLong("totalNumberQuran", 0L)
+                    edit.apply()
+                    showEndMonthCongratulationMessage(
+                        getString(R.string.add_new_azkar_to_your_schedule),
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                } else {
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                }
+                Log.d("days", "success")
+            }
+            in 65..79 -> { // handle adding
+                image = if (IntroSharedPref.readGander("Male", false)) {
+                    R.drawable.gheth_normal
+                } else {
+                    R.drawable.zahra_normal
+                }
+                weeklyMessage = generateRandomMediumMessageQuran()
+                if (isEndOfMonth) {
+                    edit.putLong("totalScoreQuran", 0L)
+                    edit.putLong("totalNumberQuran", 0L)
+                    edit.apply()
+                    showEndMonthCongratulationMessage(
+                        getString(R.string.add_new_azkar_to_your_schedule),
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                } else {
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                }
+
+                Log.d("days", "medium")
+            }
+            in 0..64 -> {
+                image = if (IntroSharedPref.readGander("Male", false)) {
+                    R.drawable.gheth_sad
+                } else {
+                    R.drawable.zahra_sad
+                }
+                weeklyMessage = generateRandomFailMessageQuran()
+                if (isEndOfMonth) {
+                    edit.putLong("totalScoreQuran", 0L)
+                    edit.putLong("totalNumberQuran", 0L)
+                    edit.apply()
+                    showEndMonthCongratulationMessage(
+                        getString(R.string.add_new_azkar_to_your_schedule),
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                } else {
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        scoreWeekPercentage
+                    )
+                }
+                Log.d("days", "fail")
+            }
+        }
+    }
+
+    private fun calculateScore(): Int {
+        numberOfQuran = numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
+        Log.d("day", "vacationDays = $vacationDaysNumber")
+
+        var totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+        if (totalValueOfWeek <= 0)
+            totalValueOfWeek = 1
+
+        if(totalWeekScore > totalValueOfWeek && vacationDaysNumber!=7) // to keep percentage in range of 0 to 100
+            totalWeekScore = totalValueOfWeek
+        else if(vacationDaysNumber == 7){
+            totalWeekScore = totalValueOfWeek
+        }
+
+        Log.d("day","totalValueOfWeek = $totalValueOfWeek")
+        var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
+        Log.d("day","previousTotalNumberQuran Old = $previousTotalNumberQuran")
+
+        edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
+        edit.apply()
+
+        previousTotalNumberQuran += totalValueOfWeek
+        Log.d("day","previousTotalNumberQuran new = $previousTotalNumberQuran")
+
+        var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+        Log.d("day","previousTotalScore old = $previousTotalScore")
+
+        edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
+        edit.apply()
+
+
+
+        previousTotalScore += totalWeekScore
+        Log.d("day","previousTotalScore new = $previousTotalScore")
+
+        Log.d("day", "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %")
+        return  ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+    }
+
     // show message after end of week but not end of month
-    private fun showNormalCongratulationMessage(message: String, image: Int) {
+    private fun showNormalCongratulationMessage(
+        message: String,
+        image: Int,
+        scorePercentage: Int
+    ) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.zahra_message_dialog)
@@ -248,6 +279,8 @@ class QuranDaysFragment : Fragment() {
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
+        val txtScore = dialog.findViewById<TextView>(R.id.txt_score_percentage_normal)
+        txtScore.text = "$scorePercentage %"
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
@@ -277,7 +310,8 @@ class QuranDaysFragment : Fragment() {
     private fun showEndMonthCongratulationMessage(
         addOrDeleteMessage: String,
         message: String,
-        image: Int
+        image: Int,
+        scorePercentage: Int
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -293,6 +327,8 @@ class QuranDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
+        val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
+        txtScore.text = "$scorePercentage %"
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
