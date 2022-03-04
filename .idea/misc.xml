@@ -5,17 +5,24 @@
       <map>
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable-xxxhdpi/bottomsheet_background.xml" value="0.185" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable-xxxhdpi/edit_custom_background.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/about_background.xml" value="0.185" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/azkar.xml" value="0.179" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/azkar_card_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/checkbox_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_calendar.xml" value="0.1095" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_our_apps.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_phone.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_rate.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_share.xml" value="0.185" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_zahra_message_frame.xml" value="0.179" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/prayer.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/quran.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/score_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/upper_card_background.xml" value="0.187" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/about_dialog.xml" value="0.4" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/action_bar_design.xml" value="0.4" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/activity_intro.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/add_azkar_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/buttomsheet_layout.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/confirmation_dialog.xml" value="0.264" />
@@ -30,11 +37,13 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_splash.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/gheth_message_dialog.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/header_nav.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/quran_item_row.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/zahra_message_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/zahra_message_end_of_month.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/menu/azkar_menu.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/menu/days_menu.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/menu/nav_drawer_menu.xml" value="0.20833333333333334" />
       </map>
     </option>
   </component>

@@ -18,10 +18,9 @@ import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
-import com.seif.eshraqaapp.databinding.FragmentQuranBinding
 import com.seif.eshraqaapp.viewmodels.QuranViewModel
 import com.seif.eshraqaapp.ui.fragments.QuranFragmentArgs.fromBundle
-
+import com.seif.eshraqaapp.databinding.FragmentQuranBinding
 
 
 class QuranFragment : Fragment() {

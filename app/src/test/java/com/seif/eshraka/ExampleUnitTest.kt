@@ -1,4 +1,4 @@
-package com.seif.eshraqaapp
+package com.seif.eshraka
 
 import org.junit.Test
 

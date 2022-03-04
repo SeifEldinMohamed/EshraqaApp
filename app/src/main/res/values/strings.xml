@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eshraqa App</string>
+    <string name="app_name">Eshraka</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="eshraka_app_description">إشراقة.. هي فكرة دعوية وضعت لك حُبًّا وحرصًا  وفريقٌ اجتمع ليشدّ أزرك، ويأخذ بمجامع قلبك لطريقٍ ارتضاهُ لنا ربُّنا وأفنى رسولنا -صلى اللّٰه عليه وسلم- عُمره فى نشره، وأحيا فينا رابط الأُخوة لئلا يتيه عنّا أخٌ إلا أمسكنا بكلتا يديه وأرجعناه لطريقنا، رغبةً وأملًا فى أن نصل سويًّا للفردوس</string>
     <string name="welcome">أهلًا بك في إشراقة</string>
@@ -99,6 +99,24 @@
     <string name="read_today">قراءة ورد اليوم</string>
     <string name="save_today">حفظ ورد اليوم</string>
     <string name="_100">100%</string>
+    <string name="share_menu">مشاركة</string>
+    <string name="rate_menu">تقييم</string>
+    <string name="review_menu">مقترحاتك</string>
+    <string name="our_apps_menu">تطبقاتنا الأخري</string>
+    <string name="about_menu">عن المطور</string>
+    <string name="about_app">عن التطبيق</string>
+    <string name="menu_other">أخري</string>
+    <string name="nav_message">مـن ذاق حُب الله ارتَوى ❤</string>
+    <string name="nav_header_image_description">nav header image description</string>
+
+    <string name="about_dialog">About</string>
+    <string name="todo_it_dialog">Eshraka</string>
+    <string name="version_1_0_0_dialog">Version: 1.0.0</string>
+    <string name="developed_by_seif_mohamed_dialog">Developed by: Software Inversion</string>
+    <string name="ok">ok</string>
+    <string name="facebook_image_description">facebook image description</string>
+    <string name="instragram_image_description">instragram image description</string>
+    <string name="twitter_image_description">twitter image description</string>
 
     <string-array name="numbersOfDays">
         <item>0</item>

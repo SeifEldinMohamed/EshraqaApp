@@ -15,7 +15,7 @@ interface EshrakaDatabaseDao {
     fun getAllData(): LiveData<List<Azkar>>
 
     @Update
-    suspend fun updateZekr(zekr:Azkar)
+    suspend fun updateZekr(zekr: Azkar)
 
     @Query("SELECT score FROM azkar_table")
     fun getAllWeekScore(): LiveData<List<Int>>
@@ -31,7 +31,7 @@ interface EshrakaDatabaseDao {
     fun getAllQuranData(): LiveData<List<Quran>>
 
     @Update
-    suspend fun updateQuran(quran:Quran)
+    suspend fun updateQuran(quran: Quran)
 
     @Query("SELECT score FROM Quran WHERE isVacation == 0") // 0-> indicates false
     fun getAllQuranWeekScore(): LiveData<List<Int>>

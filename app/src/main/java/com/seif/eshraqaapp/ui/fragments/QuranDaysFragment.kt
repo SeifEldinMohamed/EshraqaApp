@@ -14,14 +14,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
-import com.seif.eshraqaapp.databinding.FragmentQuranDaysBinding
 import com.seif.eshraqaapp.ui.adapters.QuranAdapter
 import com.seif.eshraqaapp.viewmodels.QuranViewModel
 import com.seif.eshraqaapp.ui.fragments.QuranDaysFragmentArgs.fromBundle
+import com.seif.eshraqaapp.databinding.FragmentQuranDaysBinding
 
 
 class QuranDaysFragment : Fragment() {

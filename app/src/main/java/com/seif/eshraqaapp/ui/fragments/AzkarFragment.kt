@@ -17,9 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
-import com.seif.eshraqaapp.databinding.FragmentAzkarBinding
 import com.seif.eshraqaapp.ui.fragments.AzkarFragmentArgs.fromBundle
 import com.seif.eshraqaapp.viewmodels.AzkarViewModel
+import com.seif.eshraqaapp.databinding.FragmentAzkarBinding
 
 
 class AzkarFragment : Fragment() {

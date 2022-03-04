@@ -14,12 +14,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.seif.eshraqaapp.viewmodels.AzkarViewModel
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentDaysBinding
 import com.seif.eshraqaapp.ui.adapters.AzkarAdapter
-import com.seif.eshraqaapp.viewmodels.AzkarViewModel
 
 
 class AzkarDaysFragment : Fragment() {
