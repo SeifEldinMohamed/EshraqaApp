@@ -83,7 +83,7 @@ lateinit var binding : FragmentSignUpBinding
             val format = "dd-MM-yyyy"
             SimpleDateFormat(format, Locale.UK)
         }
-        else { // check it again
+        else { // check it again //////////////////////////////////////////////////////
             val format = "dd-MM-yyyy"
             SimpleDateFormat(format, Locale.UK)
         }
