@@ -102,7 +102,7 @@ class AzkarDaysFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-        val btnBack = dialog.findViewById<Button>(R.id.btn_back)
+        val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
             Log.d("days", "number of azkar $numberOfAzkar")

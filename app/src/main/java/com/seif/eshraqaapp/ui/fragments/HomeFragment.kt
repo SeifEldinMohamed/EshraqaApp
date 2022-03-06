@@ -105,7 +105,7 @@ lateinit var homeViewModel: HomeViewModel
 
             }
         }
-        bottomSheetView.findViewById<Button>(R.id.btn_next).setOnClickListener {
+        bottomSheetView.findViewById<Button>(R.id.btn_save_counters).setOnClickListener {
                 writeSharedPref()
 
                 val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(

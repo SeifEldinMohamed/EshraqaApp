@@ -8,7 +8,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/growthCardView"
+        android:id="@+id/sebhaCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
@@ -30,7 +30,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_32sdp"
                 android:contentDescription="@string/quran_image"
-                android:src="@drawable/growth"
+                android:src="@drawable/ic_sebha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="@string/growth"
+                android:text="المسبحة"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20ssp"
                 app:layout_constraintBottom_toBottomOf="parent"

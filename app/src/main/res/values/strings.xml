@@ -117,6 +117,7 @@
     <string name="facebook_image_description">facebook image description</string>
     <string name="instragram_image_description">instragram image description</string>
     <string name="twitter_image_description">twitter image description</string>
+    <string name="updateWorkCounter">هل ترغب في تعديل ايام العمل ؟</string>
 
     <string-array name="numbersOfDays">
         <item>0</item>

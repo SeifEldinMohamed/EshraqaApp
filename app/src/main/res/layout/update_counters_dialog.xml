@@ -7,48 +7,67 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/buttom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_290sdp"
-        android:background="@drawable/bottomsheet_background"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_250sdp"
+        android:background="@color/mediumGreen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back_counters"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/back"
+            android:textColor="@color/mediumGreen"
+            android:textSize="@dimen/_16ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save_counters"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintVertical_bias="0.676" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/_27sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_revision"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <Spinner
-            android:id="@+id/spinner_revision"
+            android:id="@+id/spinner_revision_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@+id/textView12"
             app:layout_constraintEnd_toStartOf="@+id/textView12"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView12"
             tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
         <Spinner
-            android:id="@+id/spinner_save"
+            android:id="@+id/spinner_save_counterr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_31sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toStartOf="@+id/textView13"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView13"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -56,24 +75,26 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="@dimen/_28sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_save"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/spinner_read"
+            android:id="@+id/spinner_read_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintEnd_toStartOf="@+id/textView11"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView11"
             tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
@@ -81,28 +102,29 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/_27sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_read"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_counters"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="@dimen/_80sdp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:backgroundTint="@color/white"
             android:padding="@dimen/_8sdp"
-            android:text="@string/follow"
+            android:text="@string/save"
             android:textColor="@color/mediumGreen"
             android:textSize="@dimen/_16ssp"
-            app:cornerRadius="@dimen/_8sdp"
+            app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintVertical_bias="0.676" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

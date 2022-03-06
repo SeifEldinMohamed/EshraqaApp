@@ -6,10 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -127,12 +124,11 @@ class QuranDaysFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
-        val btnBack = dialog.findViewById<Button>(R.id.btn_back)
-        btnOk.setOnClickListener { ////////////////////////////////////////////////////////////
+        val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
+        btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
-
             val scoreWeekPercentage = calculateScore()
-          showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
+            showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
         btnBack.setOnClickListener {
@@ -141,7 +137,7 @@ class QuranDaysFragment : Fragment() {
         dialog.show()
     }
 
-    private fun showDialogAccordingToPercentage(scoreWeekPercentage:Int, isEndOfMonth: Boolean) {
+    private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
         val image: Int
         when (scoreWeekPercentage) {
             in 80..100 -> {
@@ -156,7 +152,7 @@ class QuranDaysFragment : Fragment() {
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.add_new_azkar_to_your_schedule),
+                        getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
                         scoreWeekPercentage
@@ -182,7 +178,7 @@ class QuranDaysFragment : Fragment() {
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.add_new_azkar_to_your_schedule),
+                        getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
                         scoreWeekPercentage
@@ -209,7 +205,7 @@ class QuranDaysFragment : Fragment() {
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.add_new_azkar_to_your_schedule),
+                        getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
                         scoreWeekPercentage
@@ -227,31 +223,32 @@ class QuranDaysFragment : Fragment() {
     }
 
     private fun calculateScore(): Int {
-        numberOfQuran = numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
+        numberOfQuran =
+            numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
         Log.d("day", "vacationDays = $vacationDaysNumber")
 
         var totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
         if (totalValueOfWeek <= 0)
             totalValueOfWeek = 1
 
-        if(totalWeekScore > totalValueOfWeek && vacationDaysNumber!=7) // to keep percentage in range of 0 to 100
+        if (totalWeekScore > totalValueOfWeek && vacationDaysNumber != 7) // to keep percentage in range of 0 to 100
             totalWeekScore = totalValueOfWeek
-        else if(vacationDaysNumber == 7){
+        else if (vacationDaysNumber == 7) {
             totalWeekScore = totalValueOfWeek
         }
 
-        Log.d("day","totalValueOfWeek = $totalValueOfWeek")
+        Log.d("day", "totalValueOfWeek = $totalValueOfWeek")
         var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
-        Log.d("day","previousTotalNumberQuran Old = $previousTotalNumberQuran")
+        Log.d("day", "previousTotalNumberQuran Old = $previousTotalNumberQuran")
 
         edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
         edit.apply()
 
         previousTotalNumberQuran += totalValueOfWeek
-        Log.d("day","previousTotalNumberQuran new = $previousTotalNumberQuran")
+        Log.d("day", "previousTotalNumberQuran new = $previousTotalNumberQuran")
 
         var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
-        Log.d("day","previousTotalScore old = $previousTotalScore")
+        Log.d("day", "previousTotalScore old = $previousTotalScore")
 
         edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
         edit.apply()
@@ -259,10 +256,13 @@ class QuranDaysFragment : Fragment() {
 
 
         previousTotalScore += totalWeekScore
-        Log.d("day","previousTotalScore new = $previousTotalScore")
+        Log.d("day", "previousTotalScore new = $previousTotalScore")
 
-        Log.d("day", "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %")
-        return  ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+        Log.d(
+            "day",
+            "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %"
+        )
+        return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
     }
 
     // show message after end of week but not end of month
@@ -342,8 +342,7 @@ class QuranDaysFragment : Fragment() {
         txtMessageAddOrDelete.text = addOrDeleteMessage
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
-            // showAddAzkarDialog()
-            Toast.makeText(requireContext(), "add modify for work days", Toast.LENGTH_SHORT).show()
+             showUpdateQuranCountersDialog()
         }
         btnNo.setOnClickListener {
             quranViewModel.addQuran(
@@ -361,77 +360,82 @@ class QuranDaysFragment : Fragment() {
         afterMonthDialog.show()
     }
 
-    //    private fun showAddAzkarDialog() {
-//
-//        val dialog = Dialog(requireContext())
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.add_azkar_dialog)
-//        val btnSave = dialog.findViewById<Button>(R.id.btn_save)
-//        val btnBack = dialog.findViewById<Button>(R.id.btn_back_no_adding)
-//
-//        val hamdCheck = dialog.findViewById<CheckBox>(R.id.hamd_check)
-//        val tsbehCheck = dialog.findViewById<CheckBox>(R.id.tsbeh_check)
-//        val tkberCheck = dialog.findViewById<CheckBox>(R.id.tkber_check)
-//        val estghCheck = dialog.findViewById<CheckBox>(R.id.estghphar_check)
-//
-//        pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
-//        hamdCheck.isChecked = pref.getBoolean("hamd", false)
-//        tsbehCheck.isChecked = pref.getBoolean("tsbeh", false)
-//        tkberCheck.isChecked = pref.getBoolean("tkber", false)
-//        estghCheck.isChecked = pref.getBoolean("estgh", false)
-//
-//        btnSave.setOnClickListener {
-//            // logic to start new week and save score of prev week
-//            edit = pref.edit()
-//
-//            if (hamdCheck.isChecked) {
-//                currentAzkarHashMap["ورد حمد"] = false
-//                edit.putBoolean("hamd", true)
-//            } else {
-//                edit.putBoolean("hamd", false)
-//                currentAzkarHashMap.remove("ورد حمد")
-//            }
-//
-//            if (tsbehCheck.isChecked) {
-//                currentAzkarHashMap["ورد تسبيح"] = false
-//                edit.putBoolean("tsbeh", true)
-//            } else {
-//                edit.putBoolean("tsbeh", false)
-//                currentAzkarHashMap.remove("ورد تسبيح")
-//            }
-//
-//            if (tkberCheck.isChecked) {
-//                currentAzkarHashMap["ورد تكبير"] = false
-//                edit.putBoolean("tkber", true)
-//            } else {
-//                edit.putBoolean("tkber", false)
-//                currentAzkarHashMap.remove("ورد تكبير")
-//            }
-//
-//            if (estghCheck.isChecked) {
-//                currentAzkarHashMap["ورد استغفار"] = false
-//                edit.putBoolean("estgh", true)
-//            } else {
-//                edit.putBoolean("estgh", false)
-//                currentAzkarHashMap.remove("ورد استغفار")
-//            }
-//            edit.apply()
-//
-//            viewModel.addZekr(
-//                viewModel.createNewWeekSchedule(
-//                    lastAzkarDay,
-//                    currentAzkarHashMap,
-//                    weeklyMessage
-//                )
-//            )
-//            dialog.dismiss()
-//            afterMonthDialog.dismiss()
-//        }
-//        btnBack.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        dialog.show()
-//    }
+    private fun showUpdateQuranCountersDialog() {
+
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.update_counters_dialog)
+        val btnSave = dialog.findViewById<Button>(R.id.btn_save_counters)
+        val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
+
+        val saveSpinner = dialog.findViewById<Spinner>(R.id.spinner_save_counterr)
+        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                numberOfSaveDays = parent?.getItemAtPosition(position).toString().toInt()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        val readSpinner = dialog.findViewById<Spinner>(R.id.spinner_read_counter)
+        readSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                numberOfReadDays = parent?.getItemAtPosition(position).toString().toInt()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        val revisionSpinner = dialog.findViewById<Spinner>(R.id.spinner_revision_counter)
+        revisionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                numberOfRevisionDays = parent?.getItemAtPosition(position).toString().toInt()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
+        btnSave.setOnClickListener {
+            // logic to start new week and save score of prev week
+            quranViewModel.addQuran(
+                quranViewModel.createNewWeekSchedule(
+                    lastQuranDay,
+                    currentQuranHashMap,
+                    weeklyMessage,
+                    numberOfSaveDays,
+                    numberOfReadDays,
+                    numberOfRevisionDays
+                )
+            )
+            dialog.dismiss()
+            afterMonthDialog.dismiss()
+        }
+        btnBack.setOnClickListener {
+            dialog.dismiss()
+            afterMonthDialog.dismiss()
+        }
+        dialog.show()
+    }
+
     fun generateRandomSuccessMessageQuran(): String {
         val strings = ArrayList<String>()
         strings.add(getString(R.string.success_message1_quran))
@@ -458,6 +462,5 @@ class QuranDaysFragment : Fragment() {
 
         return strings.random()
     }
-
 
 }
