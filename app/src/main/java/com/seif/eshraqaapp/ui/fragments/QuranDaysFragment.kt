@@ -155,13 +155,11 @@ class QuranDaysFragment : Fragment() {
                         getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 }
                 Log.d("days", "success")
@@ -181,13 +179,11 @@ class QuranDaysFragment : Fragment() {
                         getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 }
 
@@ -208,13 +204,11 @@ class QuranDaysFragment : Fragment() {
                         getString(R.string.updateWorkCounter),
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
-                        scoreWeekPercentage
                     )
                 }
                 Log.d("days", "fail")
@@ -269,7 +263,6 @@ class QuranDaysFragment : Fragment() {
     private fun showNormalCongratulationMessage(
         message: String,
         image: Int,
-        scorePercentage: Int
     ) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -278,8 +271,8 @@ class QuranDaysFragment : Fragment() {
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
-        val txtScore = dialog.findViewById<TextView>(R.id.txt_score_percentage_normal)
-        txtScore.text = "$scorePercentage %"
+        //val txtScore = dialog.findViewById<TextView>(R.id.txt_score_percentage_normal)
+        //txtScore.text = "$scorePercentage %"
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
@@ -310,7 +303,6 @@ class QuranDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
-        scorePercentage: Int
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -326,8 +318,8 @@ class QuranDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
-        val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
-        txtScore.text = "$scorePercentage %"
+       // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
+       // txtScore.text = "$scorePercentage %"
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))

@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel
 
 class HomeViewModel(application: Application): AndroidViewModel(application) {
     private lateinit var shared: SharedPreferences
-    private lateinit var pref: SharedPreferences
-    private lateinit var edit: SharedPreferences.Editor
+//    private lateinit var pref: SharedPreferences
+//    private lateinit var edit: SharedPreferences.Editor
 
     fun isAppFirstTimeRun(context: Context):Boolean {
         shared = context.getSharedPreferences("isFirstTimeQuran", Context.MODE_PRIVATE)

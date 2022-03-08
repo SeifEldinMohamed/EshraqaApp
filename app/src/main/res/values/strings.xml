@@ -46,7 +46,7 @@
 
     <string name="fail_message1_azkar">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيل! الله بعظمته يذكرك حين تذكره، فلا تهمل أذكارك.</string>
     <string name="fail_message2_azkar">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
-    <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك واستودعها في ودائع الرحمن.</string>
+    <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك.</string>
     <string name="fail_message4_azkar">مثل الذى يذكر الله والذى لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره فى قلبك وعلى لسانك.</string>
 
     // quran
@@ -106,7 +106,7 @@
     <string name="about_menu">عن المطور</string>
     <string name="about_app">عن التطبيق</string>
     <string name="menu_other">أخري</string>
-    <string name="nav_message">مـن ذاق حُب الله ارتَوى ❤</string>
+    <string name="nav_message">معًا نجلي عتمة قلوبنا ❤</string>
     <string name="nav_header_image_description">nav header image description</string>
 
     <string name="about_dialog">About</string>

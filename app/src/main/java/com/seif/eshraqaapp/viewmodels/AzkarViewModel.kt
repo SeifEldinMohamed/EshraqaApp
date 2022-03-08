@@ -222,6 +222,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         deleteAllAzkar()
         val currentDate = Calendar.getInstance()
             currentDate.set(lastAzkarDay.currentYear, lastAzkarDay.currentMonth, lastAzkarDay.currentDay+1)
+        //currentDate.add(lastAzkarDay.currentDay, 7)
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
 
