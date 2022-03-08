@@ -23,12 +23,13 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     private val eshrakaDatabaseDao = EshrakaDatabase.getInstance(application).myDao()
     val repository = RepositoryImp(eshrakaDatabaseDao)
     val azkar: LiveData<List<Azkar>> = repository.getAllData()
-    private lateinit var weekDate : ArrayList<MyDate>
+    private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
+
     // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
-     var message = application.getString(R.string.first_week_azkar_message)
+    var message = application.getString(R.string.first_week_azkar_message)
 
     fun addZekr(azkar: List<Azkar>) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,7 +44,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             repository.updateZekr(azkar)
         }
     }
-    fun deleteAllAzkar(){
+
+    fun deleteAllAzkar() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllAzkar()
         }
@@ -55,7 +57,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             val azkar = getSevenDaysData()
             pref = context.getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
             edit = pref.edit()
-            edit.putInt("nweek",1)
+            edit.putInt("nweek", 1)
             edit.apply()
             addZekr(azkar)
             val editor = shared.edit()
@@ -67,7 +69,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     fun getSevenDaysData(): List<Azkar> {
 
         val currentDate = Calendar.getInstance()
-         weekDate = ArrayList<MyDate>()
+        weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
 
         for (i in 0..6 step 1) {
@@ -218,29 +220,44 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return azkarHashMap
     }
 
-    fun createNewWeekSchedule(lastAzkarDay: Azkar, newAzkarHashMap:HashMap<String, Boolean>, weeklyMessage:String):List<Azkar> {
+    fun createNewWeekSchedule(
+        lastAzkarDay: Azkar,
+        newAzkarHashMap: HashMap<String, Boolean>,
+        weeklyMessage: String
+    ): List<Azkar> {
         deleteAllAzkar()
+
         val currentDate = Calendar.getInstance()
-            currentDate.set(lastAzkarDay.currentYear, lastAzkarDay.currentMonth, lastAzkarDay.currentDay+1)
-        //currentDate.add(lastAzkarDay.currentDay, 7)
+        currentDate.set(
+            lastAzkarDay.currentYear,
+            lastAzkarDay.currentMonth,
+            lastAzkarDay.currentDay + 1
+        )
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
+        currentDate.add(Calendar.MONTH, -1)
 
         for (i in 0..6 step 1) {
             val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH).toString()
+            val month = currentDate.get(Calendar.MONTH) + 1
             val year = currentDate.get(Calendar.YEAR).toString()
-            weekDate.add(MyDate(day, month, year))
+            Log.d("debug", "day: $day")
+            Log.d("debug", "month: $month")
+            Log.d("debug", "year: $year")
+            Log.d("debug", currentDate.time.toString())
+            weekDate.add(MyDate(day, month.toString(), year))
             daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+            Log.d("debug", daysOfWeek[i])
             currentDate.add(Calendar.DATE, 1)
-            Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
+            // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
         }
         val hashMap = HashMap<String, Boolean>()
         newAzkarHashMap.forEach { (key, value) ->
-             hashMap[key] = false
+            hashMap[key] = false
         }
         val azkarHashMap: HashMap<String, Boolean> = hashMap
-        val updateStatusDate = MyDate(lastAzkarDay.checkDay, lastAzkarDay.checkMonth, lastAzkarDay.checkYear)
+        val updateStatusDate =
+            MyDate(lastAzkarDay.checkDay, lastAzkarDay.checkMonth, lastAzkarDay.checkYear)
 
         return listOf(
             Azkar(

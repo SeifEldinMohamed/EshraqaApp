@@ -263,8 +263,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         numberOfDaysToRevision: Int
     ): List<Quran> {
         deleteAllQuran()
+
         val currentDate = Calendar.getInstance()
-        currentDate.set(Calendar.ERA, GregorianCalendar.AD)
+       // currentDate.set(Calendar.ERA, GregorianCalendar.AD)
         currentDate.set(
             lastQuranDay.currentYear,
             lastQuranDay.currentMonth,
@@ -272,15 +273,12 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         )
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
+        currentDate.add(Calendar.MONTH, -1)
 
         for (i in 0..6 step 1) {
             val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            var month = currentDate.get(Calendar.MONTH)
-            var year = currentDate.get(Calendar.YEAR)
-            if(month == 0){
-                month = 12
-                year--
-            }
+            val month = currentDate.get(Calendar.MONTH)+1
+            val year = currentDate.get(Calendar.YEAR)
             weekDate.add(MyDate(day, month.toString(), year.toString()))
             daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
             currentDate.add(Calendar.DATE, 1)
@@ -291,8 +289,6 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             hashMap[key] = ""
         }
         val quranHashMap: HashMap<String, String> = hashMap
-//        val updateStatusDate =
-//            MyDate(lastQuranDay.checkDay, lastQuranDay.checkMonth, lastQuranDay.checkYear)
 
         return listOf(
             Quran(
