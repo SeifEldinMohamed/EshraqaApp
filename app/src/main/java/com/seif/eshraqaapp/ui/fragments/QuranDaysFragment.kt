@@ -18,6 +18,7 @@ import com.seif.eshraqaapp.ui.adapters.QuranAdapter
 import com.seif.eshraqaapp.viewmodels.QuranViewModel
 import com.seif.eshraqaapp.ui.fragments.QuranDaysFragmentArgs.fromBundle
 import com.seif.eshraqaapp.databinding.FragmentQuranDaysBinding
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
 
 
 class QuranDaysFragment : Fragment() {
@@ -88,6 +89,9 @@ class QuranDaysFragment : Fragment() {
 
         quranViewModel.isAppFirstTimeRun(requireContext())
         binding.rvQuranDays.adapter = myAdapter
+        binding.rvQuranDays.itemAnimator = ScaleInTopAnimator().apply {
+            addDuration = 200
+        }
 
     }
 

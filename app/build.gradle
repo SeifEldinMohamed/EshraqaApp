@@ -74,11 +74,15 @@ dependencies {
 
     // gson converter
     implementation 'com.google.code.gson:gson:2.8.6'
+
     // intuit ssp and dsp
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
     // picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    // Recycler Animator
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 
 }

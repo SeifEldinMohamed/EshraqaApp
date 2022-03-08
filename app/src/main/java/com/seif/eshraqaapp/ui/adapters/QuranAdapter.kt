@@ -3,10 +3,12 @@ package com.seif.eshraqaapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
 import com.seif.eshraqaapp.ui.fragments.QuranDaysFragmentDirections
+import com.seif.eshraqaapp.utils.QuranDiffUtil
 
 
 class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
@@ -41,8 +43,9 @@ class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
             return quran.size
     }
     fun addQuran(quran: List<Quran>){
+        val diffUtilCallBack = QuranDiffUtil(this.quran, quran)
+        val diffUtilResult =DiffUtil.calculateDiff(diffUtilCallBack)
         this.quran = quran
-        notifyDataSetChanged()
-
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }

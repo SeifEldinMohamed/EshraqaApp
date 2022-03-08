@@ -20,6 +20,7 @@ import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentDaysBinding
 import com.seif.eshraqaapp.ui.adapters.AzkarAdapter
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
 
 
 class AzkarDaysFragment : Fragment() {
@@ -66,6 +67,9 @@ class AzkarDaysFragment : Fragment() {
         viewModel.isAppFirstTimeRun(requireContext())
 
         binding.rvAzkarDays.adapter = myAdapter
+        binding.rvAzkarDays.itemAnimator = ScaleInTopAnimator().apply {
+            addDuration = 200
+        }
 
     }
 

@@ -47,6 +47,19 @@ lateinit var binding: FragmentQuranBinding
         super.onViewCreated(view, savedInstanceState)
         quranViewModel = ViewModelProvider(requireActivity())[QuranViewModel::class.java]
 
+        // show vacation feature for girls only and the character according to gender
+        if(IntroSharedPref.readGander("Male", false)){
+            binding.quranImageZahra.visibility = View.GONE
+            binding.quranImageGheth.visibility = View.VISIBLE
+            binding.checkVacation.visibility = View.GONE
+        }
+        else{
+            binding.quranImageZahra.visibility = View.VISIBLE
+            binding.quranImageGheth.visibility = View.GONE
+            binding.checkVacation.visibility = View.VISIBLE
+
+        }
+
         val dayDate = "${fromBundle(requireArguments()).quran.currentDay} / " +
                 "${fromBundle(requireArguments()).quran.currentMonth} / " +
                 "${fromBundle(requireArguments()).quran.currentYear}"
@@ -168,14 +181,7 @@ lateinit var binding: FragmentQuranBinding
             binding.textScore.text = "$score/$numberOfQuran"
         }
 
-        if(IntroSharedPref.readGander("Male", false)){
-            binding.quranImageZahra.visibility = View.GONE
-            binding.quranImageGheth.visibility = View.VISIBLE
-        }
-        else{
-            binding.quranImageZahra.visibility = View.VISIBLE
-            binding.quranImageGheth.visibility = View.GONE
-        }
+
 
         binding.quranImageGheth.setOnClickListener {
             showEshrakaMessageDialog()
@@ -284,12 +290,6 @@ lateinit var binding: FragmentQuranBinding
             }
         }
     }
-
-    private fun initializeQuranData() {
-        if(quranViewModel.readIsFirstTimeToEnter(requireContext())){
-           quranViewModel.writeIsFirstTimeToEnter()
-        }
-        }
 
     private fun updateQuranItem() {
         Log.d("quran", "update $quranHashMap")

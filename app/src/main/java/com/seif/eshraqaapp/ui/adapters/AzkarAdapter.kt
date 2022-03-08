@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
 import com.seif.eshraqaapp.ui.fragments.AzkarDaysFragmentDirections
+import com.seif.eshraqaapp.utils.AzkarDiffUtil
 
 class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
      var azkar = emptyList<Azkar>()
@@ -44,8 +46,9 @@ class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
     }
 
     fun addAzkar(days:List<Azkar>){
+        val diffUtilCallBack = AzkarDiffUtil(this.azkar, days)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallBack)
         this.azkar = days
-        notifyDataSetChanged()
+        diffUtilResult.dispatchUpdatesTo(this)
     }
-
 }
