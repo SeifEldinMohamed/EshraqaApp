@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_sheet_sonn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_340sdp"
+        android:background="@drawable/bottomsheet_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/sont_keyam_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/keyam"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sont_doha_check" />
+
+        <CheckBox
+            android:id="@+id/sont_wetr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_63sdp"
+            android:text="@string/sont_wetr"
+            android:layout_marginEnd="@dimen/_35sdp"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_doha_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_esha_check" />
+
+        <CheckBox
+            android:id="@+id/sont_doha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_48sdp"
+            android:text="@string/sont_doha"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sont_maghreb_check" />
+
+        <CheckBox
+            android:id="@+id/sont_esha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_23sdp"
+            android:layout_marginEnd="@dimen/_35sdp"
+            android:text="@string/sont_esha"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_maghreb_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_zuhr_check" />
+
+        <CheckBox
+            android:id="@+id/sont_maghreb_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_21sdp"
+            android:text="@string/sont_maghreb"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sont_fagr_check" />
+
+        <CheckBox
+            android:id="@+id/sont_zuhr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_30sdp"
+            android:text="@string/sont_zuhr"
+            android:layout_marginEnd="@dimen/_35sdp"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_fagr_check"
+            app:layout_constraintTop_toBottomOf="@+id/txt_prayer_question" />
+
+        <CheckBox
+            android:id="@+id/sont_fagr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:buttonTint="@color/white"
+            android:paddingLeft="@dimen/_31sdp"
+            android:text="@string/sont_fagr"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textColor="@color/white"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_prayer_question" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back_sonn"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/back"
+            android:textColor="@color/mediumGreen"
+            android:textSize="@dimen/_17ssp"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save_sonn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_sonn"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_34sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/save"
+            android:textColor="@color/mediumGreen"
+            android:textSize="@dimen/_17ssp"
+            app:cornerRadius="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_prayer_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:text="@string/choose_sonn_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

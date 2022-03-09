@@ -118,6 +118,18 @@
     <string name="instragram_image_description">instragram image description</string>
     <string name="twitter_image_description">twitter image description</string>
     <string name="updateWorkCounter">هل ترغب في تعديل ايام العمل ؟</string>
+    <string name="prayer_question1">هل أنت ملتزم بالصلاة ؟</string>
+    <string name="qadaa_question1">هل عليك قضاء ؟</string>
+    <string name="qadaa_question2">كم عدد أسابيع القضاء ؟</string>
+    <string name="number_week_hint">عدد الأسابيع</string>
+    <string name="choose_sonn_text">أختر سنن تريد أدائها ؟</string>
+    <string name="keyam">القيام</string>
+    <string name="sont_fagr">سنة الفجر</string>
+    <string name="sont_maghreb">سنة المغرب</string>
+    <string name="sont_esha">سنة العشاء</string>
+    <string name="sont_doha">الضحي</string>
+    <string name="sont_zuhr">سنة الظهر</string>
+    <string name="sont_wetr">الوتر</string>
 
     <string-array name="numbersOfDays">
         <item>0</item>

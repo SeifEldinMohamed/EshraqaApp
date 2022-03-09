@@ -3,6 +3,7 @@ package com.seif.eshraqaapp.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.seif.eshraqaapp.data.models.Azkar
+import com.seif.eshraqaapp.data.models.Prayer
 import com.seif.eshraqaapp.data.models.Quran
 
 @Dao
@@ -41,5 +42,24 @@ interface EshrakaDatabaseDao {
 
     @Query("SELECT sum(isVacation) from quran where isVacation == 1")
     fun getVacationDaysNumber(): LiveData<Int>
+
+    // prayer
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addPrayer(prayer: Prayer)
+
+    @Query("SELECT * FROM Prayer")
+    fun getAllPrayerData(): LiveData<List<Prayer>>
+
+    @Update
+    suspend fun updatePrayer(prayer: Prayer)
+
+    @Query("SELECT score FROM Prayer WHERE isVacation == 0") // 0-> indicates false
+    fun getAllPrayerWeekScore(): LiveData<List<Int>>
+
+    @Query("DELETE FROM Prayer")
+    suspend fun deleteAllPrayer()
+
+    @Query("SELECT sum(isVacation) from Prayer where isVacation == 1")
+    fun getPrayerVacationDaysNumber(): LiveData<Int>
 
 }

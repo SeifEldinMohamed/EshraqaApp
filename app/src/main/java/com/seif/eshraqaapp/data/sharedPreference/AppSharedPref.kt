@@ -19,6 +19,7 @@ class AppSharedPref {
             prefsEditor.putBoolean(key, value)
             prefsEditor.apply()
         }
+        // quran
         fun readSaveCounter(key:String?, defValue:Int): Int{
             return mSharedPref!!.getInt(key, defValue)
         }
@@ -44,6 +45,36 @@ class AppSharedPref {
             prefsEditor.putInt(key, value)
             prefsEditor.apply()
         }
+
+       // prayer
+       fun readPrayerOnly(key:String?, defValue:Boolean): Boolean{
+
+           return mSharedPref!!.getBoolean(key, defValue)
+       }
+        fun writePrayerOnly(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readPrayerAndQadaa(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writePrayerAndQadaa(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readPrayerAndSonn(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writePrayerAndSonn(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)

@@ -32,13 +32,18 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_days.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_intro.xml" value="0.152" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer_days.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran.xml" value="0.4" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran_days.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_splash.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/gheth_message_dialog.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/header_nav.xml" value="0.264" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/prayer_bottom_sheet_dialog.xml" value="0.264" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/qadaa2_bottom_sheet_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/quran_item_row.xml" value="0.264" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/sonn_bottom_sheet_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/update_counters_dialog.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/zahra_message_dialog.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/zahra_message_end_of_month.xml" value="0.4" />

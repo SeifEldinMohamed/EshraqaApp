@@ -18,4 +18,11 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
         }
         return false
     }
+    fun isAppFirstTimeRunPrayer(context: Context):Boolean {
+        shared = context.getSharedPreferences("isFirstTimePrayer", Context.MODE_PRIVATE)
+        if (shared.getBoolean("checkPrayer", true)) {
+            return true
+        }
+        return false
+    }
 }

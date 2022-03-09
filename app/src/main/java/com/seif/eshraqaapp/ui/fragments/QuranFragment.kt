@@ -277,7 +277,7 @@ lateinit var binding: FragmentQuranBinding
             var currentRevisionCounter =  AppSharedPref.readRevisionCounter("revisionCounter", revisionCounter)
             Log.d("revisionCounter", currentRevisionCounter.toString())
             currentRevisionCounter--
-            AppSharedPref.updateReadCounter("revisionCounter", currentRevisionCounter)
+            AppSharedPref.updateRevisionCounter("revisionCounter", currentRevisionCounter)
         }
         else if(fromBundle(requireArguments()).quran.isRevisionCounterNotFoundUsed &&
             quranHashMap["question3"] == "yes"){
@@ -286,7 +286,7 @@ lateinit var binding: FragmentQuranBinding
             var currentRevisionCounter =  AppSharedPref.readReadCounter("revisionCounter", revisionCounter)
             if (currentRevisionCounter != revisionCounter){
                 currentRevisionCounter++
-                AppSharedPref.updateReadCounter("revisionCounter", currentRevisionCounter)
+                AppSharedPref.updateRevisionCounter("revisionCounter", currentRevisionCounter)
             }
         }
     }

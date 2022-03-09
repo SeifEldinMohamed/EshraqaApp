@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_quranDaysFragment"
             app:destination="@id/quranDaysFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_prayerDaysFragment"
+            app:destination="@id/prayerDaysFragment" />
     </fragment>
     <fragment
         android:id="@+id/azkarFragment"
@@ -68,5 +71,28 @@
         <argument
             android:name="numberOfRevisionDays"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/prayerDaysFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.PrayerDaysFragment"
+        android:label="fragment_prayer_days"
+        tools:layout="@layout/fragment_prayer_days" >
+        <action
+            android:id="@+id/action_prayerDaysFragment_to_prayerFragment"
+            app:destination="@id/prayerFragment" />
+        <argument
+            android:name="sonnHashMap"
+            app:argType="com.seif.eshraqaapp.ui.fragments.HomeFragment$SonnHashMap" />
+    </fragment>
+    <fragment
+        android:id="@+id/prayerFragment"
+        android:name="com.seif.eshraqaapp.PrayerFragment"
+        android:label="fragment_prayer"
+        tools:layout="@layout/fragment_prayer" >
+        <action
+            android:id="@+id/action_prayerFragment_to_prayerDaysFragment"
+            app:destination="@id/prayerDaysFragment"
+            app:popUpTo="@id/prayerDaysFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
