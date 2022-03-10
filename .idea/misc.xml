@@ -11,9 +11,13 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/checkbox_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_calendar.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_our_apps.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_pen.xml" value="0.1935" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_phone.xml" value="0.185" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_rate.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_reset.xml" value="0.1935" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_sebha.xml" value="0.1935" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_share.xml" value="0.185" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_sound.xml" value="0.1935" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_zahra_message_frame.xml" value="0.179" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/prayer.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/quran.xml" value="0.1095" />
@@ -36,6 +40,7 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer_days.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran.xml" value="0.4" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran_days.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_sebha.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_splash.xml" value="0.2" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/gheth_message_dialog.xml" value="0.20833333333333334" />

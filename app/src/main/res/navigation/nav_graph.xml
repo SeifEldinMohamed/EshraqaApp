@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_prayerDaysFragment"
             app:destination="@id/prayerDaysFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_sebhaFragment"
+            app:destination="@id/sebhaFragment" />
     </fragment>
     <fragment
         android:id="@+id/azkarFragment"
@@ -95,4 +98,9 @@
             app:popUpTo="@id/prayerDaysFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/sebhaFragment"
+        android:name="com.seif.eshraqaapp.SebhaFragment"
+        android:label="fragment_sebha"
+        tools:layout="@layout/fragment_sebha" />
 </navigation>

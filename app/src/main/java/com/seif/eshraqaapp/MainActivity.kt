@@ -126,7 +126,7 @@ private lateinit var navController :NavController
             Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(
-                    "mailto:" + "seifeldinmohamed101@gmail.com"
+                    "mailto:" + "eshraqh228@gmail.com"
                             + "?subject=" + "Message from Eshraka App"
                 )
             )

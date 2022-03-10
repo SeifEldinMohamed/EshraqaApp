@@ -113,7 +113,7 @@
     <string name="todo_it_dialog">Eshraka</string>
     <string name="version_1_0_0_dialog">Version: 1.0.0</string>
     <string name="developed_by_seif_mohamed_dialog">Developed by: Software Inversion</string>
-    <string name="ok">ok</string>
+    <string name="ok">OK</string>
     <string name="facebook_image_description">facebook image description</string>
     <string name="instragram_image_description">instragram image description</string>
     <string name="twitter_image_description">twitter image description</string>
@@ -141,5 +141,24 @@
         <item>6</item>
         <item>7</item>
     </string-array>
+
+    // sebha
+    <string name="tsbeh1">سبحان الله</string>
+    <string name="tsbeh2">الحمد لله</string>
+    <string name="tsbeh3">الله أكبر</string>
+    <string name="tsbeh4">أستغفر الله</string>
+    <string name="tsbeh5">لا حول ولا قوة إلا بالله</string>
+    <string name="tsbeh6">سبحان الله وبحمده، سبحان الله العظيم</string>
+    <string name="tsbeh7">اللهم إنك عفو تحب العفو فاعف عنا</string>
+    <string name="tsbeh8">اللهم صلِّ على محمد وعلى آله وصحبه وسلم</string>
+    <string name="tsbeh_message_background_image_description">tsbeh message background image description</string>
+    <string name="reset_image_description">reset image description</string>
+    <string name="floral_design_image_description">floral design image description</string>
+    <string name="pen_image_description">pen image description</string>
+    <string name="sound_image_description">sound image description</string>
+    <string name="stroke_image_description">stroke image description</string>
+    <string name="tsbeh_background_image_description">tsbeh background image description</string>
+    <string name="_33">33</string>
+
 
 </resources>
