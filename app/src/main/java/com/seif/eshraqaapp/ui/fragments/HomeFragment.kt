@@ -19,7 +19,6 @@ import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentHomeBinding
 import com.seif.eshraqaapp.viewmodels.HomeViewModel
-import com.seif.eshraqaapp.ui.fragments.HomeFragmentDirections
 
 import kotlinx.parcelize.Parcelize
 

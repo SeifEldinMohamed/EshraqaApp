@@ -1,10 +1,477 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PrayerFragment">
 
 
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:contentDescription="@string/eshraka_background_image_description"
+        android:src="@drawable/gheth_empty_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/gheth_head_prayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:contentDescription="@string/gheth_head_image_description"
+        android:src="@drawable/gheth_head"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintEnd_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="@+id/imageView10"
+        app:layout_constraintVertical_bias="0.416"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/zahra_head_prayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:contentDescription="@string/zahra_head_image_description"
+        android:src="@drawable/zahra_head"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintEnd_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="@+id/imageView10"
+        app:layout_constraintVertical_bias="0.466"
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/txt_day_prayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saturday"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_20ssp"
+        android:layout_marginStart="@dimen/_36sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="@+id/imageView10"
+        tools:ignore="TextContrastCheck" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/prayer_schedule"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/azkar_card_background"
+        android:paddingBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10">
+
+        <CheckBox
+            android:id="@+id/esha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/esha_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/asr_check"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="@+id/maghreb_check"
+            app:layout_constraintTop_toBottomOf="@+id/maghreb_check"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/upper_card_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_prayer_only"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/prayer_schedule"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/text_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="@string/score"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/maghreb_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:text="@string/maghreb_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/asr_check"
+            app:layout_constraintTop_toBottomOf="@+id/zuhr_check"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <CheckBox
+            android:id="@+id/asr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/asr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fagr_check"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <CheckBox
+            android:id="@+id/zuhr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/zuhr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/fagr_check"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <CheckBox
+            android:id="@+id/fagr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/fagr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/qadaa_schecule"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/azkar_card_background"
+        android:paddingBottom="@dimen/_6sdp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prayer_schedule">
+
+        <CheckBox
+            android:id="@+id/q_esha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/esha_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/q_asr_check"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="@+id/q_maghreb_check"
+            app:layout_constraintTop_toBottomOf="@+id/q_maghreb_check" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/q_constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/upper_card_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_prayer_qadaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/qadaa_schedule"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/text_score_qadaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="@string/score"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/q_maghreb_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_9sdp"
+            android:text="@string/maghreb_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/q_asr_check"
+            app:layout_constraintTop_toBottomOf="@+id/q_zuhr_check" />
+
+        <CheckBox
+            android:id="@+id/q_asr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/asr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/q_fagr_check" />
+
+        <CheckBox
+            android:id="@+id/q_zuhr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/zuhr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/q_fagr_check"
+            app:layout_constraintTop_toBottomOf="@+id/q_constraintLayout" />
+
+        <CheckBox
+            android:id="@+id/q_fagr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/fagr_prayer"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/q_constraintLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sonn_schecule"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/azkar_card_background"
+        android:paddingBottom="@dimen/_6sdp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prayer_schedule">
+
+        <CheckBox
+            android:id="@+id/sont_wetr_check4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/sont_keyam"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/sont_wetr_check"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="@+id/sont_doha_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_wetr_check"
+            app:layout_constraintVertical_bias="0.714" />
+
+        <CheckBox
+            android:id="@+id/sont_doha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_27sdp"
+            android:text="@string/sont_wetr"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_wetr_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_esha_check" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sonn_constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/upper_card_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_prayer_sonn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/sonn_schedule"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/text_score_sonn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="@string/score"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/sont_fagr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_27sdp"
+            android:text="@string/sont_fagr"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sonn_constraintLayout" />
+
+        <CheckBox
+            android:id="@+id/sont_zuhr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/sont_zuhr"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_fagr_check"
+            app:layout_constraintTop_toBottomOf="@+id/sonn_constraintLayout" />
+
+        <CheckBox
+            android:id="@+id/sont_maghreb_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="@string/sont_maghreb"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sont_fagr_check" />
+
+        <CheckBox
+            android:id="@+id/sont_esha_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:text="@string/sont_esha"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toStartOf="@+id/sont_maghreb_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_zuhr_check" />
+
+        <CheckBox
+            android:id="@+id/sont_wetr_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:paddingLeft="@dimen/_17sdp"
+            android:text="@string/sont_doha"
+            android:textColor="@color/mediumGreen"
+            android:textDirection="rtl"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintEnd_toEndOf="@+id/sont_maghreb_check"
+            app:layout_constraintTop_toBottomOf="@+id/sont_maghreb_check" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

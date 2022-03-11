@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Prayer
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
@@ -45,7 +47,7 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
                 }
             }
             binding.itemRowDays.setOnClickListener {
-
+                itemView.findNavController().navigate(R.id.action_prayerDaysFragment_to_prayerFragment)
             }
         }
     }

@@ -9,6 +9,7 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/azkar.xml" value="0.179" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/azkar_card_background.xml" value="0.187" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/checkbox_background.xml" value="0.187" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/gheth_empty_background.xml" value="0.1935" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_calendar.xml" value="0.1095" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_our_apps.xml" value="0.185" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/drawable/ic_pen.xml" value="0.1935" />
@@ -36,7 +37,7 @@
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_days.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_intro.xml" value="0.152" />
-        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer.xml" value="0.264" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_prayer_days.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran.xml" value="0.4" />
         <entry key="..\:/Users/96654/EshraqaApp/app/src/main/res/layout/fragment_quran_days.xml" value="0.20833333333333334" />

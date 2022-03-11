@@ -17,4 +17,6 @@ class PrayerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_prayer, container, false)
     }
 
+
+
 }

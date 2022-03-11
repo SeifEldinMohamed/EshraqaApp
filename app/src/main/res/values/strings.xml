@@ -122,14 +122,7 @@
     <string name="qadaa_question1">هل عليك قضاء ؟</string>
     <string name="qadaa_question2">كم عدد أسابيع القضاء ؟</string>
     <string name="number_week_hint">عدد الأسابيع</string>
-    <string name="choose_sonn_text">أختر سنن تريد أدائها ؟</string>
-    <string name="keyam">القيام</string>
-    <string name="sont_fagr">سنة الفجر</string>
-    <string name="sont_maghreb">سنة المغرب</string>
-    <string name="sont_esha">سنة العشاء</string>
-    <string name="sont_doha">الضحي</string>
-    <string name="sont_zuhr">سنة الظهر</string>
-    <string name="sont_wetr">الوتر</string>
+
 
     <string-array name="numbersOfDays">
         <item>0</item>
@@ -159,6 +152,26 @@
     <string name="stroke_image_description">stroke image description</string>
     <string name="tsbeh_background_image_description">tsbeh background image description</string>
     <string name="_33">33</string>
+    <string name="prayer_schedule">جدول الصلاة</string>
+    <string name="fagr_prayer">صلاة الفجر</string>
+    <string name="eshraka_background_image_description">eshraka background image description</string>
+    <string name="zahra_head_image_description">zahra head image description</string>
+    <string name="zuhr_prayer">صلاة الظهر</string>
+    <string name="maghreb_prayer">صلاة المغرب</string>
+    <string name="asr_prayer">صلاة العصر</string>
+    <string name="esha_prayer">صلاة العشاء</string>
+    <string name="qadaa_schedule">جدول القضاء</string>
+    <string name="sonn_schedule">جدول السنن</string>
+    <string name="sont_fagr">سنة الفجر</string>
+    <string name="sont_keyam">سنة القيام</string>
+    <string name="sont_maghreb">سنة المغرب</string>
+    <string name="sont_esha">سنة العشاء</string>
+    <string name="sont_zuhr">سنة الظهر</string>
+    <string name="choose_sonn_text">أختر سنن تريد أدائها ؟</string>
+    <string name="keyam">القيام</string>
+    <string name="sont_doha">سنة الضحي</string>
+    <string name="sont_wetr">سنة الوتر</string>
+    <string name="gheth_head_image_description">gheth head image description</string>
 
 
 </resources>
