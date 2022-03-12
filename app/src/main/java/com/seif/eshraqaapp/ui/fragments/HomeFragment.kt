@@ -131,51 +131,59 @@ class HomeFragment : Fragment() {
             R.layout.sonn_bottom_sheet_dialog,
             view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_sonn)
         )
-        sonnHashMap["s_doha"] = false
-        sonnHashMap["s_esha"] = false
-        sonnHashMap["s_fagr"] = false
-        sonnHashMap["s_keyam"] = false
-        sonnHashMap["s_maghreb"] = false
-        sonnHashMap["s_wetr"] = false
-        sonnHashMap["s_zuhr"] = false
+        val sontDohaCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_doha_check)
+        val sontEshaCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_esha_check)
+        val sontfagrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_fagr_check)
+        val sontKeyamCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_keyam_check)
+        val sontMaghrebCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
+        val sontZuhrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
+        val sontWetrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
 
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_doha_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_doha"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_esha_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_esha"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_fagr_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_fagr"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_keyam_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_keyam"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_maghreb"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_wetr"] = isChecked
-            }
-        bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
-            .setOnCheckedChangeListener { buttonView, isChecked ->
-                sonnHashMap["s_zuhr"] = isChecked
-            }
+//        sonnHashMap["s_doha"] = false
+//        sonnHashMap["s_esha"] = false
+//        sonnHashMap["s_fagr"] = false
+//        sonnHashMap["s_keyam"] = false
+//        sonnHashMap["s_maghreb"] = false
+//        sonnHashMap["s_wetr"] = false
+//        sonnHashMap["s_zuhr"] = false
+
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_doha_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_doha"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_esha_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_esha"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_fagr_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_fagr"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_keyam_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_keyam"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_maghreb"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_wetr"] = isChecked
+//            }
+//        bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
+//            .setOnCheckedChangeListener { buttonView, isChecked ->
+//                sonnHashMap["s_zuhr"] = isChecked
+//            }
         bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
             /** also used in alert dialog when user can add sonn to his schedule**/
-            if (sonnHashMap["s_doha"] == false &&
-                sonnHashMap["s_esha"] == false &&
-                sonnHashMap["s_fagr"] == false &&
-                sonnHashMap["s_keyam"] == false &&
-                sonnHashMap["s_maghreb"] == false &&
-                sonnHashMap["s_wetr"] == false &&
-                sonnHashMap["s_zuhr"] == false
+            if (!sontWetrCheckBox.isChecked &&
+                !sontDohaCheckBox.isChecked &&
+                !sontKeyamCheckBox.isChecked &&
+                !sontZuhrCheckBox.isChecked &&
+                !sontMaghrebCheckBox.isChecked &&
+                !sontfagrCheckBox.isChecked &&
+                !sontEshaCheckBox.isChecked
             ) { // check if there is no sonn choosed
 //                AppSharedPref.writePrayerOnly("prayerOnly", true )
 //                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
@@ -193,6 +201,58 @@ class HomeFragment : Fragment() {
                 AppSharedPref.writePrayerOnly("prayerOnly", false)
                 AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
                 AppSharedPref.writePrayerAndSonn("prayerAndSonn", true)
+
+                AppSharedPref.init(requireContext())
+                if (sontfagrCheckBox.isChecked) {
+                    sonnHashMap["s_fagr"] = false // initializing
+                    AppSharedPref.writeSontFagr("s_fagr", true)
+                } else {
+                    AppSharedPref.writeSontFagr("s_fagr", false)
+                    sonnHashMap.remove("s_fagr")
+                }
+                if (sontZuhrCheckBox.isChecked) {
+                    sonnHashMap["s_zuhr"] = false // initializing
+                    AppSharedPref.writeSontZuhr("s_zuhr", true)
+                } else {
+                    AppSharedPref.writeSontZuhr("s_zuhr", false)
+                    sonnHashMap.remove("s_zuhr")
+                }
+                if (sontMaghrebCheckBox.isChecked) {
+                    sonnHashMap["s_maghreb"] = false // initializing
+                    AppSharedPref.writeSontMaghreb("s_maghreb", true)
+                } else {
+                    AppSharedPref.writeSontMaghreb("s_maghreb", false)
+                    sonnHashMap.remove("s_maghreb")
+                }
+                if (sontEshaCheckBox.isChecked) {
+                    sonnHashMap["s_esha"] = false // initializing
+                    AppSharedPref.writeSontEsha("s_esha", true)
+                } else {
+                    AppSharedPref.writeSontEsha("s_esha", false)
+                    sonnHashMap.remove("s_esha")
+                }
+                if (sontWetrCheckBox.isChecked) {
+                    sonnHashMap["s_wetr"] = false // initializing
+                    AppSharedPref.writeSontWetr("s_wetr", true)
+                } else {
+                    AppSharedPref.writeSontWetr("s_wetr", false)
+                    sonnHashMap.remove("s_wetr")
+                }
+                if (sontDohaCheckBox.isChecked) {
+                    sonnHashMap["s_doha"] = false // initializing
+                    AppSharedPref.writeSontDoha("s_doha", true)
+                } else {
+                    AppSharedPref.writeSontDoha("s_doha", false)
+                    sonnHashMap.remove("s_doha")
+                }
+                if (sontKeyamCheckBox.isChecked) {
+                    sonnHashMap["s_keyam"] = false // initializing
+                    AppSharedPref.writeSontKeyam("s_keyam", true)
+                } else {
+                    AppSharedPref.writeSontKeyam("s_keyam", false)
+                    sonnHashMap.remove("s_keyam")
+                }
+
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
                 findNavController().navigate(action)

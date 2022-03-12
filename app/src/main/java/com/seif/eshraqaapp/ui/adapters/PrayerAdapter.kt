@@ -2,15 +2,13 @@ package com.seif.eshraqaapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Prayer
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
-import com.seif.eshraqaapp.databinding.SonnBottomSheetDialogBinding
+import com.seif.eshraqaapp.ui.fragments.PrayerDaysFragmentDirections
 
 class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
     var prayerList = emptyList<Prayer>()
@@ -27,27 +25,22 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
                 AppSharedPref.readPrayerOnly("prayerOnly", false) -> {
                     // 0/5
                     binding.txtScore.text =
-                        "${prayerList[position].score}/${prayerList[position].prayers.size}"
+                        "${prayerList[position].totalScore}/5"
                 }
                 AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false) -> {
                     // 0/10
                     binding.txtScore.text =
-                        "${prayerList[position].score}/${prayerList[position].prayersAndQadaa.size}"
+                        "${prayerList[position].totalScore}/10"
                 }
                 AppSharedPref.readPrayerAndSonn("prayerAndSonn", false) -> {
-                    // 0/ 5+ {1..7}
-                    var size = 0
-                    prayerList[position].prayersAndSonn.forEach{
-                        if (it.value)
-                            size++
-                    }
-                    size+=5
+
                     binding.txtScore.text =
-                        "${prayerList[position].score}/${size}"
+                        "${prayerList[position].totalScore}/${prayerList[position].sonnHashMap.size + 5}"
                 }
             }
             binding.itemRowDays.setOnClickListener {
-                itemView.findNavController().navigate(R.id.action_prayerDaysFragment_to_prayerFragment)
+                val action = PrayerDaysFragmentDirections.actionPrayerDaysFragmentToPrayerFragment(prayerList[position])
+                itemView.findNavController().navigate(action)
             }
         }
     }

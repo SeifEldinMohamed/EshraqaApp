@@ -75,6 +75,70 @@ class AppSharedPref {
             prefsEditor.apply()
         }
 
+        fun readSontFagr(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontFagr(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontZuhr(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontZuhr(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontMaghreb(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontMaghreb(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontEsha(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontEsha(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontWetr(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontWetr(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontDoha(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontDoha(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+        fun readSontKeyam(key:String?, defValue:Boolean): Boolean{
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSontKeyam(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)

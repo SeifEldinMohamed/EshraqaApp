@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/prayerDaysFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.PrayerDaysFragment"
-        android:label="fragment_prayer_days"
+        android:label="جدول القرآن"
         tools:layout="@layout/fragment_prayer_days" >
         <action
             android:id="@+id/action_prayerDaysFragment_to_prayerFragment"
@@ -89,14 +89,16 @@
     </fragment>
     <fragment
         android:id="@+id/prayerFragment"
-        android:name="com.seif.eshraqaapp.PrayerFragment"
-        android:label="fragment_prayer"
+        android:name="com.seif.eshraqaapp.ui.fragments.PrayerFragment"
         tools:layout="@layout/fragment_prayer" >
         <action
             android:id="@+id/action_prayerFragment_to_prayerDaysFragment"
             app:destination="@id/prayerDaysFragment"
             app:popUpTo="@id/prayerDaysFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="prayer"
+            app:argType="com.seif.eshraqaapp.data.models.Prayer" />
     </fragment>
     <fragment
         android:id="@+id/sebhaFragment"
