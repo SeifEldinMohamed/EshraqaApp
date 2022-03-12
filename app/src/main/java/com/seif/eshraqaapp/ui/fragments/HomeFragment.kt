@@ -139,42 +139,7 @@ class HomeFragment : Fragment() {
         val sontZuhrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
         val sontWetrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
 
-//        sonnHashMap["s_doha"] = false
-//        sonnHashMap["s_esha"] = false
-//        sonnHashMap["s_fagr"] = false
-//        sonnHashMap["s_keyam"] = false
-//        sonnHashMap["s_maghreb"] = false
-//        sonnHashMap["s_wetr"] = false
-//        sonnHashMap["s_zuhr"] = false
 
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_doha_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_doha"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_esha_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_esha"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_fagr_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_fagr"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_keyam_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_keyam"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_maghreb"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_wetr"] = isChecked
-//            }
-//        bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
-//            .setOnCheckedChangeListener { buttonView, isChecked ->
-//                sonnHashMap["s_zuhr"] = isChecked
-//            }
         bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
             /** also used in alert dialog when user can add sonn to his schedule**/
             if (!sontWetrCheckBox.isChecked &&

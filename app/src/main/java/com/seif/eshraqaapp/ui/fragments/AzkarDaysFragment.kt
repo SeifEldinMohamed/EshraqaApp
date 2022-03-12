@@ -240,15 +240,16 @@ class AzkarDaysFragment : Fragment() {
         }
             characterImage.setImageResource(image)
         txtMessage.text = message
-        btnOk.setOnClickListener {
-            // logic to start new week and save score of prev week
-            viewModel.addZekr(
-                viewModel.createNewWeekSchedule(
-                    lastAzkarDay,
-                    currentAzkarHashMap,
-                    weeklyMessage
-                )
+
+        // logic to start new week and save score of prev week
+        viewModel.addZekr(
+            viewModel.createNewWeekSchedule(
+                lastAzkarDay,
+                currentAzkarHashMap,
+                weeklyMessage
             )
+        )
+        btnOk.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()

@@ -62,6 +62,15 @@
     <string name="fail_message2_quran">تعاهدوا هذا القرآن فوالذي نفس محمد بيده لهو أشد تفلتًا من الإبل في عُقُلها!</string>
     <string name="fail_message3_quran">عليكَ بتلاوةِ القرآنِ، فإنَّهُ نورٌ لكَ في الأرضِ، وذُخرٌ لكَ في السَّماء.</string>
 
+    // prayer messages
+    <string name="success_message1_prayer">أبشر، أسأل الله أن يجعل حفاظك  على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
+    <string name="success_message2_prayer">أبشر، فالله يحبك، وعسی أن يبنى لك بيتًا فى الجنة كل يوم.</string>
+    <string name="success_message3_prayer">كُلمَا حَرصتّ عَلى الصَلاةْ ، كُلمَا شَعرتّ إنَ الدُنيَا أزدَادتّ يُسراً !♥</string>
+
+    <string name="fail_message1_prayer"> لا بأس، جاهد مرة أخرى وإشراقة ستساعدك على الالتزام بالفروض.</string>
+    <string name="fail_message2_prayer">النفس تتخبط بين ذنب واستقامة، فجاهد ألا تغلبك نفسك مرة أخرى، فصلاتك هي أول ما تحاسب عليه.</string>
+    <string name="fail_message3_prayer">ما دمت في الصلاة فأنت تقرع باب الملك، ومن يقرع باب الملك يفتح له، ولا تدري كمَّ الخير الذي سينالك إن فتح لك الملك بابه، فأقبل!</string>
+
     <string name="noo">لا</string>
     <string name="add_new_azkar_to_your_schedule">هل ترغب في حذف أو إضافة بعض البنود من جدولك ؟</string>
     <string name="delete_azkar_from_your_schedule">هل ترغب في تقليل عدد البنود من جدولك ؟</string>
@@ -122,6 +131,7 @@
     <string name="qadaa_question1">هل عليك قضاء ؟</string>
     <string name="qadaa_question2">كم عدد أسابيع القضاء ؟</string>
     <string name="number_week_hint">عدد الأسابيع</string>
+    <string name="update_prayer_schedule">هل ترغب في تعديل جدولك ؟</string>
 
 
     <string-array name="numbersOfDays">

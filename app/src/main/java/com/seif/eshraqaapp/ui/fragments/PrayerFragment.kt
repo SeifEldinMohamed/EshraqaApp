@@ -33,6 +33,8 @@ class PrayerFragment : Fragment() {
     private var qadaaHashMap = HashMap<String, Boolean>()
     private var sonnHashMap = HashMap<String, Boolean>()
     private lateinit var pref: SharedPreferences
+    private var isVacation = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +54,14 @@ class PrayerFragment : Fragment() {
             "${prayer.currentDay} / " +
                     "${prayer.currentMonth} / " +
                     "${prayer.currentYear}"
+
+        // vacation
+        isVacation = prayer.isVacation
+        binding.checkVacationPrayer.isChecked = isVacation
+
+        binding.checkVacationPrayer.setOnCheckedChangeListener { buttonView, isChecked ->
+            isVacation = isChecked
+        }
 
 
         // copy values to prayerHashMap so i can use in update prayer
@@ -402,7 +412,7 @@ class PrayerFragment : Fragment() {
             sonnScore,
             (prayerScore + qadaaScore + sonnScore),
             prayer.weeklyUserMessage,
-            prayer.isVacation
+            isVacation
         )
         viewModel.updatePrayer(newPrayer)
         findNavController().navigate(R.id.action_prayerFragment_to_prayerDaysFragment)

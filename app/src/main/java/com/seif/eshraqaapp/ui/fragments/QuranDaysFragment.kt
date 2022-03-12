@@ -286,18 +286,18 @@ class QuranDaysFragment : Fragment() {
         }
         characterImage.setImageResource(image)
         txtMessage.text = message
+        quranViewModel.addQuran(
+            quranViewModel.createNewWeekSchedule(
+                lastQuranDay,
+                currentQuranHashMap,
+                weeklyMessage,
+                numberOfSaveDays,
+                numberOfReadDays,
+                numberOfRevisionDays
+            )
+        )
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-            quranViewModel.addQuran(
-                quranViewModel.createNewWeekSchedule(
-                    lastQuranDay,
-                    currentQuranHashMap,
-                    weeklyMessage,
-                    numberOfSaveDays,
-                    numberOfReadDays,
-                    numberOfRevisionDays
-                )
-            )
             dialog.dismiss()
         }
         dialog.show()

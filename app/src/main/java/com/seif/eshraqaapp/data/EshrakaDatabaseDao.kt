@@ -53,7 +53,7 @@ interface EshrakaDatabaseDao {
     @Update
     suspend fun updatePrayer(prayer: Prayer)
 
-    @Query("SELECT totalScore FROM Prayer WHERE isVacation == 0") // 0-> indicates false
+    @Query("SELECT prayerScore FROM Prayer WHERE isVacation == 0") // 0-> indicates false
     fun getAllPrayerWeekScore(): LiveData<List<Int>>
 
     @Query("DELETE FROM Prayer")

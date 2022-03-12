@@ -52,6 +52,17 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
             repository.deleteAllPrayer()
         }
     }
+    fun getAllPrayerWeekScore(): LiveData<List<Int>> {
+        return repository.getAllPrayerWeekScore()
+    }
+
+    fun getSumOfPrayerWeekScore(scoreList: List<Int>): Int {
+        var totalWeekScore = 0
+        scoreList.forEach {
+            totalWeekScore += it
+        }
+        return totalWeekScore
+    }
 
     fun isAppFirstTimeRun(context: Context): Boolean {
         shared = context.getSharedPreferences("isFirstTimePrayerDays", Context.MODE_PRIVATE)
@@ -225,145 +236,166 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     }
 
 
-//    fun createNewWeekSchedule(
-//        lastPrayerDay: Azkar,
-//        prayerOnlyHashMap: HashMap<String, Boolean>,
-//        prayerAndQadaaHashMap: HashMap<String, Boolean>,
-//        sonnHashMap: HashMap<String, Boolean>,
-//        weeklyMessage: String
-//    ): List<Prayer> {
-//        deleteAllPrayer()
-//
-//        val currentDate = Calendar.getInstance()
-//        currentDate.set(
-//            lastPrayerDay.currentYear,
-//            lastPrayerDay.currentMonth,
-//            lastPrayerDay.currentDay + 1
-//        )
-//        val weekDate = ArrayList<MyDate>()
-//        val daysOfWeek = ArrayList<String>()
-//        currentDate.add(Calendar.MONTH, -1)
-//
-//        for (i in 0..6 step 1) {
-//            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-//            val month = currentDate.get(Calendar.MONTH) + 1
-//            val year = currentDate.get(Calendar.YEAR).toString()
-//            Log.d("debug", "day: $day")
-//            Log.d("debug", "month: $month")
-//            Log.d("debug", "year: $year")
-//            Log.d("debug", currentDate.time.toString())
-//            weekDate.add(MyDate(day, month.toString(), year))
-//            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-//            Log.d("debug", daysOfWeek[i])
-//            currentDate.add(Calendar.DATE, 1)
-//            // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
-//        }
-//        val hashMap1 = HashMap<String, Boolean>()
-//        prayerOnlyHashMap.forEach { (key, value) ->
-//            hashMap1[key] = false
-//        }
-//        val hashMap2 = HashMap<String, Boolean>()
-//        prayerAndQadaaHashMap.forEach { (key, value) ->
-//            hashMap2[key] = false
-//        }
-//
-//        val hashMap3 = HashMap<String, Boolean>()
-//        sonnHashMap.forEach { (key, value) ->
-//            hashMap3[key] = false
-//        }
-//
-//        return listOf(
-//            Prayer(
-//                1,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[0].day.toInt(),
-//                weekDate[0].month.toInt(),
-//                weekDate[0].year.toInt(),
-//                daysOfWeek[0],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                2,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[1].day.toInt(),
-//                weekDate[1].month.toInt(),
-//                weekDate[1].year.toInt(),
-//                daysOfWeek[1],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                3,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[2].day.toInt(),
-//                weekDate[2].month.toInt(),
-//                weekDate[2].year.toInt(),
-//                daysOfWeek[2],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                4,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[3].day.toInt(),
-//                weekDate[3].month.toInt(),
-//                weekDate[3].year.toInt(),
-//                daysOfWeek[3],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                5,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[4].day.toInt(),
-//                weekDate[4].month.toInt(),
-//                weekDate[4].year.toInt(),
-//                daysOfWeek[4],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                6,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[5].day.toInt(),
-//                weekDate[5].month.toInt(),
-//                weekDate[5].year.toInt(),
-//                daysOfWeek[5],
-//                0,
-//                weeklyMessage,
-//                false
-//            ),
-//            Prayer(
-//                7,
-//                hashMap1,
-//                hashMap2,
-//                hashMap3,
-//                weekDate[6].day.toInt(),
-//                weekDate[6].month.toInt(),
-//                weekDate[6].year.toInt(),
-//                daysOfWeek[6],
-//                0,
-//                weeklyMessage,
-//                false
-//            )
-//        )
-//    }
+    fun createNewWeekSchedule(
+        lastPrayerDay: Prayer,
+        prayerOnlyHashMap: HashMap<String, Boolean>,
+        prayerAndQadaaHashMap: HashMap<String, Boolean>,
+        sonnHashMap: HashMap<String, Boolean>,
+        weeklyMessage: String
+    ): List<Prayer> {
+        deleteAllPrayer()
+
+        val currentDate = Calendar.getInstance()
+        currentDate.set(
+            lastPrayerDay.currentYear,
+            lastPrayerDay.currentMonth,
+            lastPrayerDay.currentDay + 1
+        )
+        val weekDate = ArrayList<MyDate>()
+        val daysOfWeek = ArrayList<String>()
+        currentDate.add(Calendar.MONTH, -1)
+
+        for (i in 0..6 step 1) {
+            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
+            val month = currentDate.get(Calendar.MONTH) + 1
+            val year = currentDate.get(Calendar.YEAR).toString()
+            Log.d("debug", "day: $day")
+            Log.d("debug", "month: $month")
+            Log.d("debug", "year: $year")
+            Log.d("debug", currentDate.time.toString())
+            weekDate.add(MyDate(day, month.toString(), year))
+            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+            Log.d("debug", daysOfWeek[i])
+            currentDate.add(Calendar.DATE, 1)
+            // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
+        }
+        val hashMap1 = HashMap<String, Boolean>()
+        prayerOnlyHashMap.forEach { (key, value) ->
+            hashMap1[key] = false
+        }
+        val hashMap2 = HashMap<String, Boolean>()
+        prayerAndQadaaHashMap.forEach { (key, value) ->
+            hashMap2[key] = false
+        }
+
+        val hashMap3 = HashMap<String, Boolean>()
+        sonnHashMap.forEach { (key, value) ->
+            hashMap3[key] = false
+        }
+
+        return listOf(
+            Prayer(
+                1,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[0].day.toInt(),
+                weekDate[0].month.toInt(),
+                weekDate[0].year.toInt(),
+                daysOfWeek[0],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                2,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[1].day.toInt(),
+                weekDate[1].month.toInt(),
+                weekDate[1].year.toInt(),
+                daysOfWeek[1],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                3,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[2].day.toInt(),
+                weekDate[2].month.toInt(),
+                weekDate[2].year.toInt(),
+                daysOfWeek[2],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                4,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[3].day.toInt(),
+                weekDate[3].month.toInt(),
+                weekDate[3].year.toInt(),
+                daysOfWeek[3],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                5,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[4].day.toInt(),
+                weekDate[4].month.toInt(),
+                weekDate[4].year.toInt(),
+                daysOfWeek[4],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                6,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[5].day.toInt(),
+                weekDate[5].month.toInt(),
+                weekDate[5].year.toInt(),
+                daysOfWeek[5],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            ),
+            Prayer(
+                7,
+                hashMap1,
+                hashMap2,
+                hashMap3,
+                weekDate[6].day.toInt(),
+                weekDate[6].month.toInt(),
+                weekDate[6].year.toInt(),
+                daysOfWeek[6],
+                0,
+                0,
+                0,
+                0,
+                weeklyMessage,
+                false
+            )
+        )
+    }
 }

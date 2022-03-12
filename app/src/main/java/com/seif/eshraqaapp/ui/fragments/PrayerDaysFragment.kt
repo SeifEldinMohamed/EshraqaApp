@@ -4,36 +4,44 @@ import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Prayer
+import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentPrayerDaysBinding
 import com.seif.eshraqaapp.ui.adapters.PrayerAdapter
 import com.seif.eshraqaapp.ui.fragments.PrayerDaysFragmentArgs.fromBundle
 import com.seif.eshraqaapp.viewmodels.PrayerViewModel
-import com.seif.eshraqaapp.viewmodels.QuranViewModel
 import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
+import kotlinx.parcelize.Parcelize
 
 
+private const val maxNumberOfWeeks: Int = 500
 class PrayerDaysFragment : Fragment() {
     lateinit var binding: FragmentPrayerDaysBinding
     private val myAdapter: PrayerAdapter by lazy { PrayerAdapter() }
     private lateinit var prayerViewModel: PrayerViewModel
-
     private var numberOfPrayer = 0
     private var totalWeekScore = 0
     lateinit var lastPrayerDay: Prayer
+    private lateinit var shared: SharedPreferences
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     private var numberOfWeeks: Int = 1
     private var currentPrayerHashMap = HashMap<String, Boolean>()
+    private var currentQadaaHashMap = HashMap<String, Boolean>()
+    private var currentSonnHashMap = HashMap<String, Boolean>()
     lateinit var afterMonthDialog: Dialog
     private var weeklyMessage: String = ""
     private var prayerVacationDaysNumber: Int = 0
@@ -65,14 +73,16 @@ class PrayerDaysFragment : Fragment() {
             if (it.isNotEmpty()) {
                 //  numberOfQuran = it[0].quran.size
                 currentPrayerHashMap = it[0].prayersHashMap
+                currentQadaaHashMap = it[0].qadaaHashMap
+                currentSonnHashMap = it[0].sonnHashMap
                 if (it.size == 7)
                     lastPrayerDay = it[6]
 
             }
         })
-//        prayerViewModel.getAllQuranWeekScore().observe(viewLifecycleOwner, Observer {
-//            totalWeekScore = prayerViewModel.getSumOfQuranWeekScore(it)
-//        })
+        prayerViewModel.getAllPrayerWeekScore().observe(viewLifecycleOwner, Observer {
+            totalWeekScore = prayerViewModel.getSumOfPrayerWeekScore(it)
+        })
         prayerViewModel.vacationDaysNumber.observe(viewLifecycleOwner, Observer {
             prayerVacationDaysNumber = it ?: 0
         })
@@ -106,13 +116,6 @@ class PrayerDaysFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
-        if (isEndOfMonth) {
-            edit.putInt("nweek", 1)
-            edit.apply()
-        } else {
-            edit.putInt("nweek", numberOfWeeks + 1)
-            edit.apply()
-        }
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
@@ -120,8 +123,15 @@ class PrayerDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
-//            val scoreWeekPercentage = calculateScore()
-//            showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
+            if (isEndOfMonth) {
+                edit.putInt("nweek", 1)
+                edit.apply()
+            } else {
+                edit.putInt("nweek", numberOfWeeks + 1)
+                edit.apply()
+            }
+            val scoreWeekPercentage = calculateScore()
+            showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
         btnBack.setOnClickListener {
@@ -133,22 +143,23 @@ class PrayerDaysFragment : Fragment() {
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
         val image: Int
         when (scoreWeekPercentage) {
-            in 80..100 -> {
+            100 -> {
                 image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_happy
                 } else {
                     R.drawable.zahra_happy
                 }
-                weeklyMessage = generateRandomSuccessMessageQuran()
+                weeklyMessage = generateRandomSuccessMessagePrayer()
                 if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
+                    edit.putLong("totalScorePrayer", 0L)
+                    edit.putLong("totalNumberPrayer", 0L)
                     edit.apply()
-//                    showEndMonthCongratulationMessage(
-//                        getString(R.string.updateWorkCounter),
-//                        weeklyMessage,
-//                        image,
-//                    )
+                    showEndMonthCongratulationMessage(
+                        getString(R.string.update_prayer_schedule),
+                        weeklyMessage,
+                        image,
+                        true
+                    )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
@@ -157,47 +168,24 @@ class PrayerDaysFragment : Fragment() {
                 }
                 Log.d("days", "success")
             }
-            in 65..79 -> { // handle adding
-                image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_normal
-                } else {
-                    R.drawable.zahra_normal
-                }
-                weeklyMessage = generateRandomMediumMessageQuran()
-                if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
-                    edit.apply()
-//                    showEndMonthCongratulationMessage(
-//                        getString(R.string.updateWorkCounter),
-//                        weeklyMessage,
-//                        image,
-//                    )
-                } else {
-                    showNormalCongratulationMessage(
-                        weeklyMessage,
-                        image,
-                    )
-                }
 
-                Log.d("days", "medium")
-            }
-            in 0..64 -> {
+            else -> {
                 image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_sad
                 } else {
                     R.drawable.zahra_sad
                 }
-                weeklyMessage = generateRandomFailMessageQuran()
+                weeklyMessage = generateRandomFailMessagePrayer()
                 if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
+                    edit.putLong("totalScorePrayer", 0L)
+                    edit.putLong("totalNumberPrayer", 0L)
                     edit.apply()
-//                    showEndMonthCongratulationMessage(
-//                        getString(R.string.updateWorkCounter),
-//                        weeklyMessage,
-//                        image,
-//                    )
+                    showEndMonthCongratulationMessage(
+                        getString(R.string.update_prayer_schedule),
+                        weeklyMessage,
+                        image,
+                        false
+                    )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
@@ -208,47 +196,44 @@ class PrayerDaysFragment : Fragment() {
             }
         }
     }
- //   private fun calculateScore(): Int {
-//        numberOfPrayer =
-//        Log.d("day", "vacationDays = $prayerVacationDaysNumber")
-//
-//        var totalValueOfWeek = numberOfQuran - (prayerVacationDaysNumber * 3)  // ex: 12
-//        if (totalValueOfWeek <= 0)
-//            totalValueOfWeek = 1
-//
-//        if (totalWeekScore > totalValueOfWeek && prayerVacationDaysNumber != 7) // to keep percentage in range of 0 to 100
-//            totalWeekScore = totalValueOfWeek
-//        else if (prayerVacationDaysNumber == 7) {
-//            totalWeekScore = totalValueOfWeek
-//        }
-//
-//        Log.d("day", "totalValueOfWeek = $totalValueOfWeek")
-//        var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
-//        Log.d("day", "previousTotalNumberQuran Old = $previousTotalNumberQuran")
-//
-//        edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
-//        edit.apply()
-//
-//        previousTotalNumberQuran += totalValueOfWeek
-//        Log.d("day", "previousTotalNumberQuran new = $previousTotalNumberQuran")
-//
-//        var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
-//        Log.d("day", "previousTotalScore old = $previousTotalScore")
-//
-//        edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
-//        edit.apply()
-//
-//
-//
-//        previousTotalScore += totalWeekScore
-//        Log.d("day", "previousTotalScore new = $previousTotalScore")
-//
-//        Log.d(
-//            "day",
-//            "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %"
-//        )
-//        return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
- //   }
+    private fun calculateScore(): Int {
+        numberOfPrayer = 7*5
+        Log.d("day", "vacationDays = $prayerVacationDaysNumber")
+
+        var totalValueOfWeek = numberOfPrayer - (prayerVacationDaysNumber * 5)
+        if (totalValueOfWeek <= 0)
+            totalValueOfWeek = 1
+
+        if (totalWeekScore > totalValueOfWeek && prayerVacationDaysNumber != 7) // to keep percentage in range of 0 to 100
+            totalWeekScore = totalValueOfWeek
+        else if (prayerVacationDaysNumber == 7) {
+            totalWeekScore = totalValueOfWeek
+        }
+
+        var previousTotalNumberQuran = pref.getLong("totalNumberPrayer", 0L)
+        Log.d("day", "previousTotalNumberPrayer Old = $previousTotalNumberQuran")
+
+        edit.putLong("totalNumberPrayer", (previousTotalNumberQuran + totalValueOfWeek))
+        edit.apply()
+
+        previousTotalNumberQuran += totalValueOfWeek
+        Log.d("day", "TotalNumberPrayer new = $previousTotalNumberQuran")
+
+        var previousTotalScore = pref.getLong("totalScorePrayer", 0L)
+        Log.d("day", "previousTotalScore old = $previousTotalScore")
+
+        edit.putLong("totalScorePrayer", (previousTotalScore + totalWeekScore))
+        edit.apply()
+
+        previousTotalScore += totalWeekScore
+        Log.d("day", "TotalScore new = $previousTotalScore")
+
+        Log.d(
+            "day",
+            "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %"
+        )
+        return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+    }
 
     // show message after end of week but not end of month
     private fun showNormalCongratulationMessage(
@@ -273,44 +258,275 @@ class PrayerDaysFragment : Fragment() {
         }
         characterImage.setImageResource(image)
         txtMessage.text = message
+
+        prayerViewModel.addPrayer(
+            prayerViewModel.createNewWeekSchedule(
+                lastPrayerDay,
+                currentPrayerHashMap,
+                currentQadaaHashMap,
+                currentSonnHashMap,
+                weeklyMessage
+            )
+        )
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-//            prayerViewModel.addPrayer(
-//                prayerViewModel.createNewWeekSchedule(
-//                    lastPrayerDay,
-//                    prayer,
-//                    weeklyMessage,
-//                )
-//            )
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    fun generateRandomSuccessMessageQuran(): String {
+    private fun showEndMonthCongratulationMessage(
+        addOrDeleteMessage: String,
+        message: String,
+        image: Int,
+        canUpdate:Boolean
+    ) {
+
+        afterMonthDialog = Dialog(requireContext())
+        afterMonthDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        afterMonthDialog.setContentView(R.layout.zahra_message_end_of_month)
+        val btnYes = afterMonthDialog.findViewById<Button>(R.id.btn_ok_message_end_of_month)
+        val btnNo = afterMonthDialog.findViewById<Button>(R.id.btn_no)
+        val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
+        val txtMessageAddOrDelete =
+            afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)
+        val characterImage =
+            afterMonthDialog.findViewById<ImageView>(R.id.character_image_end_of_month)
+        characterImage.setImageResource(image)
+
+        val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
+        // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
+        // txtScore.text = "$scorePercentage %"
+        if (IntroSharedPref.readGander("Male", false)) {
+            frameImage.setImageResource(R.drawable.gheth_frame_dialog)
+            btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+            btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
+        } else {
+            frameImage.setImageResource(R.drawable.zahra_frame_dialog)
+            btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+            btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
+        }
+        // change character and frame according to male of user
+        txtMessage.text = message
+        txtMessageAddOrDelete.text = addOrDeleteMessage
+        btnYes.setOnClickListener {
+            // logic to start new week and save score of prev week
+          //  showUpdateQuranCountersDialog()
+            if (canUpdate){
+                if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
+                    // start ask from qadaa
+                    showQadaaBottomSheetDialog()
+                    afterMonthDialog.dismiss()
+                }
+                else if (AppSharedPref.readPrayerOnly("prayerAndQadaa", false)){
+                    // check if the qadaa period is finished or not
+                    // if finished then we start ask from qadaa
+                }
+                else{ // sonn + prayer
+                    // so he can add or remove sonn from it's schedule
+
+                }
+            }
+        }
+        btnNo.setOnClickListener {
+            prayerViewModel.addPrayer(
+                prayerViewModel.createNewWeekSchedule(
+                    lastPrayerDay,
+                    currentPrayerHashMap,
+                    currentQadaaHashMap,
+                    currentSonnHashMap,
+                    weeklyMessage,
+                )
+            )
+            afterMonthDialog.dismiss()
+        }
+        afterMonthDialog.show()
+    }
+
+    fun generateRandomSuccessMessagePrayer(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.success_message1_quran))
-        strings.add(getString(R.string.success_message2_quran))
-        strings.add(getString(R.string.success_message3_quran))
+        strings.add(getString(R.string.success_message1_prayer))
+        strings.add(getString(R.string.success_message2_prayer))
+        strings.add(getString(R.string.success_message3_prayer))
 
         return strings.random()
     }
 
-    private fun generateRandomMediumMessageQuran(): String {
+    private fun generateRandomFailMessagePrayer(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.medium_message1_quran))
-        strings.add(getString(R.string.medium_message2_quran))
-        strings.add(getString(R.string.medium_message3_quran))
+        strings.add(getString(R.string.fail_message1_prayer))
+        strings.add(getString(R.string.fail_message2_prayer))
+        strings.add(getString(R.string.fail_message3_prayer))
 
         return strings.random()
     }
 
-    private fun generateRandomFailMessageQuran(): String {
-        val strings = ArrayList<String>()
-        strings.add(getString(R.string.fail_message1_quran))
-        strings.add(getString(R.string.fail_message2_quran))
-        strings.add(getString(R.string.fail_message3_quran))
-
-        return strings.random()
+    private fun showQadaaBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+            R.layout.prayer_bottom_sheet_dialog,
+            view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_prayer)
+        )
+        bottomSheetView.findViewById<TextView>(R.id.txt_prayer_question).text =
+            getString(R.string.qadaa_question1)
+        bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
+            showQadaa2BottomSheetDialog() // to know how many weeks the qadaa schedule will be available
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetView.findViewById<Button>(R.id.btn_no_prayer).setOnClickListener {
+            showChooseSonnBottomSheetDialog() // go to sonn bottom sheet
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
     }
+
+    private fun showChooseSonnBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+            R.layout.sonn_bottom_sheet_dialog,
+            view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_sonn)
+        )
+        val sontDohaCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_doha_check)
+        val sontEshaCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_esha_check)
+        val sontfagrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_fagr_check)
+        val sontKeyamCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_keyam_check)
+        val sontMaghrebCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
+        val sontZuhrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
+        val sontWetrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
+
+
+        bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
+            /** also used in alert dialog when user can add sonn to his schedule**/
+            if (!sontWetrCheckBox.isChecked &&
+                !sontDohaCheckBox.isChecked &&
+                !sontKeyamCheckBox.isChecked &&
+                !sontZuhrCheckBox.isChecked &&
+                !sontMaghrebCheckBox.isChecked &&
+                !sontfagrCheckBox.isChecked &&
+                !sontEshaCheckBox.isChecked
+            ) { // check if there is no sonn choosed
+//                AppSharedPref.writePrayerOnly("prayerOnly", true )
+//                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
+//                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+//                sonnHashMap = SonnHashMap() // make it empty to know that the user didn't choose any sonn so the system will create prayers only schedule
+//                val action = HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
+//                findNavController().navigate(action)
+                Toast.makeText(
+                    requireContext(),
+                    "يجب أختيار سنة واحدة كبداية !",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                AppSharedPref.writePrayerOnly("prayerOnly", false)
+                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
+                AppSharedPref.writePrayerAndSonn("prayerAndSonn", true)
+
+                AppSharedPref.init(requireContext())
+                if (sontfagrCheckBox.isChecked) {
+                    sonnHashMap["s_fagr"] = false // initializing
+                    AppSharedPref.writeSontFagr("s_fagr", true)
+                } else {
+                    AppSharedPref.writeSontFagr("s_fagr", false)
+                    sonnHashMap.remove("s_fagr")
+                }
+                if (sontZuhrCheckBox.isChecked) {
+                    sonnHashMap["s_zuhr"] = false // initializing
+                    AppSharedPref.writeSontZuhr("s_zuhr", true)
+                } else {
+                    AppSharedPref.writeSontZuhr("s_zuhr", false)
+                    sonnHashMap.remove("s_zuhr")
+                }
+                if (sontMaghrebCheckBox.isChecked) {
+                    sonnHashMap["s_maghreb"] = false // initializing
+                    AppSharedPref.writeSontMaghreb("s_maghreb", true)
+                } else {
+                    AppSharedPref.writeSontMaghreb("s_maghreb", false)
+                    sonnHashMap.remove("s_maghreb")
+                }
+                if (sontEshaCheckBox.isChecked) {
+                    sonnHashMap["s_esha"] = false // initializing
+                    AppSharedPref.writeSontEsha("s_esha", true)
+                } else {
+                    AppSharedPref.writeSontEsha("s_esha", false)
+                    sonnHashMap.remove("s_esha")
+                }
+                if (sontWetrCheckBox.isChecked) {
+                    sonnHashMap["s_wetr"] = false // initializing
+                    AppSharedPref.writeSontWetr("s_wetr", true)
+                } else {
+                    AppSharedPref.writeSontWetr("s_wetr", false)
+                    sonnHashMap.remove("s_wetr")
+                }
+                if (sontDohaCheckBox.isChecked) {
+                    sonnHashMap["s_doha"] = false // initializing
+                    AppSharedPref.writeSontDoha("s_doha", true)
+                } else {
+                    AppSharedPref.writeSontDoha("s_doha", false)
+                    sonnHashMap.remove("s_doha")
+                }
+                if (sontKeyamCheckBox.isChecked) {
+                    sonnHashMap["s_keyam"] = false // initializing
+                    AppSharedPref.writeSontKeyam("s_keyam", true)
+                } else {
+                    AppSharedPref.writeSontKeyam("s_keyam", false)
+                    sonnHashMap.remove("s_keyam")
+                }
+
+                prayerViewModel.addPrayer(
+                    prayerViewModel.createNewWeekSchedule(
+                        lastPrayerDay,
+                        currentPrayerHashMap,
+                        currentQadaaHashMap,
+                        sonnHashMap,
+                        weeklyMessage,
+                    )
+                )
+                bottomSheetDialog.dismiss()
+            }
+        }
+        bottomSheetView.findViewById<Button>(R.id.btn_back_sonn).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+    }
+
+    private fun showQadaa2BottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
+            R.layout.qadaa2_bottom_sheet_dialog,
+            view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_qadaa2)
+        )
+        val numberOfWeeksEditText =
+            bottomSheetView.findViewById<EditText>(R.id.et_number_weeks_qadaa2)
+        bottomSheetView.findViewById<Button>(R.id.btn_save_qadaa2).setOnClickListener {
+            if (numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks) {
+                numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
+            } else {
+                AppSharedPref.writePrayerOnly("prayerOnly", false)
+                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
+                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+
+                prayerViewModel.addPrayer(
+                    prayerViewModel.createNewWeekSchedule(
+                        lastPrayerDay,
+                        currentPrayerHashMap,
+                        currentQadaaHashMap,
+                        currentSonnHashMap,
+                        weeklyMessage,
+                    )
+                )
+
+                bottomSheetDialog.dismiss()
+            }
+        }
+        bottomSheetView.findViewById<Button>(R.id.btn_back_qadaa2).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+    }
+
 }

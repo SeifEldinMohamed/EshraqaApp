@@ -7,6 +7,18 @@
     tools:context=".ui.fragments.PrayerFragment">
 
 
+    <CheckBox
+        android:id="@+id/check_vacation_prayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_19sdp"
+        android:paddingLeft="@dimen/_20sdp"
+        android:text="@string/vacation"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/character_background"
         android:layout_width="wrap_content"
