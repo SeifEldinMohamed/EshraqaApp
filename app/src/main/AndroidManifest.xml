@@ -13,6 +13,7 @@
         <activity
             android:name=".IntroActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/introTheme"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

@@ -25,7 +25,7 @@
                 android:id="@+id/cardView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_15sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -173,7 +173,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_12sdp"
 
                 android:contentDescription="@string/transparent_logo_image_description"
                 android:src="@drawable/eshraka_transparent_logo"
