@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.seif.eshraqaapp.data.models.Prayer
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.databinding.DaysItemRowBinding
 import com.seif.eshraqaapp.ui.fragments.PrayerDaysFragmentDirections
+import com.seif.eshraqaapp.utils.PrayerDiffUtil
 
 class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
     var prayerList = emptyList<Prayer>()
@@ -64,7 +66,10 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
     }
 
     fun addPrayerList(prayers: List<Prayer>) {
+        val diffUtilCallBack = PrayerDiffUtil(this.prayerList, prayers)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallBack)
         this.prayerList = prayers
-        notifyDataSetChanged()
+        diffUtilResult.dispatchUpdatesTo(this)
+
     }
 }

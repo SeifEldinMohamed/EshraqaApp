@@ -25,6 +25,7 @@ import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
 
 
 private const val maxNumberOfWeeks: Int = 500
+
 class PrayerDaysFragment : Fragment() {
     lateinit var binding: FragmentPrayerDaysBinding
     private val myAdapter: PrayerAdapter by lazy { PrayerAdapter() }
@@ -54,7 +55,7 @@ class PrayerDaysFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       prayerViewModel =  ViewModelProvider(requireActivity())[PrayerViewModel::class.java]
+        prayerViewModel = ViewModelProvider(requireActivity())[PrayerViewModel::class.java]
 
         setHasOptionsMenu(true)
 
@@ -112,6 +113,7 @@ class PrayerDaysFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -121,8 +123,8 @@ class PrayerDaysFragment : Fragment() {
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
 
-            if(AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false)){
-                var currentQadaaPeriod = AppSharedPref.readQadaaPeriod("qadaa_period",0)
+            if (AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false)) {
+                var currentQadaaPeriod = AppSharedPref.readQadaaPeriod("qadaa_period", 0)
                 currentQadaaPeriod--
                 AppSharedPref.writeQadaaPeriod("qadaa_period", currentQadaaPeriod)
             }
@@ -157,7 +159,11 @@ class PrayerDaysFragment : Fragment() {
                         image,
                         isEndOfMonth
                     )
-                    Log.d("day","qadaa period: "+ AppSharedPref.readQadaaPeriod("qadaa_period", -1).toString())
+                    Log.d(
+                        "day",
+                        "qadaa period: " + AppSharedPref.readQadaaPeriod("qadaa_period", -1)
+                            .toString()
+                    )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
@@ -197,8 +203,9 @@ class PrayerDaysFragment : Fragment() {
             }
         }
     }
+
     private fun calculateScore(): Int {
-        numberOfPrayer = 7*5
+        numberOfPrayer = 7 * 5
         Log.d("day", "vacationDays = $prayerVacationDaysNumber")
 
         var totalValueOfWeek = numberOfPrayer - (prayerVacationDaysNumber * 5)
@@ -261,7 +268,7 @@ class PrayerDaysFragment : Fragment() {
         characterImage.setImageResource(image)
         txtMessage.text = message
 
-        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0){
+        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0) {
             AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
             AppSharedPref.writePrayerOnly("prayerOnly", true)
         }
@@ -325,24 +332,27 @@ class PrayerDaysFragment : Fragment() {
         txtMessage.text = message
         txtMessageAddOrDelete.text = addOrDeleteMessage
 
-        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0){ // check if qadaa period is finished or not
+        if (AppSharedPref.readQadaaPeriod(
+                "qadaa_period",
+                -1
+            ) == 0
+        ) { // check if qadaa period is finished or not
             AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
             AppSharedPref.writePrayerOnly("prayerOnly", true)
         }
 
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
-          //  showUpdateQuranCountersDialog()
-                if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
-                    // start ask from qadaa
-                    showQadaaBottomSheetDialog(isEndOfMonth)
-                    afterMonthDialog.dismiss()
-                }
-                else{ // sonn + prayer
-                    // so he can add or remove sonn from it's schedule
-                    showQadaaBottomSheetDialog(isEndOfMonth)
-                    afterMonthDialog.dismiss()
-                }
+            //  showUpdateQuranCountersDialog()
+            if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
+                // start ask from qadaa
+                showQadaaBottomSheetDialog(isEndOfMonth)
+                afterMonthDialog.dismiss()
+            } else { // sonn + prayer
+                // so he can add or remove sonn from it's schedule
+                showQadaaBottomSheetDialog(isEndOfMonth)
+                afterMonthDialog.dismiss()
+            }
         }
         btnNo.setOnClickListener {
             if (isEndOfMonth) {
@@ -371,14 +381,6 @@ class PrayerDaysFragment : Fragment() {
         afterMonthDialog.show()
     }
 
-//    private fun showQadaaCongratulationMessage() {
-//        if(IntroSharedPref.readGander("Male", false)){
-//            showNormalCongratulationMessage(getString(R.string.qadaa_period_finished_message), R.drawable.gheth_happy)
-//            }
-//            else{ // female (zahra)
-//            showNormalCongratulationMessage(getString(R.string.qadaa_period_finished_message), R.drawable.zahra_happy)
-//        }
-//    }
 
     fun generateRandomSuccessMessagePrayer(): String {
         val strings = ArrayList<String>()
@@ -451,12 +453,6 @@ class PrayerDaysFragment : Fragment() {
                 !sontfagrCheckBox.isChecked &&
                 !sontEshaCheckBox.isChecked
             ) { // check if there is no sonn choosed
-//                AppSharedPref.writePrayerOnly("prayerOnly", true )
-//                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
-//                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
-//                sonnHashMap = SonnHashMap() // make it empty to know that the user didn't choose any sonn so the system will create prayers only schedule
-//                val action = HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
-//                findNavController().navigate(action)
                 Toast.makeText(
                     requireContext(),
                     "يجب أختيار سنة واحدة كبداية !",
@@ -597,5 +593,4 @@ class PrayerDaysFragment : Fragment() {
         bottomSheetDialog.show()
 
     }
-
 }

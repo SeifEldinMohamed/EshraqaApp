@@ -95,9 +95,9 @@
     <string name="vacation">إجازة</string>
     <string name="number_of_days">الأيام</string>
     <string name="follow">متابعة</string>
-    <string name="enter_number_of_days_save">أدخل عدد أيام الحفظ اسبوعيا</string>
-    <string name="enter_number_of_days_read">أدخل عدد أيام القراءة اسبوعيا</string>
-    <string name="enter_number_of_days_revision">أدخل عدد أيام المراجعة اسبوعيا</string>
+    <string name="enter_number_of_days_save">أختر عدد أيام الحفظ اسبوعيا</string>
+    <string name="enter_number_of_days_read">أختر عدد أيام القراءة اسبوعيا</string>
+    <string name="enter_number_of_days_revision">أختر عدد أيام المراجعة اسبوعيا</string>
     <string name="_20_2_2022">20 / 2 / 2022</string>
     <string name="day_name_item_row">السبت</string>
     <string name="score_item_row">2 / 4</string>

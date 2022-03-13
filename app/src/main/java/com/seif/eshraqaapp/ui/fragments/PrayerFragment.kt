@@ -63,7 +63,6 @@ class PrayerFragment : Fragment() {
             isVacation = isChecked
         }
 
-
         // copy values to prayerHashMap so i can use in update prayer
         prayerHashMap["fagr"] = prayer.prayersHashMap["fagr"] ?: false
         prayerHashMap["zuhr"] = prayer.prayersHashMap["zuhr"] ?: false
@@ -79,67 +78,65 @@ class PrayerFragment : Fragment() {
         // sonn
 
 
-        binding.fagrCheck.isChecked = prayerHashMap["fagr"]?:false
-        binding.zuhrCheck.isChecked = prayerHashMap["zuhr"]?:false
-        binding.asrCheck.isChecked = prayerHashMap["asr"]?:false
-        binding.maghrebCheck.isChecked = prayerHashMap["maghreb"]?:false
-        binding.eshaCheck.isChecked = prayerHashMap["esha"]?:false
+        binding.fagrCheck.isChecked = prayerHashMap["fagr"] ?: false
+        binding.zuhrCheck.isChecked = prayerHashMap["zuhr"] ?: false
+        binding.asrCheck.isChecked = prayerHashMap["asr"] ?: false
+        binding.maghrebCheck.isChecked = prayerHashMap["maghreb"] ?: false
+        binding.eshaCheck.isChecked = prayerHashMap["esha"] ?: false
 
         if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
             binding.qadaaSchecule.visibility = View.GONE
             binding.sonnSchecule.visibility = View.GONE
 
-        }
-        else if (AppSharedPref.readPrayerOnly("prayerAndQadaa", false)){
+        } else if (AppSharedPref.readPrayerOnly("prayerAndQadaa", false)) {
             binding.qadaaSchecule.visibility = View.VISIBLE
             binding.sonnSchecule.visibility = View.GONE
 
-            binding.qFagrCheck.isChecked = qadaaHashMap["q_fagr"]?:false
-            binding.qZuhrCheck.isChecked = qadaaHashMap["q_zuhr"]?:false
-            binding.qAsrCheck.isChecked = qadaaHashMap["q_asr"]?:false
-            binding.qMaghrebCheck.isChecked = qadaaHashMap["q_maghreb"]?:false
-            binding.qEshaCheck.isChecked = qadaaHashMap["q_esha"]?:false
-        }
-        else{ // sonn
+            binding.qFagrCheck.isChecked = qadaaHashMap["q_fagr"] ?: false
+            binding.qZuhrCheck.isChecked = qadaaHashMap["q_zuhr"] ?: false
+            binding.qAsrCheck.isChecked = qadaaHashMap["q_asr"] ?: false
+            binding.qMaghrebCheck.isChecked = qadaaHashMap["q_maghreb"] ?: false
+            binding.qEshaCheck.isChecked = qadaaHashMap["q_esha"] ?: false
+        } else { // sonn
             binding.qadaaSchecule.visibility = View.GONE
             binding.sonnSchecule.visibility = View.VISIBLE
 
-            if(AppSharedPref.readSontFagr("s_fagr", false)){
+            if (AppSharedPref.readSontFagr("s_fagr", false)) {
                 binding.sontFagrCheck.visibility = View.VISIBLE
                 sonnHashMap["s_fagr"] = prayer.sonnHashMap["s_fagr"] ?: false
-                binding.sontFagrCheck.isChecked = sonnHashMap["s_fagr"]?:false
+                binding.sontFagrCheck.isChecked = sonnHashMap["s_fagr"] ?: false
             }
-            if(AppSharedPref.readSontZuhr("s_zuhr", false)){
+            if (AppSharedPref.readSontZuhr("s_zuhr", false)) {
                 binding.sontZuhrCheck.visibility = View.VISIBLE
                 sonnHashMap["s_zuhr"] = prayer.sonnHashMap["s_zuhr"] ?: false
-                binding.sontZuhrCheck.isChecked = sonnHashMap["s_zuhr"]?:false
+                binding.sontZuhrCheck.isChecked = sonnHashMap["s_zuhr"] ?: false
             }
-            if(AppSharedPref.readSontMaghreb("s_maghreb", false)){
+            if (AppSharedPref.readSontMaghreb("s_maghreb", false)) {
                 binding.sontMaghrebCheck.visibility = View.VISIBLE
                 sonnHashMap["s_maghreb"] = prayer.sonnHashMap["s_maghreb"] ?: false
-                binding.sontMaghrebCheck.isChecked = sonnHashMap["s_maghreb"]?:false
+                binding.sontMaghrebCheck.isChecked = sonnHashMap["s_maghreb"] ?: false
             }
-            if(AppSharedPref.readSontEsha("s_esha", false)){
+            if (AppSharedPref.readSontEsha("s_esha", false)) {
                 binding.sontEshaCheck.visibility = View.VISIBLE
                 sonnHashMap["s_esha"] = prayer.sonnHashMap["s_esha"] ?: false
-                binding.sontEshaCheck.isChecked = sonnHashMap["s_esha"]?:false
+                binding.sontEshaCheck.isChecked = sonnHashMap["s_esha"] ?: false
             }
-            if(AppSharedPref.readSontWetr("s_wetr", false)){
+            if (AppSharedPref.readSontWetr("s_wetr", false)) {
                 binding.sontWetrCheck.visibility = View.VISIBLE
                 sonnHashMap["s_wetr"] = prayer.sonnHashMap["s_wetr"] ?: false
-                binding.sontWetrCheck.isChecked = sonnHashMap["s_wetr"]?:false
+                binding.sontWetrCheck.isChecked = sonnHashMap["s_wetr"] ?: false
             }
-            if(AppSharedPref.readSontDoha("s_doha", false)){
+            if (AppSharedPref.readSontDoha("s_doha", false)) {
                 binding.sontDohaCheck.visibility = View.VISIBLE
                 sonnHashMap["s_doha"] = prayer.sonnHashMap["s_doha"] ?: false
-                binding.sontDohaCheck.isChecked = sonnHashMap["s_doha"]?:false
+                binding.sontDohaCheck.isChecked = sonnHashMap["s_doha"] ?: false
             }
-            if(AppSharedPref.readSontDoha("s_keyam", false)){
+            if (AppSharedPref.readSontDoha("s_keyam", false)) {
                 binding.sontKeyamCheck.visibility = View.VISIBLE
                 sonnHashMap["s_keyam"] = prayer.sonnHashMap["s_keyam"] ?: false
-                binding.sontKeyamCheck.isChecked = sonnHashMap["s_keyam"]?:false
+                binding.sontKeyamCheck.isChecked = sonnHashMap["s_keyam"] ?: false
             }
-            }
+        }
 
         // set Menu
         setHasOptionsMenu(true)
@@ -155,55 +152,50 @@ class PrayerFragment : Fragment() {
 
         // prayer
         binding.fagrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 prayerScore++
                 prayerHashMap["fagr"] = true
-            }
-            else{
+            } else {
                 prayerScore--
                 prayerHashMap["fagr"] = false
             }
             binding.textScorePrayerOnly.text = "$prayerScore/5"
         }
         binding.zuhrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 prayerScore++
                 prayerHashMap["zuhr"] = true
-            }
-            else{
+            } else {
                 prayerScore--
                 prayerHashMap["zuhr"] = false
             }
             binding.textScorePrayerOnly.text = "$prayerScore/5"
         }
         binding.asrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 prayerScore++
                 prayerHashMap["asr"] = true
-            }
-            else{
+            } else {
                 prayerScore--
                 prayerHashMap["asr"] = false
             }
             binding.textScorePrayerOnly.text = "$prayerScore/5"
         }
         binding.maghrebCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 prayerScore++
                 prayerHashMap["maghreb"] = true
-            }
-            else{
+            } else {
                 prayerScore--
                 prayerHashMap["maghreb"] = false
             }
             binding.textScorePrayerOnly.text = "$prayerScore/5"
         }
         binding.eshaCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 prayerScore++
                 prayerHashMap["esha"] = true
-            }
-            else{
+            } else {
                 prayerScore--
                 prayerHashMap["esha"] = false
             }
@@ -211,55 +203,50 @@ class PrayerFragment : Fragment() {
         }
 
         binding.qFagrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 qadaaScore++
                 qadaaHashMap["q_fagr"] = true
-            }
-            else{
+            } else {
                 qadaaScore--
                 qadaaHashMap["q_fagr"] = false
             }
             binding.textScoreQadaa.text = "$qadaaScore/5"
         }
         binding.qZuhrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 qadaaScore++
                 qadaaHashMap["q_zuhr"] = true
-            }
-            else{
+            } else {
                 qadaaScore--
                 qadaaHashMap["q_zuhr"] = false
             }
             binding.textScoreQadaa.text = "$qadaaScore/5"
         }
         binding.qAsrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 qadaaScore++
                 qadaaHashMap["q_asr"] = true
-            }
-            else{
+            } else {
                 qadaaScore--
                 qadaaHashMap["q_asr"] = false
             }
             binding.textScoreQadaa.text = "$qadaaScore/5"
         }
         binding.qMaghrebCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 qadaaScore++
                 qadaaHashMap["q_maghreb"] = true
-            }
-            else{
+            } else {
                 qadaaScore--
                 qadaaHashMap["q_maghreb"] = false
             }
             binding.textScoreQadaa.text = "$qadaaScore/5"
         }
         binding.qEshaCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 qadaaScore++
                 qadaaHashMap["q_esha"] = true
-            }
-            else{
+            } else {
                 qadaaScore--
                 qadaaHashMap["q_esha"] = false
             }
@@ -268,77 +255,70 @@ class PrayerFragment : Fragment() {
 
         // sonn
         binding.sontFagrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_fagr"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_fagr"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontZuhrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_zuhr"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_zuhr"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontMaghrebCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_maghreb"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_maghreb"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontEshaCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_esha"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_esha"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontWetrCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_wetr"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_wetr"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontDohaCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_doha"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_doha"] = false
             }
             binding.textScoreSonn.text = "$sonnScore/${prayer.sonnHashMap.size}"
         }
         binding.sontKeyamCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 sonnScore++
                 sonnHashMap["s_keyam"] = true
-            }
-            else{
+            } else {
                 sonnScore--
                 sonnHashMap["s_keyam"] = false
             }
@@ -347,20 +327,20 @@ class PrayerFragment : Fragment() {
 
         IntroSharedPref.init(requireContext())
 
-        if(IntroSharedPref.readGander("Male", false)){
+        if (IntroSharedPref.readGander("Male", false)) {
             binding.zahraHeadPrayer.visibility = View.GONE
             binding.ghethHeadPrayer.visibility = View.VISIBLE
+            binding.checkVacationPrayer.visibility = View.GONE
         }
-        else{
+        else { // female
             binding.zahraHeadPrayer.visibility = View.VISIBLE
             binding.ghethHeadPrayer.visibility = View.GONE
+            binding.checkVacationPrayer.visibility = View.VISIBLE
         }
 
         binding.characterBackground.setOnClickListener {
             showEshrakaMessageDialog()
         }
-
-
     }
 
     private fun showEshrakaMessageDialog() {
@@ -372,12 +352,11 @@ class PrayerFragment : Fragment() {
         txtMessage.text = prayer.weeklyUserMessage
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
-        if(IntroSharedPref.readGander("Male", false)){
+        if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             characterImage.setImageResource(R.drawable.gheth_normal)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
-        }
-        else{ // female
+        } else { // female
             frameImage.setImageResource(R.drawable.zahra_frame_dialog)
             characterImage.setImageResource(R.drawable.zahra_normal)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
@@ -387,6 +366,7 @@ class PrayerFragment : Fragment() {
         }
         dialog.show()
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.azkar_menu, menu)
     }
@@ -397,6 +377,7 @@ class PrayerFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
     private fun updatePrayerItem() {
         val newPrayer = Prayer(
             prayer.id,
