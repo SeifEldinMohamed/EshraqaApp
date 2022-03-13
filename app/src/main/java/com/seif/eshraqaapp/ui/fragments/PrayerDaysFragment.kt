@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -13,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Prayer
@@ -24,7 +22,6 @@ import com.seif.eshraqaapp.ui.adapters.PrayerAdapter
 import com.seif.eshraqaapp.ui.fragments.PrayerDaysFragmentArgs.fromBundle
 import com.seif.eshraqaapp.viewmodels.PrayerViewModel
 import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
-import kotlinx.parcelize.Parcelize
 
 
 private const val maxNumberOfWeeks: Int = 500
@@ -123,12 +120,11 @@ class PrayerDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
-            if (isEndOfMonth) {
-                edit.putInt("nweek", 1)
-                edit.apply()
-            } else {
-                edit.putInt("nweek", numberOfWeeks + 1)
-                edit.apply()
+
+            if(AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false)){
+                var currentQadaaPeriod = AppSharedPref.readQadaaPeriod("qadaa_period",0)
+                currentQadaaPeriod--
+                AppSharedPref.writeQadaaPeriod("qadaa_period", currentQadaaPeriod)
             }
             val scoreWeekPercentage = calculateScore()
             showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
@@ -144,32 +140,36 @@ class PrayerDaysFragment : Fragment() {
         val image: Int
         when (scoreWeekPercentage) {
             100 -> {
+
                 image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_happy
                 } else {
                     R.drawable.zahra_happy
                 }
                 weeklyMessage = generateRandomSuccessMessagePrayer()
-                if (isEndOfMonth) {
-                    edit.putLong("totalScorePrayer", 0L)
-                    edit.putLong("totalNumberPrayer", 0L)
-                    edit.apply()
+                if (isEndOfMonth && AppSharedPref.readQadaaPeriod("qadaa_period", -1) <= 0) {
+//                    edit.putLong("totalScorePrayer", 0L)
+//                    edit.putLong("totalNumberPrayer", 0L)
+//                    edit.apply()
                     showEndMonthCongratulationMessage(
                         getString(R.string.update_prayer_schedule),
                         weeklyMessage,
                         image,
-                        true
+                        isEndOfMonth
                     )
+                    Log.d("day","qadaa period: "+ AppSharedPref.readQadaaPeriod("qadaa_period", -1).toString())
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 }
                 Log.d("days", "success")
             }
 
             else -> {
+
                 image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_sad
                 } else {
@@ -180,18 +180,19 @@ class PrayerDaysFragment : Fragment() {
                     edit.putLong("totalScorePrayer", 0L)
                     edit.putLong("totalNumberPrayer", 0L)
                     edit.apply()
-                    showEndMonthCongratulationMessage(
-                        getString(R.string.update_prayer_schedule),
-                        weeklyMessage,
-                        image,
-                        false
-                    )
-                } else {
-                    showNormalCongratulationMessage(
-                        weeklyMessage,
-                        image,
-                    )
+
+//                    showEndMonthCongratulationMessage(
+//                        getString(R.string.update_prayer_schedule),
+//                        weeklyMessage,
+//                        image,
+//                        false
+//                    )
                 }
+                showNormalCongratulationMessage(
+                    weeklyMessage,
+                    image,
+                    isEndOfMonth
+                )
                 Log.d("days", "fail")
             }
         }
@@ -239,6 +240,7 @@ class PrayerDaysFragment : Fragment() {
     private fun showNormalCongratulationMessage(
         message: String,
         image: Int,
+        isEndOfMonth: Boolean
     ) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -258,6 +260,19 @@ class PrayerDaysFragment : Fragment() {
         }
         characterImage.setImageResource(image)
         txtMessage.text = message
+
+        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0){
+            AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
+            AppSharedPref.writePrayerOnly("prayerOnly", true)
+        }
+
+        if (isEndOfMonth) {
+            edit.putInt("nweek", 1)
+            edit.apply()
+        } else {
+            edit.putInt("nweek", numberOfWeeks + 1)
+            edit.apply()
+        }
 
         prayerViewModel.addPrayer(
             prayerViewModel.createNewWeekSchedule(
@@ -279,7 +294,7 @@ class PrayerDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
-        canUpdate:Boolean
+        isEndOfMonth: Boolean
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -309,26 +324,39 @@ class PrayerDaysFragment : Fragment() {
         // change character and frame according to male of user
         txtMessage.text = message
         txtMessageAddOrDelete.text = addOrDeleteMessage
+
+        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0){ // check if qadaa period is finished or not
+            AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
+            AppSharedPref.writePrayerOnly("prayerOnly", true)
+        }
+
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
           //  showUpdateQuranCountersDialog()
-            if (canUpdate){
                 if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
                     // start ask from qadaa
-                    showQadaaBottomSheetDialog()
+                    showQadaaBottomSheetDialog(isEndOfMonth)
                     afterMonthDialog.dismiss()
-                }
-                else if (AppSharedPref.readPrayerOnly("prayerAndQadaa", false)){
-                    // check if the qadaa period is finished or not
-                    // if finished then we start ask from qadaa
                 }
                 else{ // sonn + prayer
                     // so he can add or remove sonn from it's schedule
-
+                    showQadaaBottomSheetDialog(isEndOfMonth)
+                    afterMonthDialog.dismiss()
                 }
-            }
         }
         btnNo.setOnClickListener {
+            if (isEndOfMonth) {
+                edit.putInt("nweek", 1)
+                edit.apply()
+            } else {
+                edit.putInt("nweek", numberOfWeeks + 1)
+                edit.apply()
+            }
+
+            edit.putLong("totalScorePrayer", 0L)
+            edit.putLong("totalNumberPrayer", 0L)
+            edit.apply()
+
             prayerViewModel.addPrayer(
                 prayerViewModel.createNewWeekSchedule(
                     lastPrayerDay,
@@ -342,6 +370,15 @@ class PrayerDaysFragment : Fragment() {
         }
         afterMonthDialog.show()
     }
+
+//    private fun showQadaaCongratulationMessage() {
+//        if(IntroSharedPref.readGander("Male", false)){
+//            showNormalCongratulationMessage(getString(R.string.qadaa_period_finished_message), R.drawable.gheth_happy)
+//            }
+//            else{ // female (zahra)
+//            showNormalCongratulationMessage(getString(R.string.qadaa_period_finished_message), R.drawable.zahra_happy)
+//        }
+//    }
 
     fun generateRandomSuccessMessagePrayer(): String {
         val strings = ArrayList<String>()
@@ -361,7 +398,7 @@ class PrayerDaysFragment : Fragment() {
         return strings.random()
     }
 
-    private fun showQadaaBottomSheetDialog() {
+    private fun showQadaaBottomSheetDialog(isEndOfMonth: Boolean) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
             R.layout.prayer_bottom_sheet_dialog,
@@ -370,18 +407,18 @@ class PrayerDaysFragment : Fragment() {
         bottomSheetView.findViewById<TextView>(R.id.txt_prayer_question).text =
             getString(R.string.qadaa_question1)
         bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
-            showQadaa2BottomSheetDialog() // to know how many weeks the qadaa schedule will be available
+            showQadaa2BottomSheetDialog(isEndOfMonth) // to know how many weeks the qadaa schedule will be available
             bottomSheetDialog.dismiss()
         }
         bottomSheetView.findViewById<Button>(R.id.btn_no_prayer).setOnClickListener {
-            showChooseSonnBottomSheetDialog() // go to sonn bottom sheet
+            showChooseSonnBottomSheetDialog(isEndOfMonth) // go to sonn bottom sheet
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
 
-    private fun showChooseSonnBottomSheetDialog() {
+    private fun showChooseSonnBottomSheetDialog(isEndOfMonth: Boolean) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
             R.layout.sonn_bottom_sheet_dialog,
@@ -394,6 +431,14 @@ class PrayerDaysFragment : Fragment() {
         val sontMaghrebCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_maghreb_check)
         val sontZuhrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
         val sontWetrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
+
+        sontDohaCheckBox.isChecked = AppSharedPref.readSontDoha("s_doha", false)
+        sontEshaCheckBox.isChecked = AppSharedPref.readSontEsha("s_esha", false)
+        sontfagrCheckBox.isChecked = AppSharedPref.readSontFagr("s_fagr", false)
+        sontKeyamCheckBox.isChecked = AppSharedPref.readSontKeyam("s_keyam", false)
+        sontMaghrebCheckBox.isChecked = AppSharedPref.readSontMaghreb("s_maghreb", false)
+        sontZuhrCheckBox.isChecked = AppSharedPref.readSontZuhr("s_zuhr", false)
+        sontWetrCheckBox.isChecked = AppSharedPref.readSontWetr("s_wetr", false)
 
 
         bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
@@ -418,6 +463,18 @@ class PrayerDaysFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                if (isEndOfMonth) {
+                    edit.putInt("nweek", 1)
+                    edit.apply()
+                } else {
+                    edit.putInt("nweek", numberOfWeeks + 1)
+                    edit.apply()
+                }
+
+                edit.putLong("totalScorePrayer", 0L)
+                edit.putLong("totalNumberPrayer", 0L)
+                edit.apply()
+
                 AppSharedPref.writePrayerOnly("prayerOnly", false)
                 AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
                 AppSharedPref.writePrayerAndSonn("prayerAndSonn", true)
@@ -492,7 +549,7 @@ class PrayerDaysFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
-    private fun showQadaa2BottomSheetDialog() {
+    private fun showQadaa2BottomSheetDialog(isEndOfMonth: Boolean) {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(requireContext()).inflate(
             R.layout.qadaa2_bottom_sheet_dialog,
@@ -504,6 +561,18 @@ class PrayerDaysFragment : Fragment() {
             if (numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks) {
                 numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
             } else {
+                if (isEndOfMonth) {
+                    edit.putInt("nweek", 1)
+                    edit.apply()
+                } else {
+                    edit.putInt("nweek", numberOfWeeks + 1)
+                    edit.apply()
+                }
+
+                edit.putLong("totalScorePrayer", 0L)
+                edit.putLong("totalNumberPrayer", 0L)
+                edit.apply()
+
                 AppSharedPref.writePrayerOnly("prayerOnly", false)
                 AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
                 AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)

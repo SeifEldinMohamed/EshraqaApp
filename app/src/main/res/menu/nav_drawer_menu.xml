@@ -29,6 +29,14 @@
                     android:id="@+id/menu_about"
                     android:icon="@drawable/ic_about"
                     android:title="@string/about_menu" />
+                <item
+                    android:id="@+id/menu_blank"
+                    android:title=""
+                    android:enabled="false"/>
+                <item
+                    android:id="@+id/menu_blank2"
+                    android:title=""
+                    android:enabled="false"/>
             </menu>
         </item>
 

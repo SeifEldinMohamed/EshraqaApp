@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
             showQadaaBottomSheetDialog()
             bottomSheetDialog.dismiss()
         }
-        bottomSheetView.findViewById<Button>(R.id.btn_no_prayer).setOnClickListener {
+        bottomSheetView.findViewById<Button>(R.id.btn_no_prayer).setOnClickListener { // create only prayer schedule
             writeSharedPrefPrayer()
             AppSharedPref.writePrayerOnly("prayerOnly", true)
             AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
@@ -247,6 +247,8 @@ class HomeFragment : Fragment() {
                 AppSharedPref.writePrayerOnly("prayerOnly", false)
                 AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
                 AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+
+                AppSharedPref.writeQadaaPeriod("qadaa_period", numberOfWeeksEditText.text.toString().toInt())
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
                 findNavController().navigate(action)

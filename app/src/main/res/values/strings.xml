@@ -63,7 +63,7 @@
     <string name="fail_message3_quran">عليكَ بتلاوةِ القرآنِ، فإنَّهُ نورٌ لكَ في الأرضِ، وذُخرٌ لكَ في السَّماء.</string>
 
     // prayer messages
-    <string name="success_message1_prayer">أبشر، أسأل الله أن يجعل حفاظك  على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
+    <string name="success_message1_prayer">أبشر، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
     <string name="success_message2_prayer">أبشر، فالله يحبك، وعسی أن يبنى لك بيتًا فى الجنة كل يوم.</string>
     <string name="success_message3_prayer">كُلمَا حَرصتّ عَلى الصَلاةْ ، كُلمَا شَعرتّ إنَ الدُنيَا أزدَادتّ يُسراً !♥</string>
 
@@ -132,6 +132,7 @@
     <string name="qadaa_question2">كم عدد أسابيع القضاء ؟</string>
     <string name="number_week_hint">عدد الأسابيع</string>
     <string name="update_prayer_schedule">هل ترغب في تعديل جدولك ؟</string>
+    <string name="qadaa_period_finished_message">لقد نم الأنتهاء من جدول القضاء بفضل الله، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
 
 
     <string-array name="numbersOfDays">

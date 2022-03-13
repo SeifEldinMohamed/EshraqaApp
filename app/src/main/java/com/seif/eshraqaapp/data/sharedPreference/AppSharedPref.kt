@@ -139,6 +139,16 @@ class AppSharedPref {
             prefsEditor.apply()
         }
 
+        fun readQadaaPeriod(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writeQadaaPeriod(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)
