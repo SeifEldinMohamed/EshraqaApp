@@ -7,17 +7,25 @@
     tools:context=".ui.fragments.QuranFragment">
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="90dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_280sdp"
         android:layout_height="wrap_content"
         android:background="@drawable/azkar_card_background"
         android:paddingBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.347">
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.0">
 
         <RadioGroup
             android:id="@+id/radio_group_revision"

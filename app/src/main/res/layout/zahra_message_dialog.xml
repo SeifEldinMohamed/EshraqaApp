@@ -54,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.338"
             app:layout_constraintStart_toStartOf="@+id/img_frame_message"
             app:layout_constraintTop_toBottomOf="@+id/txt_message"
-            app:srcCompat="@drawable/zahra_normal" />
+            android:src="@drawable/zahra_normal" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_ok_message"

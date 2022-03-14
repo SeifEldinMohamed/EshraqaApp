@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/prayerDaysFragment"
         android:name="com.seif.eshraqaapp.ui.fragments.PrayerDaysFragment"
-        android:label="جدول القرآن"
+        android:label="جدول الصلاة"
         tools:layout="@layout/fragment_prayer_days" >
         <action
             android:id="@+id/action_prayerDaysFragment_to_prayerFragment"

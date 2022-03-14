@@ -51,17 +51,17 @@ lateinit var binding : FragmentSignUpBinding
         }
         binding.btnLogin.setOnClickListener{
                 if (binding.etUsername.text!!.isEmpty()) {
-                    Toast.makeText(requireContext(), "Username is required ", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "أدخل أسمك !", Toast.LENGTH_SHORT)
                         .show()
                     return@setOnClickListener
                 }
                 if (binding.etBirthdate.text!!.isEmpty()) {
-                    Toast.makeText(requireContext(), "Birthdate is required ", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "أدخل تاريخ ميلادك !", Toast.LENGTH_SHORT)
                         .show()
                     return@setOnClickListener
                 }
                 if (!binding.rbMale.isChecked && !binding.rbFemale.isChecked) {
-                    Toast.makeText(requireContext(), "Gender is required ", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "أدخل نوع جنسك !", Toast.LENGTH_SHORT)
                         .show()
                     return@setOnClickListener
                 }
