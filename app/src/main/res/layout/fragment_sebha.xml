@@ -20,19 +20,19 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/txt_counter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/_20sdp"
                 android:gravity="center"
-                android:text="@string/_33"
+                android:text="@string/_0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_38ssp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton4"
-                app:layout_constraintEnd_toEndOf="@+id/floatingActionButton4"
-                app:layout_constraintStart_toStartOf="@+id/floatingActionButton4"
-                app:layout_constraintTop_toTopOf="@+id/floatingActionButton4"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_sebha"
+                app:layout_constraintEnd_toEndOf="@+id/btn_sebha"
+                app:layout_constraintStart_toStartOf="@+id/btn_sebha"
+                app:layout_constraintTop_toTopOf="@+id/btn_sebha"
                 tools:ignore="TextContrastCheck" />
 
             <ImageView
@@ -47,12 +47,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/floatingActionButton3"
+                app:layout_constraintTop_toBottomOf="@+id/btn_seha_message"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="ImageContrastCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton4"
+                android:id="@+id/btn_sebha"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/_8sdp"
@@ -69,7 +69,7 @@
                 tools:ignore="ImageContrastCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton3"
+                android:id="@+id/btn_seha_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_28sdp"
@@ -79,14 +79,14 @@
                 android:focusable="true"
                 android:src="@drawable/ic_pen"
                 android:theme="@style/FloatingButton"
-                app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+                app:layout_constraintEnd_toStartOf="@+id/btn_reset"
                 app:layout_constraintHorizontal_bias="0.52"
-                app:layout_constraintStart_toEndOf="@+id/floatingActionButton2"
+                app:layout_constraintStart_toEndOf="@+id/btn_sound"
                 app:layout_constraintTop_toBottomOf="@+id/imageView7"
                 tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton2"
+                android:id="@+id/btn_sound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_28sdp"
@@ -101,7 +101,7 @@
                 tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
+                android:id="@+id/btn_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_28sdp"
@@ -129,7 +129,7 @@
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/txt_sebha_message"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
@@ -156,6 +156,7 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView7"
                 app:layout_constraintTop_toTopOf="@+id/imageView7"
                 tools:ignore="ImageContrastCheck" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

@@ -3,6 +3,7 @@ package com.seif.eshraqaapp.data.sharedPreference
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 class AppSharedPref {
     companion object {
@@ -149,6 +150,33 @@ class AppSharedPref {
             prefsEditor.apply()
         }
 
+        fun readSoundChoice(key:String?, defValue:Boolean): Boolean{
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+        fun writeSoundChoice(key:String?, value:Boolean){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSebhaScore(key:String?, defValue:Long): Long{
+
+            return mSharedPref!!.getLong(key, defValue)
+        }
+        fun writeSebhaScore(key:String?, value:Long){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putLong(key, value)
+            prefsEditor.apply()
+        }
+        fun readSebhaMessage(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writeSebhaMessage(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)

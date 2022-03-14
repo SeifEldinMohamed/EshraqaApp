@@ -147,14 +147,15 @@
     </string-array>
 
     // sebha
-    <string name="tsbeh1">سبحان الله</string>
+    <string name="tsbeh1">الله أكبر</string>
     <string name="tsbeh2">الحمد لله</string>
-    <string name="tsbeh3">الله أكبر</string>
+    <string name="tsbeh3">سبحان الله</string>
     <string name="tsbeh4">أستغفر الله</string>
     <string name="tsbeh5">لا حول ولا قوة إلا بالله</string>
-    <string name="tsbeh6">سبحان الله وبحمده، سبحان الله العظيم</string>
-    <string name="tsbeh7">اللهم إنك عفو تحب العفو فاعف عنا</string>
-    <string name="tsbeh8">اللهم صلِّ على محمد وعلى آله وصحبه وسلم</string>
+    <string name="tsbeh6">اللهم إنك عفو تحب\nالعفو فاعف عنا</string>
+    <string name="tsbeh7">سبحان الله وبحمده،\n سبحان الله العظيم</string>
+    <string name="tsbeh8">اللهم صلِّ على محمد وعلى\n آله وصحبه وسلم</string>
+
     <string name="tsbeh_message_background_image_description">tsbeh message background image description</string>
     <string name="reset_image_description">reset image description</string>
     <string name="floral_design_image_description">floral design image description</string>
@@ -183,6 +184,8 @@
     <string name="sont_doha">سنة الضحي</string>
     <string name="sont_wetr">سنة الوتر</string>
     <string name="gheth_head_image_description">gheth head image description</string>
+    <string name="_0">0</string>
+    <string name="choose">أختر</string>
 
 
 </resources>
