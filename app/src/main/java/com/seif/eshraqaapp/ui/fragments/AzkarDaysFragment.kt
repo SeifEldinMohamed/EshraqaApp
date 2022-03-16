@@ -107,6 +107,15 @@ class AzkarDaysFragment : Fragment() {
         dialog.setContentView(R.layout.confirmation_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
+
+        val txtNewWeek = dialog.findViewById<TextView>(R.id.txt_new_week)
+         if(IntroSharedPref.readGander("Male", false)) {
+                txtNewWeek.text = getString(R.string.end_of_week_confirmation)
+         }
+        else{
+             txtNewWeek.text = getString(R.string.end_of_week_confirmation_female)
+         }
+
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
             Log.d("days", "number of azkar $numberOfAzkar")
@@ -135,11 +144,17 @@ class AzkarDaysFragment : Fragment() {
             Log.d("days", "total week score  $totalWeekScore")
             Log.d("days", "percentage  $scoreWeekPercentage")
             val image :Int
+            val addNewAzkarToYourSchedule :String
+            addNewAzkarToYourSchedule = if(IntroSharedPref.readGander("Male", false)){
+                getString(R.string.add_new_azkar_to_your_schedule)
+            } else{
+                getString(R.string.add_new_azkar_to_your_schedule_female)
+            }
             when (scoreWeekPercentage) {
                 in 80..100 -> {
                     image = if(IntroSharedPref.readGander("Male", false)){
                         R.drawable.gheth_happy
-                    }else{
+                    } else{
                         R.drawable.zahra_happy
                     }
                         weeklyMessage = generateRandomSuccessMessage()
@@ -148,7 +163,7 @@ class AzkarDaysFragment : Fragment() {
                         edit.putLong("totalNumberAzkar", 0L)
                         edit.apply()
                         showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
+                            addNewAzkarToYourSchedule,
                             weeklyMessage,
                             image
                         )
@@ -175,7 +190,7 @@ class AzkarDaysFragment : Fragment() {
                         edit.putLong("totalNumberAzkar", 0L)
                         edit.apply()
                         showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
+                            addNewAzkarToYourSchedule,
                             weeklyMessage,
                             image
                         )
@@ -200,7 +215,7 @@ class AzkarDaysFragment : Fragment() {
                         edit.putLong("totalNumberAzkar", 0L)
                         edit.apply()
                         showEndMonthCongratulationMessage(
-                            getString(R.string.add_new_azkar_to_your_schedule),
+                            addNewAzkarToYourSchedule,
                             weeklyMessage,
                             image
                         )
@@ -317,7 +332,14 @@ class AzkarDaysFragment : Fragment() {
         val tkberCheck = dialog.findViewById<CheckBox>(R.id.tkber_check)
         val estghCheck = dialog.findViewById<CheckBox>(R.id.estghphar_check)
 
-        pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
+        val txtChooseZekr = dialog.findViewById<TextView>(R.id.txt_choose_zekr)
+        if(IntroSharedPref.readGander("Male", false)) {
+            txtChooseZekr.text = getString(R.string.choose_akar_to_add_message)
+        }
+        else{
+            txtChooseZekr.text = getString(R.string.choose_akar_to_add_message_female)
+        }
+            pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
         hamdCheck.isChecked = pref.getBoolean("hamd", false)
         tsbehCheck.isChecked = pref.getBoolean("tsbeh", false)
         tkberCheck.isChecked = pref.getBoolean("tkber", false)

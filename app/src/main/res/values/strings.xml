@@ -24,7 +24,10 @@
     <string name="eshraka_charchter_describtion">eshraka charchter</string>
     <string name="save_menu">save</string>
     <string name="end_of_week">نهاية الأسبوع</string>
+
     <string name="end_of_week_confirmation">هل ترغب في بداية أسبوع جديد و حفظ درجات هذا الأسبوع ؟</string>
+    <string name="end_of_week_confirmation_female">هل ترغبين في بداية أسبوع جديد و حفظ درجات هذا الأسبوع ؟</string>
+
     <string name="back">رجوع</string>
     <string name="yes">نعم</string>
     <string name="first_week_prayer_message">أول أسبوع لك في جدول الصلاة أسال الله ان يوفقك</string>
@@ -109,9 +112,13 @@
     <string name="fail_message3_prayer_female">ما دمت في الصلاة فأنت تقرعين باب الملك، ومن يقرع باب الملك يفتح له، ولا تدريين كمَّ الخير الذي سينالك إن فتح لك الملك بابه، فأقبلي!</string>
 
     <string name="noo">لا</string>
+
     <string name="add_new_azkar_to_your_schedule">هل ترغب في حذف أو إضافة بعض البنود من جدولك ؟</string>
-    <string name="delete_azkar_from_your_schedule">هل ترغب في تقليل عدد البنود من جدولك ؟</string>
+    <string name="add_new_azkar_to_your_schedule_female">هل ترغبين في حذف أو إضافة بعض البنود من جدولك ؟</string>
+
     <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها أو حذفها</string>
+    <string name="choose_akar_to_add_message_female">أختاري البنود التي تريد إضافتها أو حذفها</string>
+
     <string name="save">حفظ</string>
     <string name="software_inversion">Software Inversion</string>
     <string name="logo_image_description">logo image description</string>
@@ -132,9 +139,16 @@
     <string name="vacation">إجازة</string>
     <string name="number_of_days">الأيام</string>
     <string name="follow">متابعة</string>
+
     <string name="enter_number_of_days_save">أختر عدد أيام الحفظ أسبوعيا</string>
+    <string name="enter_number_of_days_save_female">أختاري عدد أيام الحفظ أسبوعيا</string>
+
     <string name="enter_number_of_days_read">أختر عدد أيام القراءة أسبوعيا</string>
+    <string name="enter_number_of_days_read_female">أختاري عدد أيام القراءة أسبوعيا</string>
+
     <string name="enter_number_of_days_revision">أختر عدد أيام المراجعة أسبوعيا</string>
+    <string name="enter_number_of_days_revision_female">أختاري عدد أيام المراجعة أسبوعيا</string>
+
     <string name="_20_2_2022">20 / 2 / 2022</string>
     <string name="day_name_item_row">السبت</string>
     <string name="score_item_row">2 / 4</string>

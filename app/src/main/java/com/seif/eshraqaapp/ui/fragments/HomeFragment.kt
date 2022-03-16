@@ -283,7 +283,23 @@ class HomeFragment : Fragment() {
         var numberOfSaveDays = ""
         var numberOfReadDays = ""
         var numberOfRevisionDays = ""
-        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+        val txtReadCounter = bottomSheetView.findViewById<TextView>(R.id.txt_read_counters)
+        val txtSaveCounter = bottomSheetView.findViewById<TextView>(R.id.txt_save_counters)
+        val txtRevisionCounter = bottomSheetView.findViewById<TextView>(R.id.txt_revise_counters)
+        if (IntroSharedPref.readGander("Male", false)) {
+            txtReadCounter.text = getString(R.string.enter_number_of_days_read)
+            txtSaveCounter.text = getString(R.string.enter_number_of_days_save)
+            txtRevisionCounter.text = getString(R.string.enter_number_of_days_revision)
+        }
+        else{
+            txtReadCounter.text = getString(R.string.enter_number_of_days_read_female)
+            txtSaveCounter.text = getString(R.string.enter_number_of_days_save_female)
+            txtRevisionCounter.text = getString(R.string.enter_number_of_days_revision_female)
+
+        }
+
+            saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,

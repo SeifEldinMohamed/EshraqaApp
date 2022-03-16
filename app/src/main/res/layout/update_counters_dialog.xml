@@ -26,11 +26,11 @@
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_save_counters"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/txt_revise_counter"
             app:layout_constraintVertical_bias="0.676" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/txt_revise_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_27sdp"
@@ -39,7 +39,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_read_counter" />
 
         <Spinner
             android:id="@+id/spinner_revision_counter"
@@ -49,11 +49,11 @@
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView12"
-            app:layout_constraintEnd_toStartOf="@+id/textView12"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_revise_counter"
+            app:layout_constraintEnd_toStartOf="@+id/txt_revise_counter"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/txt_revise_counter"
             tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
         <Spinner
@@ -64,15 +64,15 @@
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintEnd_toStartOf="@+id/textView13"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_save_counter"
+            app:layout_constraintEnd_toStartOf="@+id/txt_save_counter"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/txt_save_counter"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/txt_save_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_28sdp"
@@ -91,15 +91,15 @@
             android:backgroundTint="#FFFFFF"
             android:entries="@array/numbersOfDays"
             android:padding="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
-            app:layout_constraintEnd_toStartOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_read_counter"
+            app:layout_constraintEnd_toStartOf="@+id/txt_read_counter"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:layout_constraintTop_toTopOf="@+id/txt_read_counter"
             tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/txt_read_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_27sdp"
@@ -108,7 +108,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_save_counter" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_counters"
@@ -123,7 +123,7 @@
             app:cornerRadius="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/txt_revise_counter"
             app:layout_constraintVertical_bias="0.676" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
