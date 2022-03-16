@@ -140,13 +140,15 @@ class PrayerDaysFragment : Fragment() {
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
         val image: Int
+        val addOrDeleteMessage: String
         when (scoreWeekPercentage) {
             100 -> {
-
-                image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_happy
+                if (IntroSharedPref.readGander("Male", false)) {
+                    image = R.drawable.gheth_happy
+                    addOrDeleteMessage = getString(R.string.update_prayer_schedule)
                 } else {
-                    R.drawable.zahra_happy
+                    image = R.drawable.zahra_happy
+                    addOrDeleteMessage = getString(R.string.update_prayer_schedule_female)
                 }
                 weeklyMessage = generateRandomSuccessMessagePrayer()
                 if (isEndOfMonth && AppSharedPref.readQadaaPeriod("qadaa_period", -1) <= 0) {
@@ -154,7 +156,7 @@ class PrayerDaysFragment : Fragment() {
 //                    edit.putLong("totalNumberPrayer", 0L)
 //                    edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.update_prayer_schedule),
+                        addOrDeleteMessage,
                         weeklyMessage,
                         image,
                         isEndOfMonth
@@ -384,18 +386,32 @@ class PrayerDaysFragment : Fragment() {
 
     fun generateRandomSuccessMessagePrayer(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.success_message1_prayer))
-        strings.add(getString(R.string.success_message2_prayer))
-        strings.add(getString(R.string.success_message3_prayer))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.success_message1_prayer))
+            strings.add(getString(R.string.success_message2_prayer))
+            strings.add(getString(R.string.success_message3_prayer))
+        }
+        else{ // female
+            strings.add(getString(R.string.success_message1_prayer_female))
+            strings.add(getString(R.string.success_message2_prayer_female))
+            strings.add(getString(R.string.success_message3_prayer_female))
+        }
 
         return strings.random()
     }
 
     private fun generateRandomFailMessagePrayer(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.fail_message1_prayer))
-        strings.add(getString(R.string.fail_message2_prayer))
-        strings.add(getString(R.string.fail_message3_prayer))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.fail_message1_prayer))
+            strings.add(getString(R.string.fail_message2_prayer))
+            strings.add(getString(R.string.fail_message3_prayer))
+        }
+        else{ //female
+            strings.add(getString(R.string.fail_message1_prayer_female))
+            strings.add(getString(R.string.fail_message2_prayer_female))
+            strings.add(getString(R.string.fail_message3_prayer_female))
+        }
 
         return strings.random()
     }

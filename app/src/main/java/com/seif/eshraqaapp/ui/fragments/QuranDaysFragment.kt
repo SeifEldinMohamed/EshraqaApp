@@ -143,20 +143,24 @@ class QuranDaysFragment : Fragment() {
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
         val image: Int
+        val addOrDeleteMessage : String
         when (scoreWeekPercentage) {
             in 80..100 -> {
-                image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_happy
+                 if (IntroSharedPref.readGander("Male", false)) {
+                     image = R.drawable.gheth_happy
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
                 } else {
-                    R.drawable.zahra_happy
-                }
+                     image =  R.drawable.zahra_happy
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
+
+                 }
                 weeklyMessage = generateRandomSuccessMessageQuran()
                 if (isEndOfMonth) {
                     edit.putLong("totalScoreQuran", 0L)
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.updateWorkCounter),
+                        addOrDeleteMessage,
                         weeklyMessage,
                         image,
                     )
@@ -169,10 +173,13 @@ class QuranDaysFragment : Fragment() {
                 Log.d("days", "success")
             }
             in 65..79 -> { // handle adding
-                image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_normal
-                } else {
-                    R.drawable.zahra_normal
+                 if (IntroSharedPref.readGander("Male", false)) {
+                      image = R.drawable.gheth_normal
+                      addOrDeleteMessage = getString(R.string.updateWorkCounter)
+
+                } else { // female
+                     image = R.drawable.zahra_normal
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
                 }
                 weeklyMessage = generateRandomMediumMessageQuran()
                 if (isEndOfMonth) {
@@ -180,7 +187,7 @@ class QuranDaysFragment : Fragment() {
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.updateWorkCounter),
+                        addOrDeleteMessage,
                         weeklyMessage,
                         image,
                     )
@@ -194,18 +201,22 @@ class QuranDaysFragment : Fragment() {
                 Log.d("days", "medium")
             }
             in 0..64 -> {
-                image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_sad
-                } else {
-                    R.drawable.zahra_sad
-                }
+                 if (IntroSharedPref.readGander("Male", false)) {
+                     image = R.drawable.gheth_sad
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
+
+                 } else {
+                     image = R.drawable.zahra_sad
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
+
+                 }
                 weeklyMessage = generateRandomFailMessageQuran()
                 if (isEndOfMonth) {
                     edit.putLong("totalScoreQuran", 0L)
                     edit.putLong("totalNumberQuran", 0L)
                     edit.apply()
                     showEndMonthCongratulationMessage(
-                        getString(R.string.updateWorkCounter),
+                        addOrDeleteMessage,
                         weeklyMessage,
                         image,
                     )
@@ -434,29 +445,50 @@ class QuranDaysFragment : Fragment() {
 
     fun generateRandomSuccessMessageQuran(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.success_message1_quran))
-        strings.add(getString(R.string.success_message2_quran))
-        strings.add(getString(R.string.success_message3_quran))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.success_message1_quran))
+            strings.add(getString(R.string.success_message2_quran))
+            strings.add(getString(R.string.success_message3_quran))
+        }
+        else{ // female
+            strings.add(getString(R.string.success_message1_quran_female))
+            strings.add(getString(R.string.success_message2_quran_female))
+            strings.add(getString(R.string.success_message3_quran_female))
+        }
 
         return strings.random()
     }
 
     private fun generateRandomMediumMessageQuran(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.medium_message1_quran))
-        strings.add(getString(R.string.medium_message2_quran))
-        strings.add(getString(R.string.medium_message3_quran))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.medium_message1_quran))
+            strings.add(getString(R.string.medium_message2_quran))
+            strings.add(getString(R.string.medium_message3_quran))
+        }
+        else{ // female
+            strings.add(getString(R.string.medium_message1_quran_female))
+            strings.add(getString(R.string.medium_message2_quran_female))
+            strings.add(getString(R.string.medium_message3_quran_female))
+        }
+
 
         return strings.random()
     }
 
     private fun generateRandomFailMessageQuran(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.fail_message1_quran))
-        strings.add(getString(R.string.fail_message2_quran))
-        strings.add(getString(R.string.fail_message3_quran))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.fail_message1_quran))
+            strings.add(getString(R.string.fail_message2_quran))
+            strings.add(getString(R.string.fail_message3_quran))
+        }
+        else{
+            strings.add(getString(R.string.fail_message1_quran_female))
+            strings.add(getString(R.string.fail_message2_quran_female))
+            strings.add(getString(R.string.fail_message3_quran_female))
+        }
 
         return strings.random()
     }
-
 }

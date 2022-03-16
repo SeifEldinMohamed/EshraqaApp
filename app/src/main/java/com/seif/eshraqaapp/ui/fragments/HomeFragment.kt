@@ -21,6 +21,7 @@ import com.seif.eshraqaapp.databinding.FragmentHomeBinding
 import com.seif.eshraqaapp.viewmodels.HomeViewModel
 
 import kotlinx.parcelize.Parcelize
+import org.w3c.dom.Text
 
 private const val maxNumberOfWeeks: Int = 500
 var sonnHashMap: HomeFragment.SonnHashMap = HomeFragment.SonnHashMap()
@@ -83,7 +84,14 @@ class HomeFragment : Fragment() {
             R.layout.prayer_bottom_sheet_dialog,
             view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_prayer)
         )
-        bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
+        val question = bottomSheetView.findViewById<TextView>(R.id.txt_prayer_question)
+        if (IntroSharedPref.readGander("Male", false)) {
+            question.text = getString(R.string.prayer_question1)
+        }
+        else{
+            question.text = getString(R.string.prayer_question1_female)
+        }
+            bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
             showQadaaBottomSheetDialog()
             bottomSheetDialog.dismiss()
         }

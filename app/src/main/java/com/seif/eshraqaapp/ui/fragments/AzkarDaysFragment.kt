@@ -378,30 +378,55 @@ class AzkarDaysFragment : Fragment() {
 
     fun generateRandomSuccessMessage(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.success_message1_azkar))
-        strings.add(getString(R.string.success_message2_azkar))
-        strings.add(getString(R.string.success_message3_azkar))
-        strings.add(getString(R.string.success_message4_azkar))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.success_message1_azkar))
+            strings.add(getString(R.string.success_message2_azkar))
+            strings.add(getString(R.string.success_message3_azkar))
+            strings.add(getString(R.string.success_message4_azkar))
+        }
+        else{ // female
+            strings.add(getString(R.string.success_message1_azkar_female))
+            strings.add(getString(R.string.success_message2_azkar_female))
+            strings.add(getString(R.string.success_message3_azkar_female))
+            strings.add(getString(R.string.success_message4_azkar_female))
+        }
 
         return strings.random()
     }
 
     private fun generateRandomMediumMessage(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.medium_message1_azkar))
-        strings.add(getString(R.string.medium_message2_azkar))
-        strings.add(getString(R.string.medium_message3_azkar))
-        strings.add(getString(R.string.medium_message4_azkar))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.medium_message1_azkar))
+            strings.add(getString(R.string.medium_message2_azkar))
+            strings.add(getString(R.string.medium_message3_azkar))
+            strings.add(getString(R.string.medium_message4_azkar))
+        }
+        else{ // female
+            strings.add(getString(R.string.medium_message1_azkar_female))
+            strings.add(getString(R.string.medium_message2_azkar_female))
+            strings.add(getString(R.string.medium_message3_azkar_female))
+            strings.add(getString(R.string.medium_message4_azkar_female))
+        }
 
         return strings.random()
     }
 
     private fun generateRandomFailMessage(): String {
         val strings = ArrayList<String>()
-        strings.add(getString(R.string.fail_message1_azkar))
-        strings.add(getString(R.string.fail_message2_azkar))
-        strings.add(getString(R.string.fail_message3_azkar))
-        strings.add(getString(R.string.fail_message4_azkar))
+        if (IntroSharedPref.readGander("Male", false)) {
+            strings.add(getString(R.string.fail_message1_azkar))
+            strings.add(getString(R.string.fail_message2_azkar))
+            strings.add(getString(R.string.fail_message3_azkar))
+            strings.add(getString(R.string.fail_message4_azkar))
+        }
+        else{ // female
+            strings.add(getString(R.string.fail_message1_azkar_female))
+            strings.add(getString(R.string.fail_message2_azkar_female))
+            strings.add(getString(R.string.fail_message3_azkar_female))
+            strings.add(getString(R.string.fail_message4_azkar_female))
+        }
+
 
         return strings.random()
     }

@@ -23,8 +23,8 @@
     <string name="wrd_estghphar">ورد استغفار</string>
     <string name="eshraka_charchter_describtion">eshraka charchter</string>
     <string name="save_menu">save</string>
-    <string name="end_of_week">نهاية الاسبوع</string>
-    <string name="end_of_week_confirmation">هل ترغب في بداية اسبوع جديد و حفظ درجات هذا الاسبوع ؟</string>
+    <string name="end_of_week">نهاية الأسبوع</string>
+    <string name="end_of_week_confirmation">هل ترغب في بداية أسبوع جديد و حفظ درجات هذا الأسبوع ؟</string>
     <string name="back">رجوع</string>
     <string name="yes">نعم</string>
     <string name="first_week_prayer_message">أول أسبوع لك في جدول الصلاة أسال الله ان يوفقك</string>
@@ -38,38 +38,75 @@
     <string name="success_message2_azkar">بشرك الله بالجنة، وبقصور مشيدة وبساتين مزروعة، وبدوام صلة القلب بالله إن شاء الله.</string>
     <string name="success_message3_azkar">شخص آخر كلامه قبل النوم ذكر، وأول ما يقوله بعد الاستيقاظ ذكر، هو حتمََا قلب موصول بالله ويحبهُ الله.</string>
     <string name="success_message4_azkar">أرى أن لسانك رطبٌ دائمًا بذكر الله، رزقك الله حبه وقربه والأنس به.</string>
+    <!--female-->
+    <string name="success_message1_azkar_female">أبشري بطمأنينة القلب وانشراح الصدر، وحفظ الله لك من الهم والغم ومكائد الشيطان.</string>
+    <string name="success_message2_azkar_female">بشرك الله بالجنة، وبقصور مشيدة وبساتين مزروعة، وبدوام صلة القلب بالله إن شاء الله.</string>
+    <string name="success_message3_azkar_female">شخص آخر كلامه قبل النوم ذكر، وأول ما يقوله بعد الاستيقاظ ذكر، هو حتمََا قلب موصول بالله ويحبهُ الله.</string>
+    <string name="success_message4_azkar_female">أرى أن لسانك رطبٌ دائمًا بذكر الله، رزقك الله حبه وقربه والأنس به.</string>
 
     <string name="medium_message1_azkar">بأذكارك تكسر شوكة الشيطان وتقمعه وتخرجه من حياتك، فهلا التزمت بها بشكل أفضل؟</string>
     <string name="medium_message2_azkar">أراك تقصّر فى أذكارك دبر كل صلاة، لا تتكاسل، إشراقة ستساعدك بالتذكير، جاهد ليبقى لسانك ذاكرًا لله دومًا.</string>
     <string name="medium_message3_azkar">أحاديثٌ كثيرة تخبرنا بفضائل عظيمة، كقراءة سورة الملك قبل النوم تخاصم عن صاحبها حتى تدخله الجنة، آية الكرسي تحميك من مكر الشياطين، فلا تهمل أذكار نومك، أنت بحاجة إليها دائمًا.</string>
     <string name="medium_message4_azkar">إن كان قلبك موصولٌ بالله  وروحك تأنس بالله، ولسانك دائمُ الذكر، أتخشى شيئًا من الدنيا؟! فلا تتكاسل عن أذكارك.</string>
+    <!--female-->
+    <string name="medium_message1_azkar_female">بأذكارك تكسرين شوكة الشيطان وتقمعينه وتخرجينه من حياتك، فهلا التزمت بها بشكل أفضل؟</string>
+    <string name="medium_message2_azkar_female">أراك تقصّرين فى أذكارك دبر كل صلاة، لا تتكاسلي، إشراقة ستساعدك بالتذكير، جاهدي ليبقى لسانك ذاكرًا لله دومًا.</string>
+    <string name="medium_message3_azkar_female">أحاديثٌ كثيرة تخبرنا بفضائل عظيمة، كقراءة سورة الملك قبل النوم تخاصم عن صاحبها حتى تدخله الجنة، آية الكرسي تحميك من مكر الشياطين، فلا تهملي أذكار نومك، أنت بحاجة إليها دائمًا.</string>
+    <string name="medium_message4_azkar_female">إن كان قلبك موصولٌ بالله  وروحك تأنس بالله، ولسانك دائمُ الذكر، أتخشين شيئًا من الدنيا؟! فلا تتكاسلي عن أذكارك.</string>
+
 
     <string name="fail_message1_azkar">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيل! الله بعظمته يذكرك حين تذكره، فلا تهمل أذكارك.</string>
     <string name="fail_message2_azkar">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
     <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك.</string>
     <string name="fail_message4_azkar">مثل الذى يذكر الله والذى لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره فى قلبك وعلى لسانك.</string>
+    <!--female-->
+    <string name="fail_message1_azkar_female">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيلي! الله بعظمته يذكرك حين تذكرينه، فلا تهملي أذكارك.</string>
+    <string name="fail_message2_azkar_female">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
+    <string name="fail_message3_azkar_female">عندما تذهبين لفراشك لا تدرين على أي حال ستصبحين، فاجعلي روحك محصنة بأذكار نومك.</string>
+    <string name="fail_message4_azkar_female">مثل الذى يذكر الله والذى لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره فى قلبك وعلى لسانك.</string>
+
 
     // quran
     <string name="success_message1_quran">جعلك الله من الذين يقال لهم:" اقرأ ورتل وارتقِ كما كنت تُرتل في الدنيا فإن منزلتك عندَ أخر آية كنت تقرؤها“.</string>
     <string name="success_message2_quran"> مادمت تداوم على ورد مراجعتك فتيقن أن القرآن سيُحفظ في قلبك وعقلك حتى ترتل منه ما تشاء وقت ما تشاء.</string>
     <string name="success_message3_quran">أبشر، فقد قال رسولنا:"مثلُ المؤمنِ الذي يقرأ القرآنَ مثلُ الأترُجَّةِ. ريحُها طيِّبٌ وطعمُها طيِّبٌ".</string>
+<!--female-->
+    <string name="success_message1_quran_female">جعلك الله من الذين يقال لهم:" اقرأ ورتل وارتقِ كما كنت تُرتل في الدنيا فإن منزلتك عندَ أخر آية كنت تقرؤها“.</string>
+    <string name="success_message2_quran_female"> مادمت تداومين على ورد مراجعتك فتيقني أن القرآن سيُحفظ في قلبك وعقلك حتى ترتلي منه ما تشائين وقت ما تشائين.</string>
+    <string name="success_message3_quran_female">أبشري، فقد قال رسولنا:"مثلُ المؤمنِ الذي يقرأ القرآنَ مثلُ الأترُجَّةِ. ريحُها طيِّبٌ وطعمُها طيِّبٌ".</string>
 
     <string name="medium_message1_quran"> إذا ساومتك نفسك للتكاسل فذكرها أنك مسلم، والمسلم همته تناطح السماء في حفظ كتاب الله.</string>
     <string name="medium_message2_quran"> لعل تخبطك في الحفظ اختبارٌ لمدى تعلق قلبك بالقرآن، فاحذر أن تفتر همتك وتهمله فتنسى ما حفظت.</string>
     <string name="medium_message3_quran">شخص يتعاهد القرآن كل يوم ألا يرقّ قلبُه؟ ألا يزداد إيمانه؟ ألا يكون له نصيبٌ من محبة الله؟ فلمَ تتكاسل عن وردك؟</string>
+<!--female-->
+    <string name="medium_message1_quran_female"> إذا ساومتك نفسك للتكاسل فذكريها أنك مسلمة، والمسلمة همتها تناطح السماء في حفظ كتاب الله.</string>
+    <string name="medium_message2_quran_female"> لعل تخبطك في الحفظ اختبارٌ لمدى تعلق قلبك بالقرآن، فاحذري أن تفتر همتك وتهمليه فتنسي ما حفظت.</string>
+    <string name="medium_message3_quran_female">شخص يتعاهد القرآن كل يوم ألا يرقّ قلبُه؟ ألا يزداد إيمانه؟ ألا يكون له نصيبٌ من محبة الله؟ فلمَ تتكاسلين عن وردك؟</string>
 
     <string name="fail_message1_quran">ألا تحب أن تنال الشرف والرفعة في الدنيا، والمكانة العالية في الجنة؟! فلمَ تتكاسل في حفظ القرآن!</string>
     <string name="fail_message2_quran">تعاهدوا هذا القرآن فوالذي نفس محمد بيده لهو أشد تفلتًا من الإبل في عُقُلها!</string>
     <string name="fail_message3_quran">عليكَ بتلاوةِ القرآنِ، فإنَّهُ نورٌ لكَ في الأرضِ، وذُخرٌ لكَ في السَّماء.</string>
+<!--female-->
+    <string name="fail_message1_quran_female">ألا تحبين أن تنالي الشرف والرفعة في الدنيا، والمكانة العالية في الجنة؟! فلمَ تتكاسلين في حفظ القرآن!</string>
+    <string name="fail_message2_quran_female">تعاهدوا هذا القرآن فوالذي نفس محمد بيده لهو أشد تفلتًا من الإبل في عُقُلها!</string>
+    <string name="fail_message3_quran_female">عليكِ بتلاوةِ القرآنِ، فإنَّهُ نورٌ لكِ في الأرضِ، وذُخرٌ لكِ في السَّماء.</string>
 
     // prayer messages
     <string name="success_message1_prayer">أبشر، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
     <string name="success_message2_prayer">أبشر، فالله يحبك، وعسی أن يبنى لك بيتًا فى الجنة كل يوم.</string>
     <string name="success_message3_prayer">كُلمَا حَرصتّ عَلى الصَلاةْ ، كُلمَا شَعرتّ إنَ الدُنيَا أزدَادتّ يُسراً !♥</string>
+    <!--female-->
+    <string name="success_message1_prayer_female">أبشري، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
+    <string name="success_message2_prayer_female">أبشري، فالله يحبك، وعسی أن يبنى لك بيتًا فى الجنة كل يوم.</string>
+    <string name="success_message3_prayer_female">كُلمَا حَرصتِ عَلى الصَلاةْ ، كُلمَا شَعرتِ إنَ الدُنيَا أزدَادتّ يُسراً !♥</string>
 
     <string name="fail_message1_prayer"> لا بأس، جاهد مرة أخرى وإشراقة ستساعدك على الالتزام بالفروض.</string>
     <string name="fail_message2_prayer">النفس تتخبط بين ذنب واستقامة، فجاهد ألا تغلبك نفسك مرة أخرى، فصلاتك هي أول ما تحاسب عليه.</string>
     <string name="fail_message3_prayer">ما دمت في الصلاة فأنت تقرع باب الملك، ومن يقرع باب الملك يفتح له، ولا تدري كمَّ الخير الذي سينالك إن فتح لك الملك بابه، فأقبل!</string>
+    <!--female-->
+    <string name="fail_message1_prayer_female"> لا بأس، جاهدي مرة أخرى وإشراقة ستساعدك على الالتزام بالفروض.</string>
+    <string name="fail_message2_prayer_female">النفس تتخبط بين ذنب واستقامة، فجاهدي ألا تغلبك نفسك مرة أخرى، فصلاتك هي أول ما تحاسبين عليه.</string>
+    <string name="fail_message3_prayer_female">ما دمت في الصلاة فأنت تقرعين باب الملك، ومن يقرع باب الملك يفتح له، ولا تدريين كمَّ الخير الذي سينالك إن فتح لك الملك بابه، فأقبلي!</string>
 
     <string name="noo">لا</string>
     <string name="add_new_azkar_to_your_schedule">هل ترغب في حذف أو إضافة بعض البنود من جدولك ؟</string>
@@ -89,15 +126,15 @@
     <string name="no">لا</string>
     <string name="facation">إجازة</string>
     <string name="quran_question2">هل قرأت وردك اليوم ؟</string>
-    <string name="quran_question3">هل راجعت ورد في مراجعة اليوم ؟</string>
-    <string name="quran_question5">فهم معاني الايات ؟</string>
-    <string name="quran_question4">فهم معاني الايات ؟</string>
+    <string name="quran_question3">هل راجعت ورد المراجعة اليوم ؟</string>
+    <string name="quran_question5">فهم معاني الأيات ؟</string>
+    <string name="quran_question4">فهم معاني الأيات ؟</string>
     <string name="vacation">إجازة</string>
     <string name="number_of_days">الأيام</string>
     <string name="follow">متابعة</string>
-    <string name="enter_number_of_days_save">أختر عدد أيام الحفظ اسبوعيا</string>
-    <string name="enter_number_of_days_read">أختر عدد أيام القراءة اسبوعيا</string>
-    <string name="enter_number_of_days_revision">أختر عدد أيام المراجعة اسبوعيا</string>
+    <string name="enter_number_of_days_save">أختر عدد أيام الحفظ أسبوعيا</string>
+    <string name="enter_number_of_days_read">أختر عدد أيام القراءة أسبوعيا</string>
+    <string name="enter_number_of_days_revision">أختر عدد أيام المراجعة أسبوعيا</string>
     <string name="_20_2_2022">20 / 2 / 2022</string>
     <string name="day_name_item_row">السبت</string>
     <string name="score_item_row">2 / 4</string>
@@ -111,7 +148,7 @@
     <string name="share_menu">مشاركة</string>
     <string name="rate_menu">تقييم</string>
     <string name="review_menu">مقترحاتك</string>
-    <string name="our_apps_menu">تطبقاتنا الأخري</string>
+    <string name="our_apps_menu">تطبيقاتنا الأخري</string>
     <string name="about_menu">عن المطور</string>
     <string name="about_app">عن التطبيق</string>
     <string name="menu_other">أخري</string>
@@ -126,13 +163,22 @@
     <string name="facebook_image_description">facebook image description</string>
     <string name="instragram_image_description">instragram image description</string>
     <string name="twitter_image_description">twitter image description</string>
-    <string name="updateWorkCounter">هل ترغب في تعديل ايام العمل ؟</string>
+
+    <string name="updateWorkCounter">هل ترغب في تعديل أيام العمل ؟</string>
+    <string name="updateWorkCounter_female">هل ترغبي في تعديل أيام العمل ؟</string>
+
     <string name="prayer_question1">هل أنت ملتزم بالصلاة ؟</string>
+    <string name="prayer_question1_female">هل أنت ملتزمة بالصلاة ؟</string>
+
     <string name="qadaa_question1">هل عليك قضاء ؟</string>
     <string name="qadaa_question2">كم عدد أسابيع القضاء ؟</string>
     <string name="number_week_hint">عدد الأسابيع</string>
+
     <string name="update_prayer_schedule">هل ترغب في تعديل جدولك ؟</string>
-    <string name="qadaa_period_finished_message">لقد نم الأنتهاء من جدول القضاء بفضل الله، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
+    <string name="update_prayer_schedule_female">هل ترغبي في تعديل جدولك ؟</string>
+
+    // not used
+    <string name="qadaa_period_finished_message">لقد نم الانتهاء من جدول القضاء بفضل الله، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
 
 
     <string-array name="numbersOfDays">
@@ -179,6 +225,7 @@
     <string name="sont_maghreb">سنة المغرب</string>
     <string name="sont_esha">سنة العشاء</string>
     <string name="sont_zuhr">سنة الظهر</string>
+
     <string name="choose_sonn_text">أختر سنن تريد أدائها ؟</string>
     <string name="keyam">القيام</string>
     <string name="sont_doha">سنة الضحي</string>
