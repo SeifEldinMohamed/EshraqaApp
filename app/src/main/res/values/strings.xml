@@ -117,7 +117,7 @@
     <string name="add_new_azkar_to_your_schedule_female">هل ترغبين في حذف أو إضافة بعض البنود من جدولك ؟</string>
 
     <string name="choose_akar_to_add_message">أختر البنود التي تريد إضافتها أو حذفها</string>
-    <string name="choose_akar_to_add_message_female">أختاري البنود التي تريد إضافتها أو حذفها</string>
+    <string name="choose_akar_to_add_message_female">أختاري البنود التي تريدين إضافتها أو حذفها</string>
 
     <string name="save">حفظ</string>
     <string name="software_inversion">Software Inversion</string>
@@ -134,8 +134,10 @@
     <string name="facation">إجازة</string>
     <string name="quran_question2">هل قرأت وردك اليوم ؟</string>
     <string name="quran_question3">هل راجعت ورد المراجعة اليوم ؟</string>
+    // not used
     <string name="quran_question5">فهم معاني الأيات ؟</string>
     <string name="quran_question4">فهم معاني الأيات ؟</string>
+
     <string name="vacation">إجازة</string>
     <string name="number_of_days">الأيام</string>
     <string name="follow">متابعة</string>
@@ -179,7 +181,7 @@
     <string name="twitter_image_description">twitter image description</string>
 
     <string name="updateWorkCounter">هل ترغب في تعديل أيام العمل ؟</string>
-    <string name="updateWorkCounter_female">هل ترغبي في تعديل أيام العمل ؟</string>
+    <string name="updateWorkCounter_female">هل ترغبين في تعديل أيام العمل ؟</string>
 
     <string name="prayer_question1">هل أنت ملتزم بالصلاة ؟</string>
     <string name="prayer_question1_female">هل أنت ملتزمة بالصلاة ؟</string>
@@ -189,7 +191,7 @@
     <string name="number_week_hint">عدد الأسابيع</string>
 
     <string name="update_prayer_schedule">هل ترغب في تعديل جدولك ؟</string>
-    <string name="update_prayer_schedule_female">هل ترغبي في تعديل جدولك ؟</string>
+    <string name="update_prayer_schedule_female">هل ترغبين في تعديل جدولك ؟</string>
 
     // not used
     <string name="qadaa_period_finished_message">لقد نم الانتهاء من جدول القضاء بفضل الله، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
@@ -241,12 +243,16 @@
     <string name="sont_zuhr">سنة الظهر</string>
 
     <string name="choose_sonn_text">أختر سنن تريد أدائها ؟</string>
+    <string name="choose_sonn_text_female">أختاري سنن تريدين أدائها ؟</string>
+
     <string name="keyam">القيام</string>
     <string name="sont_doha">سنة الضحي</string>
     <string name="sont_wetr">سنة الوتر</string>
     <string name="gheth_head_image_description">gheth head image description</string>
     <string name="_0">0</string>
+
     <string name="choose">أختر</string>
+    <string name="choose_female">أختاري</string>
 
 
 </resources>

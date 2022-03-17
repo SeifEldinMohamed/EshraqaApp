@@ -102,7 +102,7 @@
     </fragment>
     <fragment
         android:id="@+id/sebhaFragment"
-        android:name="com.seif.eshraqaapp.SebhaFragment"
+        android:name="com.seif.eshraqaapp.ui.fragments.SebhaFragment"
         android:label="المسبحة"
         tools:layout="@layout/fragment_sebha" />
 </navigation>

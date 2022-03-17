@@ -207,7 +207,7 @@ class QuranDaysFragment : Fragment() {
 
                  } else {
                      image = R.drawable.zahra_sad
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
+                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
 
                  }
                 weeklyMessage = generateRandomFailMessageQuran()
@@ -328,6 +328,7 @@ class QuranDaysFragment : Fragment() {
         val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
         val txtMessageAddOrDelete =
             afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)
+
         val characterImage =
             afterMonthDialog.findViewById<ImageView>(R.id.character_image_end_of_month)
         characterImage.setImageResource(image)
@@ -422,19 +423,24 @@ class QuranDaysFragment : Fragment() {
         }
 
         btnSave.setOnClickListener {
-            // logic to start new week and save score of prev week
-            quranViewModel.addQuran(
-                quranViewModel.createNewWeekSchedule(
-                    lastQuranDay,
-                    currentQuranHashMap,
-                    weeklyMessage,
-                    numberOfSaveDays,
-                    numberOfReadDays,
-                    numberOfRevisionDays
+            if (numberOfSaveDays == 0 && numberOfReadDays == 0 && numberOfRevisionDays == 0){
+                Toast.makeText(requireContext(), "لا يمكن أن يكونوا الثلاثة أصفارا !", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                quranViewModel.addQuran(
+                    quranViewModel.createNewWeekSchedule(
+                        lastQuranDay,
+                        currentQuranHashMap,
+                        weeklyMessage,
+                        numberOfSaveDays,
+                        numberOfReadDays,
+                        numberOfRevisionDays
+                    )
                 )
-            )
-            dialog.dismiss()
-            afterMonthDialog.dismiss()
+                dialog.dismiss()
+                afterMonthDialog.dismiss()
+            }
+
         }
         btnBack.setOnClickListener {
             dialog.dismiss()

@@ -147,8 +147,16 @@ class HomeFragment : Fragment() {
         val sontZuhrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_zuhr_check)
         val sontWetrCheckBox = bottomSheetView.findViewById<CheckBox>(R.id.sont_wetr_check)
 
+        val txtChooseSonn = bottomSheetView.findViewById<TextView>(R.id.txt_choose_sonn)
+        if (IntroSharedPref.readGander("Male", false)) {
+            txtChooseSonn.text = getString(R.string.choose_sonn_text)
+        }
+        else{
+            txtChooseSonn.text = getString(R.string.choose_sonn_text_female)
+        }
 
-        bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
+
+            bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
             /** also used in alert dialog when user can add sonn to his schedule**/
             if (!sontWetrCheckBox.isChecked &&
                 !sontDohaCheckBox.isChecked &&
@@ -248,19 +256,25 @@ class HomeFragment : Fragment() {
         val numberOfWeeksEditText =
             bottomSheetView.findViewById<EditText>(R.id.et_number_weeks_qadaa2)
         bottomSheetView.findViewById<Button>(R.id.btn_save_qadaa2).setOnClickListener {
-            if (numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks) {
-                numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
-            } else {
-                writeSharedPrefPrayer()
-                AppSharedPref.writePrayerOnly("prayerOnly", false)
-                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
-                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+            when {
+                numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks -> {
+                    numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
+                }
+                numberOfWeeksEditText.text.toString().toInt() <=0 -> {
+                    numberOfWeeksEditText.error = " أقل عدد 1" + " !"
+                }
+                else -> {
+                    writeSharedPrefPrayer()
+                    AppSharedPref.writePrayerOnly("prayerOnly", false)
+                    AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
+                    AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
 
-                AppSharedPref.writeQadaaPeriod("qadaa_period", numberOfWeeksEditText.text.toString().toInt())
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
-                findNavController().navigate(action)
-                bottomSheetDialog.dismiss()
+                    AppSharedPref.writeQadaaPeriod("qadaa_period", numberOfWeeksEditText.text.toString().toInt())
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
+                    findNavController().navigate(action)
+                    bottomSheetDialog.dismiss()
+                }
             }
         }
         bottomSheetView.findViewById<Button>(R.id.btn_back_qadaa2).setOnClickListener {
@@ -342,15 +356,19 @@ class HomeFragment : Fragment() {
             }
         }
         bottomSheetView.findViewById<Button>(R.id.btn_save_counters).setOnClickListener {
-            writeSharedPrefQuran()
-
-            val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(
-                numberOfSaveDays.toInt(),
-                numberOfReadDays.toInt(),
-                numberOfRevisionDays.toInt()
-            )
-            findNavController().navigate(action)
-            bottomSheetDialog.dismiss()
+            if (numberOfSaveDays.toInt() == 0 && numberOfReadDays.toInt() == 0 && numberOfRevisionDays.toInt() == 0){
+                Toast.makeText(requireContext(), "لا يمكن أن يكونوا الثلاثة أصفارا !", Toast.LENGTH_SHORT).show()
+            }
+            else{ // valid input
+                writeSharedPrefQuran()
+                val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(
+                    numberOfSaveDays.toInt(),
+                    numberOfReadDays.toInt(),
+                    numberOfRevisionDays.toInt()
+                )
+                findNavController().navigate(action)
+                bottomSheetDialog.dismiss()
+            }
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()

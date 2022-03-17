@@ -88,7 +88,7 @@ class PrayerFragment : Fragment() {
             binding.qadaaSchecule.visibility = View.GONE
             binding.sonnSchecule.visibility = View.GONE
 
-        } else if (AppSharedPref.readPrayerOnly("prayerAndQadaa", false)) {
+        } else if (AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false)) {
             binding.qadaaSchecule.visibility = View.VISIBLE
             binding.sonnSchecule.visibility = View.GONE
 

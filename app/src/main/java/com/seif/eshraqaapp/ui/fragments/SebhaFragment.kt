@@ -1,7 +1,6 @@
-package com.seif.eshraqaapp
+package com.seif.eshraqaapp.ui.fragments
 
 import android.app.Dialog
-import android.media.MediaParser
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
-import androidx.core.content.ContextCompat
+import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.data.sharedPreference.IntroSharedPref
 import com.seif.eshraqaapp.databinding.FragmentSebhaBinding
-import com.seif.eshraqaapp.ui.fragments.AzkarFragmentArgs
 
 
 class SebhaFragment : Fragment() {
@@ -93,7 +91,15 @@ private var score:Long = 0
         val btnBack = dialog.findViewById<TextView>(R.id.btn_back_tsbeh)
         val radioGroup = dialog.findViewById<RadioGroup>(R.id.radioGroup_tsbeh)
 
-        when(AppSharedPref.readSebhaMessage("message", 8)){
+        val txtChoose = dialog.findViewById<TextView>(R.id.txt_choose_sebha)
+        if (IntroSharedPref.readGander("Male", false)) {
+            txtChoose.text = getString(R.string.choose)
+        }
+        else{
+            txtChoose.text = getString(R.string.choose_female)
+        }
+
+            when(AppSharedPref.readSebhaMessage("message", 8)){
             1 -> radioGroup.check(R.id.tsbeh1_radio)
             2 -> radioGroup.check(R.id.tsbeh2_radio)
             3 -> radioGroup.check(R.id.tsbeh3_radio)

@@ -570,36 +570,44 @@ class PrayerDaysFragment : Fragment() {
         val numberOfWeeksEditText =
             bottomSheetView.findViewById<EditText>(R.id.et_number_weeks_qadaa2)
         bottomSheetView.findViewById<Button>(R.id.btn_save_qadaa2).setOnClickListener {
-            if (numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks) {
-                numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
-            } else {
-                if (isEndOfMonth) {
-                    edit.putInt("nweek", 1)
-                    edit.apply()
-                } else {
-                    edit.putInt("nweek", numberOfWeeks + 1)
-                    edit.apply()
+            when {
+                numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks -> {
+                    numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
                 }
+                numberOfWeeksEditText.text.toString().toInt() <=0 -> {
+                    numberOfWeeksEditText.error = " أقل عدد 1" + " !"
+                }
+                else -> {
+                    if (isEndOfMonth) {
+                        edit.putInt("nweek", 1)
+                        edit.apply()
+                    } else {
+                        edit.putInt("nweek", numberOfWeeks + 1)
+                        edit.apply()
+                    }
 
-                edit.putLong("totalScorePrayer", 0L)
-                edit.putLong("totalNumberPrayer", 0L)
-                edit.apply()
+                    edit.putLong("totalScorePrayer", 0L)
+                    edit.putLong("totalNumberPrayer", 0L)
+                    edit.apply()
 
-                AppSharedPref.writePrayerOnly("prayerOnly", false)
-                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
-                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+                    AppSharedPref.writePrayerOnly("prayerOnly", false)
+                    AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
+                    AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
 
-                prayerViewModel.addPrayer(
-                    prayerViewModel.createNewWeekSchedule(
-                        lastPrayerDay,
-                        currentPrayerHashMap,
-                        currentQadaaHashMap,
-                        currentSonnHashMap,
-                        weeklyMessage,
+                    AppSharedPref.writeQadaaPeriod("qadaa_period", numberOfWeeksEditText.text.toString().toInt())
+
+                    prayerViewModel.addPrayer(
+                        prayerViewModel.createNewWeekSchedule(
+                            lastPrayerDay,
+                            currentPrayerHashMap,
+                            currentQadaaHashMap,
+                            currentSonnHashMap,
+                            weeklyMessage,
+                        )
                     )
-                )
 
-                bottomSheetDialog.dismiss()
+                    bottomSheetDialog.dismiss()
+                }
             }
         }
         bottomSheetView.findViewById<Button>(R.id.btn_back_qadaa2).setOnClickListener {

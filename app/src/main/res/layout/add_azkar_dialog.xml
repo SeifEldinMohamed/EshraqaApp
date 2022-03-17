@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_280sdp"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,18 +70,21 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_back_no_adding"
-                tools:ignore="TextContrastCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:padding="@dimen/_6sdp"
                 android:text="@string/back"
                 android:textSize="@dimen/_18ssp"
                 app:background="@color/green"
                 app:cornerRadius="@dimen/_4sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_save" />
+                app:layout_constraintEnd_toStartOf="@+id/btn_save"
+                app:layout_constraintTop_toBottomOf="@+id/estghphar_check"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/txt_choose_zekr"
@@ -92,6 +95,7 @@
                 android:textColor="@color/mediumGreen"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +105,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:padding="@dimen/_6sdp"
                 android:text="@string/save"
                 android:textSize="@dimen/_18ssp"
@@ -109,6 +114,8 @@
                 app:cornerRadius="@dimen/_4sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/estghphar_check"
+                app:layout_constraintVertical_bias="0.0"
                 tools:ignore="TextContrastCheck">
 
             </com.google.android.material.button.MaterialButton>
