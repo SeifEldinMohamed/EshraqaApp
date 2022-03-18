@@ -2,6 +2,7 @@ package com.seif.eshraqaapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -40,6 +41,12 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
                         "${prayerList[position].totalScore}/${prayerList[position].sonnHashMap.size + 5}"
                 }
             }
+
+            if(prayerList[position].isVacation)
+                binding.imgVacation.visibility = View.VISIBLE
+            else
+                binding.imgVacation.visibility = View.GONE
+
             binding.itemRowDays.setOnClickListener {
                 val action = PrayerDaysFragmentDirections.actionPrayerDaysFragmentToPrayerFragment(prayerList[position])
                 itemView.findNavController().navigate(action)

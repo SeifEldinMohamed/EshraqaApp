@@ -2,6 +2,7 @@ package com.seif.eshraqaapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -20,6 +21,11 @@ class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
             binding.txtDay.text = quran[position].dayName
             binding.txtScore.text = "${quran[position].score}/${quran[position].quran.size}"
             binding.txtDate.text = "${quran[position].currentDay} / ${quran[position].currentMonth} / ${quran[position].currentYear}  "
+            if(quran[position].isVacation)
+                binding.imgVacation.visibility = View.VISIBLE
+            else
+                binding.imgVacation.visibility = View.GONE
+
             binding.itemRowDays.setOnClickListener {
                 val action = QuranDaysFragmentDirections.actionQuranDaysFragmentToQuranFragment(quran[position])
                 itemView.findNavController().navigate(action)
