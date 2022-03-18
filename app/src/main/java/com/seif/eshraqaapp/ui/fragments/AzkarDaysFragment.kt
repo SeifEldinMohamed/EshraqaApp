@@ -95,13 +95,7 @@ class AzkarDaysFragment : Fragment() {
     }
 
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
-        if (isEndOfMonth) {
-            edit.putInt("nweek", 1)
-            edit.apply()
-        } else {
-            edit.putInt("nweek", numberOfWeeks + 1)
-            edit.apply()
-        }
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
@@ -118,116 +112,8 @@ class AzkarDaysFragment : Fragment() {
 
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-            Log.d("days", "number of azkar $numberOfAzkar")
-            val totalValueOfWeek = numberOfAzkar * 7
-
-            var previousTotalNumberAzkar = pref.getLong("totalNumberAzkar", 0L)
-            edit.putLong("totalNumberAzkar", (previousTotalNumberAzkar + totalValueOfWeek))
-            Log.d(
-                "days", "previousTotalNumberAzkar: $previousTotalNumberAzkar" +
-                        "+ totalValueOfWeek $totalValueOfWeek"
-            )
-            previousTotalNumberAzkar += totalValueOfWeek
-            var previousTotalScore = pref.getLong("totalScore", 0L)
-            edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
-            Log.d(
-                "days", "previousTotalScore: $previousTotalScore" +
-                        "+ totalScore $totalWeekScore"
-            )
-            previousTotalScore += totalWeekScore
-            edit.apply()
-
-            Log.d("days", "total number of azkar $totalValueOfWeek")
-            val scoreWeekPercentage =
-                ((previousTotalScore.toDouble() / previousTotalNumberAzkar.toDouble()) * 100).toInt()
-
-            Log.d("days", "total week score  $totalWeekScore")
-            Log.d("days", "percentage  $scoreWeekPercentage")
-            val image :Int
-            val addNewAzkarToYourSchedule :String
-            addNewAzkarToYourSchedule = if(IntroSharedPref.readGander("Male", false)){
-                getString(R.string.add_new_azkar_to_your_schedule)
-            } else{
-                getString(R.string.add_new_azkar_to_your_schedule_female)
-            }
-            when (scoreWeekPercentage) {
-                in 80..100 -> {
-                    image = if(IntroSharedPref.readGander("Male", false)){
-                        R.drawable.gheth_happy
-                    } else{
-                        R.drawable.zahra_happy
-                    }
-                        weeklyMessage = generateRandomSuccessMessage()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScore", 0L)
-                        edit.putLong("totalNumberAzkar", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            addNewAzkarToYourSchedule,
-                            weeklyMessage,
-                            image
-                        )
-                    } else {
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-                    Log.d("days", "success")
-                }
-                in 65..79 -> { // handle adding
-                    image = if(IntroSharedPref.readGander("Male", false)){
-                        R.drawable.gheth_normal
-                    }else{
-                        R.drawable.zahra_normal
-                    }
-                    edit.putLong("totalScore", 0L)
-                    edit.putLong("totalNumberAzkar", 0L)
-                    edit.apply()
-                    weeklyMessage = generateRandomMediumMessage()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScore", 0L)
-                        edit.putLong("totalNumberAzkar", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            addNewAzkarToYourSchedule,
-                            weeklyMessage,
-                            image
-                        )
-                    }else{
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-
-                    Log.d("days", "medium")
-                }
-                in 0..64 -> {
-                    image = if(IntroSharedPref.readGander("Male", false)){
-                        R.drawable.gheth_sad
-                    }else{
-                        R.drawable.zahra_sad
-                    }
-                    weeklyMessage = generateRandomFailMessage()
-                    if (isEndOfMonth) {
-                        edit.putLong("totalScore", 0L)
-                        edit.putLong("totalNumberAzkar", 0L)
-                        edit.apply()
-                        showEndMonthCongratulationMessage(
-                            addNewAzkarToYourSchedule,
-                            weeklyMessage,
-                            image
-                        )
-                    } else {
-                        showNormalCongratulationMessage(
-                            weeklyMessage,
-                            image
-                        )
-                    }
-                    Log.d("days", "fail")
-                }
-            }
+            val scoreWeekPercentage = calculateScore()
+            showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
         btnBack.setOnClickListener {
@@ -236,9 +122,126 @@ class AzkarDaysFragment : Fragment() {
         dialog.show()
     }
 
+    private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
+        val image :Int
+        val addNewAzkarToYourSchedule :String = if(IntroSharedPref.readGander("Male", false)){
+            getString(R.string.add_new_azkar_to_your_schedule)
+        }
+        else{
+            getString(R.string.add_new_azkar_to_your_schedule_female)
+        }
+        when (scoreWeekPercentage) {
+            in 80..100 -> {
+                image = if(IntroSharedPref.readGander("Male", false)){
+                    R.drawable.gheth_happy
+                } else{
+                    R.drawable.zahra_happy
+                }
+                weeklyMessage = generateRandomSuccessMessage()
+                if (isEndOfMonth) {
+                    showEndMonthCongratulationMessage(
+                        addNewAzkarToYourSchedule,
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                } else {
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                }
+                Log.d("days", "success")
+            }
+            in 65..79 -> { // handle adding
+                image = if(IntroSharedPref.readGander("Male", false)){
+                    R.drawable.gheth_normal
+                }else{
+                    R.drawable.zahra_normal
+                }
+
+                weeklyMessage = generateRandomMediumMessage()
+                if (isEndOfMonth) {
+                    edit.putLong("totalScore", 0L)
+                    edit.putLong("totalNumberAzkar", 0L)
+                    edit.apply()
+                    showEndMonthCongratulationMessage(
+                        addNewAzkarToYourSchedule,
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                }else{
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                }
+
+                Log.d("days", "medium")
+            }
+            in 0..64 -> {
+                image = if(IntroSharedPref.readGander("Male", false)){
+                    R.drawable.gheth_sad
+                }else{
+                    R.drawable.zahra_sad
+                }
+                weeklyMessage = generateRandomFailMessage()
+                if (isEndOfMonth) {
+
+                    showEndMonthCongratulationMessage(
+                        addNewAzkarToYourSchedule,
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                } else {
+                    showNormalCongratulationMessage(
+                        weeklyMessage,
+                        image,
+                        isEndOfMonth
+                    )
+                }
+                Log.d("days", "fail")
+            }
+        }
+    }
+
+    private fun calculateScore(): Int {
+
+        Log.d("days", "number of azkar $numberOfAzkar")
+        val totalValueOfWeek = numberOfAzkar * 7
+
+        var previousTotalNumberAzkar = pref.getLong("totalNumberAzkar", 0L)
+        edit.putLong("totalNumberAzkar", (previousTotalNumberAzkar + totalValueOfWeek))
+        Log.d(
+            "days", "previousTotalNumberAzkar: $previousTotalNumberAzkar" +
+                    "+ totalValueOfWeek $totalValueOfWeek"
+        )
+        previousTotalNumberAzkar += totalValueOfWeek
+        var previousTotalScore = pref.getLong("totalScore", 0L)
+        edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
+        Log.d(
+            "days", "previousTotalScore: $previousTotalScore" +
+                    "+ totalScore $totalWeekScore"
+        )
+        previousTotalScore += totalWeekScore
+        edit.apply()
+
+        Log.d("days", "total number of azkar $totalValueOfWeek")
+        val scoreWeekPercentage =
+            ((previousTotalScore.toDouble() / previousTotalNumberAzkar.toDouble()) * 100).toInt()
+
+        Log.d("days", "total week score  $totalWeekScore")
+        Log.d("days", "percentage  $scoreWeekPercentage")
+        return scoreWeekPercentage
+    }
+
 
     // show message after end of week but not end of month
-    private fun showNormalCongratulationMessage(message: String, image: Int) {
+    private fun showNormalCongratulationMessage(message: String, image: Int, isEndOfMonth: Boolean) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.zahra_message_dialog)
@@ -255,6 +258,14 @@ class AzkarDaysFragment : Fragment() {
         }
             characterImage.setImageResource(image)
         txtMessage.text = message
+
+        if (isEndOfMonth) {
+            edit.putInt("nweek", 1)
+            edit.apply()
+        } else {
+            edit.putInt("nweek", numberOfWeeks + 1)
+            edit.apply()
+        }
 
         // logic to start new week and save score of prev week
         viewModel.addZekr(
@@ -273,7 +284,8 @@ class AzkarDaysFragment : Fragment() {
     private fun showEndMonthCongratulationMessage(
         addOrDeleteMessage: String,
         message: String,
-        image: Int
+        image: Int,
+        isEndOfMonth: Boolean
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -303,9 +315,21 @@ class AzkarDaysFragment : Fragment() {
         txtMessageAddOrDelete.text = addOrDeleteMessage
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
-            showAddAzkarDialog()
+            showAddAzkarDialog(isEndOfMonth)
         }
         btnNo.setOnClickListener {
+            if (isEndOfMonth) {
+                edit.putInt("nweek", 1)
+                edit.apply()
+            } else {
+                edit.putInt("nweek", numberOfWeeks + 1)
+                edit.apply()
+            }
+
+            edit.putLong("totalScore", 0L)
+            edit.putLong("totalNumberAzkar", 0L)
+            edit.apply()
+
             viewModel.addZekr(
                 viewModel.createNewWeekSchedule(
                     lastAzkarDay,
@@ -319,7 +343,7 @@ class AzkarDaysFragment : Fragment() {
         afterMonthDialog.show()
     }
 
-    private fun showAddAzkarDialog() {
+    private fun showAddAzkarDialog(isEndOfMonth: Boolean) {
 
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -347,6 +371,18 @@ class AzkarDaysFragment : Fragment() {
 
         btnSave.setOnClickListener {
             // logic to start new week and save score of prev week
+            if (isEndOfMonth) {
+                edit.putInt("nweek", 1)
+                edit.apply()
+            } else {
+                edit.putInt("nweek", numberOfWeeks + 1)
+                edit.apply()
+            }
+
+            edit.putLong("totalScore", 0L)
+            edit.putLong("totalNumberAzkar", 0L)
+            edit.apply()
+
             edit = pref.edit()
 
             if (hamdCheck.isChecked) {
@@ -381,6 +417,8 @@ class AzkarDaysFragment : Fragment() {
                 currentAzkarHashMap.remove("ورد استغفار")
             }
             edit.apply()
+
+
 
             viewModel.addZekr(
                 viewModel.createNewWeekSchedule(

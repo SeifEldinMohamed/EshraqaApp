@@ -117,13 +117,7 @@ class QuranDaysFragment : Fragment() {
     }
 
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
-        if (isEndOfMonth) {
-            edit.putInt("nweek", 1)
-            edit.apply()
-        } else {
-            edit.putInt("nweek", numberOfWeeks + 1)
-            edit.apply()
-        }
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
@@ -143,87 +137,85 @@ class QuranDaysFragment : Fragment() {
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
         val image: Int
-        val addOrDeleteMessage : String
+        val addOrDeleteMessage: String
         when (scoreWeekPercentage) {
             in 80..100 -> {
-                 if (IntroSharedPref.readGander("Male", false)) {
-                     image = R.drawable.gheth_happy
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
+                if (IntroSharedPref.readGander("Male", false)) {
+                    image = R.drawable.gheth_happy
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter)
                 } else {
-                     image =  R.drawable.zahra_happy
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
+                    image = R.drawable.zahra_happy
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
 
-                 }
+                }
                 weeklyMessage = generateRandomSuccessMessageQuran()
                 if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
-                    edit.apply()
                     showEndMonthCongratulationMessage(
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 }
                 Log.d("days", "success")
             }
             in 65..79 -> { // handle adding
-                 if (IntroSharedPref.readGander("Male", false)) {
-                      image = R.drawable.gheth_normal
-                      addOrDeleteMessage = getString(R.string.updateWorkCounter)
+                if (IntroSharedPref.readGander("Male", false)) {
+                    image = R.drawable.gheth_normal
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter)
 
                 } else { // female
-                     image = R.drawable.zahra_normal
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
+                    image = R.drawable.zahra_normal
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
                 }
                 weeklyMessage = generateRandomMediumMessageQuran()
                 if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
-                    edit.apply()
+
                     showEndMonthCongratulationMessage(
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 }
 
                 Log.d("days", "medium")
             }
             in 0..64 -> {
-                 if (IntroSharedPref.readGander("Male", false)) {
-                     image = R.drawable.gheth_sad
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
+                if (IntroSharedPref.readGander("Male", false)) {
+                    image = R.drawable.gheth_sad
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter)
 
-                 } else {
-                     image = R.drawable.zahra_sad
-                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
+                } else {
+                    image = R.drawable.zahra_sad
+                    addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
 
-                 }
+                }
                 weeklyMessage = generateRandomFailMessageQuran()
                 if (isEndOfMonth) {
-                    edit.putLong("totalScoreQuran", 0L)
-                    edit.putLong("totalNumberQuran", 0L)
-                    edit.apply()
                     showEndMonthCongratulationMessage(
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
+                        isEndOfMonth
                     )
                 }
                 Log.d("days", "fail")
@@ -278,6 +270,7 @@ class QuranDaysFragment : Fragment() {
     private fun showNormalCongratulationMessage(
         message: String,
         image: Int,
+        isEndOfMonth: Boolean
     ) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -297,6 +290,15 @@ class QuranDaysFragment : Fragment() {
         }
         characterImage.setImageResource(image)
         txtMessage.text = message
+
+        if (isEndOfMonth) {
+            edit.putInt("nweek", 1)
+            edit.apply()
+        } else {
+            edit.putInt("nweek", numberOfWeeks + 1)
+            edit.apply()
+        }
+
         quranViewModel.addQuran(
             quranViewModel.createNewWeekSchedule(
                 lastQuranDay,
@@ -318,6 +320,7 @@ class QuranDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
+        isEndOfMonth: Boolean
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -334,8 +337,8 @@ class QuranDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
-       // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
-       // txtScore.text = "$scorePercentage %"
+        // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
+        // txtScore.text = "$scorePercentage %"
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
@@ -350,9 +353,20 @@ class QuranDaysFragment : Fragment() {
         txtMessageAddOrDelete.text = addOrDeleteMessage
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
-             showUpdateQuranCountersDialog()
+            showUpdateQuranCountersDialog(isEndOfMonth)
         }
         btnNo.setOnClickListener {
+            if (isEndOfMonth) {
+                edit.putInt("nweek", 1)
+                edit.apply()
+            } else {
+                edit.putInt("nweek", numberOfWeeks + 1)
+                edit.apply()
+            }
+            edit.putLong("totalScoreQuran", 0L)
+            edit.putLong("totalNumberQuran", 0L)
+            edit.apply()
+
             quranViewModel.addQuran(
                 quranViewModel.createNewWeekSchedule(
                     lastQuranDay,
@@ -368,7 +382,7 @@ class QuranDaysFragment : Fragment() {
         afterMonthDialog.show()
     }
 
-    private fun showUpdateQuranCountersDialog() {
+    private fun showUpdateQuranCountersDialog(isEndOfMonth: Boolean) {
 
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -377,6 +391,13 @@ class QuranDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
 
         val saveSpinner = dialog.findViewById<Spinner>(R.id.spinner_save_counterr)
+        val readSpinner = dialog.findViewById<Spinner>(R.id.spinner_read_counter)
+        val revisionSpinner = dialog.findViewById<Spinner>(R.id.spinner_revision_counter)
+
+        saveSpinner.setSelection(numberOfSaveDays)
+        readSpinner.setSelection(numberOfReadDays)
+        revisionSpinner.setSelection(numberOfRevisionDays)
+
         saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -391,7 +412,6 @@ class QuranDaysFragment : Fragment() {
 
             }
         }
-        val readSpinner = dialog.findViewById<Spinner>(R.id.spinner_read_counter)
         readSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -406,7 +426,6 @@ class QuranDaysFragment : Fragment() {
 
             }
         }
-        val revisionSpinner = dialog.findViewById<Spinner>(R.id.spinner_revision_counter)
         revisionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -423,10 +442,25 @@ class QuranDaysFragment : Fragment() {
         }
 
         btnSave.setOnClickListener {
-            if (numberOfSaveDays == 0 && numberOfReadDays == 0 && numberOfRevisionDays == 0){
-                Toast.makeText(requireContext(), "لا يمكن أن يكونوا الثلاثة أصفارا !", Toast.LENGTH_SHORT).show()
-            }
-            else{
+            if (numberOfSaveDays == 0 && numberOfReadDays == 0 && numberOfRevisionDays == 0) {
+                Toast.makeText(
+                    requireContext(),
+                    "لا يمكن أن يكونوا الثلاثة أصفارا !",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                if (isEndOfMonth) {
+                    edit.putInt("nweek", 1)
+                    edit.apply()
+                } else {
+                    edit.putInt("nweek", numberOfWeeks + 1)
+                    edit.apply()
+                }
+
+                edit.putLong("totalScoreQuran", 0L)
+                edit.putLong("totalNumberQuran", 0L)
+                edit.apply()
+
                 quranViewModel.addQuran(
                     quranViewModel.createNewWeekSchedule(
                         lastQuranDay,
@@ -444,7 +478,6 @@ class QuranDaysFragment : Fragment() {
         }
         btnBack.setOnClickListener {
             dialog.dismiss()
-            afterMonthDialog.dismiss()
         }
         dialog.show()
     }
@@ -455,8 +488,7 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.success_message1_quran))
             strings.add(getString(R.string.success_message2_quran))
             strings.add(getString(R.string.success_message3_quran))
-        }
-        else{ // female
+        } else { // female
             strings.add(getString(R.string.success_message1_quran_female))
             strings.add(getString(R.string.success_message2_quran_female))
             strings.add(getString(R.string.success_message3_quran_female))
@@ -471,8 +503,7 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.medium_message1_quran))
             strings.add(getString(R.string.medium_message2_quran))
             strings.add(getString(R.string.medium_message3_quran))
-        }
-        else{ // female
+        } else { // female
             strings.add(getString(R.string.medium_message1_quran_female))
             strings.add(getString(R.string.medium_message2_quran_female))
             strings.add(getString(R.string.medium_message3_quran_female))
@@ -488,8 +519,7 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.fail_message1_quran))
             strings.add(getString(R.string.fail_message2_quran))
             strings.add(getString(R.string.fail_message3_quran))
-        }
-        else{
+        } else {
             strings.add(getString(R.string.fail_message1_quran_female))
             strings.add(getString(R.string.fail_message2_quran_female))
             strings.add(getString(R.string.fail_message3_quran_female))

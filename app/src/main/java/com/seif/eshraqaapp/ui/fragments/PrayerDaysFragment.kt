@@ -122,7 +122,6 @@ class PrayerDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
-
             if (AppSharedPref.readPrayerAndQadaa("prayerAndQadaa", false)) {
                 var currentQadaaPeriod = AppSharedPref.readQadaaPeriod("qadaa_period", 0)
                 currentQadaaPeriod--
