@@ -487,7 +487,6 @@ class AzkarDaysFragment : Fragment() {
             strings.add(getString(R.string.fail_message4_azkar_female))
         }
 
-
         return strings.random()
     }
 

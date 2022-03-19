@@ -97,7 +97,7 @@ private lateinit var navController :NavController
 
     private fun aboutApp() {
         // navigate to about app fragment which contains overview about app.
-
+        navController.navigate(R.id.action_homeFragment_to_aboutAppFragment)
     }
 
 
