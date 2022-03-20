@@ -19,6 +19,20 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:text="@string/my_email"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_ok_about"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,10 +94,8 @@
                 android:text="@string/developed_by_seif_mohamed_dialog"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_ok_about"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

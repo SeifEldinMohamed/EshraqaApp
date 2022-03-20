@@ -123,6 +123,14 @@ class QuranDaysFragment : Fragment() {
         dialog.setContentView(R.layout.confirmation_dialog)
         val btnOk = dialog.findViewById<Button>(R.id.btn_ok)
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
+        val txtNewWeekMessage = dialog.findViewById<TextView>(R.id.txt_new_week)
+
+        if (IntroSharedPref.readGander("Male", false)) {
+            txtNewWeekMessage.text = getString(R.string.end_of_week_confirmation)
+        }
+        else {
+            txtNewWeekMessage.text = getString(R.string.end_of_week_confirmation_female)
+        }
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
             val scoreWeekPercentage = calculateScore()

@@ -3,7 +3,6 @@ package com.seif.eshraqaapp.data.sharedPreference
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 
 class AppSharedPref {
     companion object {

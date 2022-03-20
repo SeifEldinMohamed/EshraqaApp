@@ -88,7 +88,6 @@ private lateinit var navController :NavController
             R.id.menu_share -> shareApp()
             R.id.menu_rate -> rateApp()
             R.id.menu_review -> reviewApp()
-            R.id.menu_our_apps -> ourApps()
             R.id.menu_about -> aboutDeveloper()
         }
         binding.drawerLayout.close()
@@ -132,16 +131,16 @@ private lateinit var navController :NavController
             )
         )
     }
-    private fun ourApps() {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(
-                    "https://play.google.com/store/apps/dev?id=8697500693164992079"
-                )
-            )
-        )
-    }
+//    private fun ourApps() {
+//        startActivity(
+//            Intent(
+//                Intent.ACTION_VIEW,
+//                Uri.parse(
+//                    "https://play.google.com/store/apps/dev?id=8697500693164992079"
+//                )
+//            )
+//        )
+//    }
     private fun aboutDeveloper() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
