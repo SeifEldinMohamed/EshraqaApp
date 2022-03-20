@@ -171,8 +171,8 @@
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_18sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:backgroundTint="@color/mediumGreen"
                     android:padding="@dimen/_8sdp"
                     android:text="@string/save"
@@ -180,7 +180,7 @@
                     android:textSize="@dimen/_16ssp"
                     app:cornerRadius="@dimen/_4sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup_tsbeh"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup_tsbeh"
                     app:layout_constraintVertical_bias="0.0" />
 
