@@ -89,12 +89,14 @@ lateinit var binding: FragmentQuranBinding
         binding.textScore.text = "${fromBundle(requireArguments()).quran.score}/$numberOfQuran"
 
         AppSharedPref.init(requireContext())
-
+        Log.d("saveCounter",  fromBundle(requireArguments()).quran.numberOfSaveDaysToWork.toString())
         val saveCounter = 7 - fromBundle(requireArguments()).quran.numberOfSaveDaysToWork
-        Log.d("saveCounter", saveCounter.toString())
+        Log.d("saveCounter", AppSharedPref.readSaveCounter("saveCounter",saveCounter).toString())
+
         if (AppSharedPref.readSaveCounter("saveCounter",saveCounter) <= 0){
             binding.radioNotFoundSave.visibility = View.GONE
-        }else{
+        }
+        else{
             binding.radioNotFoundSave.visibility = View.VISIBLE
         }
 

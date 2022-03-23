@@ -37,7 +37,7 @@
             android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_revision"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_read_counter" />
 
@@ -79,7 +79,7 @@
             android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_save"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,7 +106,7 @@
             android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/enter_number_of_days_read"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_save_counter" />
 

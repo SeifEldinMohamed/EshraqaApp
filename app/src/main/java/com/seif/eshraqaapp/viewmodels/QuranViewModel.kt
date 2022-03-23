@@ -12,6 +12,7 @@ import com.seif.eshraqaapp.data.EshrakaDatabase
 import com.seif.eshraqaapp.data.models.MyDate
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.data.repository.RepositoryImp
+import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -289,6 +290,12 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             hashMap[key] = ""
         }
         val quranHashMap: HashMap<String, String> = hashMap
+
+        // to handle "laa yogd" to appear in next
+        AppSharedPref.updateSaveCounter("saveCounter", 7-numberOfDaysToSave)
+        AppSharedPref.updateReadCounter("readCounter", 7-numberOfDaysToRead)
+        AppSharedPref.updateRevisionCounter("revisionCounter", 7-numberOfDaysToRevision)
+
 
         return listOf(
             Quran(
