@@ -112,7 +112,15 @@ class AzkarDaysFragment : Fragment() {
 
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-            val scoreWeekPercentage = calculateScore()
+            val scoreWeekPercentage:Int
+            if (isEndOfMonth){
+                scoreWeekPercentage = calculateScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
+            else{ // normal weeks
+                scoreWeekPercentage = calculateNoramlWeekScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
             showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
@@ -120,6 +128,36 @@ class AzkarDaysFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun calculateNoramlWeekScore(): Int {
+        Log.d("days", "number of azkar $numberOfAzkar")
+        val totalValueOfWeek = numberOfAzkar * 7
+
+        var previousTotalNumberAzkar = pref.getLong("totalNumberAzkar", 0L)
+        edit.putLong("totalNumberAzkar", (previousTotalNumberAzkar + totalValueOfWeek))
+        Log.d(
+            "days", "previousTotalNumberAzkar: $previousTotalNumberAzkar" +
+                    "+ totalValueOfWeek $totalValueOfWeek"
+        )
+        previousTotalNumberAzkar += totalValueOfWeek
+        var previousTotalScore = pref.getLong("totalScore", 0L)
+        edit.putLong("totalScore", (previousTotalScore + totalWeekScore))
+        Log.d(
+            "days", "previousTotalScore: $previousTotalScore" +
+                    "+ totalScore $totalWeekScore"
+        )
+        previousTotalScore += totalWeekScore
+        edit.apply()
+
+        Log.d("days", "total number of azkar $totalValueOfWeek")
+
+        val scoreWeekPercentage =
+            ((totalWeekScore.toDouble() / totalValueOfWeek.toDouble()) * 100).toInt() // using this week score(not previous)
+
+        Log.d("dayss", "total week score  $totalWeekScore")
+        Log.d("dayss", "percentage  $scoreWeekPercentage")
+        return scoreWeekPercentage
     }
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
@@ -143,7 +181,8 @@ class AzkarDaysFragment : Fragment() {
                         addNewAzkarToYourSchedule,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
@@ -170,7 +209,8 @@ class AzkarDaysFragment : Fragment() {
                         addNewAzkarToYourSchedule,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 }else{
                     showNormalCongratulationMessage(
@@ -195,7 +235,8 @@ class AzkarDaysFragment : Fragment() {
                         addNewAzkarToYourSchedule,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
@@ -285,7 +326,8 @@ class AzkarDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
-        isEndOfMonth: Boolean
+        isEndOfMonth: Boolean,
+        scoreWeekPercentage: Int
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -294,6 +336,10 @@ class AzkarDaysFragment : Fragment() {
         val btnYes = afterMonthDialog.findViewById<Button>(R.id.btn_ok_message_end_of_month)
         val btnNo = afterMonthDialog.findViewById<Button>(R.id.btn_no)
         val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
+
+        val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
+        txtPercentage.text = "${scoreWeekPercentage}%"
+
         val txtMessageAddOrDelete =
             afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)
         val characterImage =

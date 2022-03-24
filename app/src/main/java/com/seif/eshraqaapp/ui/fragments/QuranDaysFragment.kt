@@ -133,7 +133,17 @@ class QuranDaysFragment : Fragment() {
         }
         btnOk.setOnClickListener { //////////
             // logic to start new week and save score of prev week
-            val scoreWeekPercentage = calculateScore()
+
+            val scoreWeekPercentage:Int
+            if (isEndOfMonth){
+                scoreWeekPercentage = calculateScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
+            else{ // normal weeks
+                scoreWeekPercentage = calculateNoramlWeekScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
+
             showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
@@ -141,6 +151,58 @@ class QuranDaysFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun calculateNoramlWeekScore(): Int {
+        numberOfQuran =
+            numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
+        Log.d("day", "vacationDays = $vacationDaysNumber")
+
+        val totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+//        if (totalValueOfWeek <= 0)
+//            totalValueOfWeek = 1
+//
+//        if (totalWeekScore > totalValueOfWeek && vacationDaysNumber != 7) // to keep percentage in range of 0 to 100
+//            totalWeekScore = totalValueOfWeek
+//        else if (vacationDaysNumber == 7) {
+//            totalWeekScore = totalValueOfWeek
+//        }
+        if (vacationDaysNumber == 7){        // all week are vacation
+            val previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
+            edit.putLong("totalNumberQuran", (previousTotalNumberQuran + numberOfQuran))
+            edit.apply()
+            val previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+            edit.putLong("totalScoreQuran", (previousTotalScore + numberOfQuran))
+            edit.apply()
+            return 100
+        }
+
+        Log.d("day", "totalValueOfWeek = $totalValueOfWeek")
+        var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
+        Log.d("day", "previousTotalNumberQuran Old = $previousTotalNumberQuran")
+
+        edit.putLong("totalNumberQuran", (previousTotalNumberQuran + totalValueOfWeek))
+        edit.apply()
+
+        previousTotalNumberQuran += totalValueOfWeek
+        Log.d("day", "previousTotalNumberQuran new = $previousTotalNumberQuran")
+
+        var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+        Log.d("day", "previousTotalScore old = $previousTotalScore")
+
+        edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
+        edit.apply()
+
+        previousTotalScore += totalWeekScore
+        Log.d("day", "previousTotalScore new = $previousTotalScore")
+
+        val scoreWeekPercentage =
+            ((totalWeekScore.toDouble() / totalValueOfWeek.toDouble()) * 100).toInt() // using this week score(not previous)
+
+        Log.d("day", "total week score  $totalWeekScore")
+        Log.d("day", "percentage  $scoreWeekPercentage")
+        return scoreWeekPercentage
+
     }
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
@@ -162,7 +224,8 @@ class QuranDaysFragment : Fragment() {
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
@@ -189,7 +252,8 @@ class QuranDaysFragment : Fragment() {
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
@@ -217,7 +281,8 @@ class QuranDaysFragment : Fragment() {
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                 } else {
                     showNormalCongratulationMessage(
@@ -236,15 +301,21 @@ class QuranDaysFragment : Fragment() {
             numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
         Log.d("day", "vacationDays = $vacationDaysNumber")
 
-        var totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
-        if (totalValueOfWeek <= 0)
-            totalValueOfWeek = 1
+        val totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+
+        if (vacationDaysNumber == 7){        // all week are vacation
+            val previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
+            edit.putLong("totalNumberQuran", (previousTotalNumberQuran + numberOfQuran))
+            edit.apply()
+            val previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+            edit.putLong("totalScoreQuran", (previousTotalScore + numberOfQuran))
+            edit.apply()
+            return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+        }
+
 
         if (totalWeekScore > totalValueOfWeek && vacationDaysNumber != 7) // to keep percentage in range of 0 to 100
             totalWeekScore = totalValueOfWeek
-        else if (vacationDaysNumber == 7) {
-            totalWeekScore = totalValueOfWeek
-        }
 
         Log.d("day", "totalValueOfWeek = $totalValueOfWeek")
         var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
@@ -261,8 +332,6 @@ class QuranDaysFragment : Fragment() {
 
         edit.putLong("totalScoreQuran", (previousTotalScore + totalWeekScore))
         edit.apply()
-
-
 
         previousTotalScore += totalWeekScore
         Log.d("day", "previousTotalScore new = $previousTotalScore")
@@ -328,7 +397,8 @@ class QuranDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
-        isEndOfMonth: Boolean
+        isEndOfMonth: Boolean,
+        scoreWeekPercentage: Int
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -345,8 +415,10 @@ class QuranDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
-        // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
-        // txtScore.text = "$scorePercentage %"
+
+         val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
+         txtPercentage.text = "$scoreWeekPercentage%"
+
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))

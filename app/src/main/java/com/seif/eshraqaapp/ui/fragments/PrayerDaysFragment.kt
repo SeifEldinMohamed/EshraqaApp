@@ -136,7 +136,16 @@ class PrayerDaysFragment : Fragment() {
                 currentQadaaPeriod--
                 AppSharedPref.writeQadaaPeriod("qadaa_period", currentQadaaPeriod)
             }
-            val scoreWeekPercentage = calculateScore()
+            val scoreWeekPercentage:Int
+            if (isEndOfMonth){
+                scoreWeekPercentage = calculateScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
+            else{ // normal weeks
+                scoreWeekPercentage = calculateNoramlWeekScore()
+                Log.d("azkar", scoreWeekPercentage.toString())
+            }
+
             showDialogAccordingToPercentage(scoreWeekPercentage, isEndOfMonth)
             dialog.dismiss()
         }
@@ -144,6 +153,47 @@ class PrayerDaysFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun calculateNoramlWeekScore(): Int {
+        numberOfPrayer = 7 * 5
+        Log.d("day", "vacationDays = $prayerVacationDaysNumber")
+
+        var totalValueOfWeek = numberOfPrayer - (prayerVacationDaysNumber * 5)
+        if (totalValueOfWeek <= 0)
+            totalValueOfWeek = 1
+
+        if (totalWeekScore > totalValueOfWeek && prayerVacationDaysNumber != 7) // to keep percentage in range of 0 to 100
+            totalWeekScore = totalValueOfWeek
+        else if (prayerVacationDaysNumber == 7) {
+            totalWeekScore = totalValueOfWeek
+        }
+
+        var previousTotalNumberQuran = pref.getLong("totalNumberPrayer", 0L)
+        Log.d("day", "previousTotalNumberPrayer Old = $previousTotalNumberQuran")
+
+        edit.putLong("totalNumberPrayer", (previousTotalNumberQuran + totalValueOfWeek))
+        edit.apply()
+
+        previousTotalNumberQuran += totalValueOfWeek
+        Log.d("day", "TotalNumberPrayer new = $previousTotalNumberQuran")
+
+        var previousTotalScore = pref.getLong("totalScorePrayer", 0L)
+        Log.d("day", "previousTotalScore old = $previousTotalScore")
+
+        edit.putLong("totalScorePrayer", (previousTotalScore + totalWeekScore))
+        edit.apply()
+
+        previousTotalScore += totalWeekScore
+        Log.d("day", "TotalScore new = $previousTotalScore")
+
+        val scoreWeekPercentage =
+            ((totalWeekScore.toDouble() / totalValueOfWeek.toDouble()) * 100).toInt() // using this week score(not previous)
+
+        Log.d("days", "total week score  $totalWeekScore")
+        Log.d("days", "percentage  $scoreWeekPercentage")
+        return scoreWeekPercentage
+
     }
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
@@ -167,7 +217,8 @@ class PrayerDaysFragment : Fragment() {
                         addOrDeleteMessage,
                         weeklyMessage,
                         image,
-                        isEndOfMonth
+                        isEndOfMonth,
+                        scoreWeekPercentage
                     )
                     Log.d(
                         "day",
@@ -278,7 +329,8 @@ class PrayerDaysFragment : Fragment() {
         characterImage.setImageResource(image)
         txtMessage.text = message
 
-        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0) {
+        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0
+            && !AppSharedPref.readPrayerAndSonn("prayerAndSonn", false)) {
             AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
             AppSharedPref.writePrayerOnly("prayerOnly", true)
         }
@@ -311,7 +363,8 @@ class PrayerDaysFragment : Fragment() {
         addOrDeleteMessage: String,
         message: String,
         image: Int,
-        isEndOfMonth: Boolean
+        isEndOfMonth: Boolean,
+        scoreWeekPercentage: Int
     ) {
 
         afterMonthDialog = Dialog(requireContext())
@@ -327,8 +380,10 @@ class PrayerDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
-        // val txtScore = afterMonthDialog.findViewById<TextView>(R.id.txt_score_percentage_end_month)
-        // txtScore.text = "$scorePercentage %"
+
+         val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
+         txtPercentage.text = "$scoreWeekPercentage%"
+
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
@@ -342,10 +397,8 @@ class PrayerDaysFragment : Fragment() {
         txtMessage.text = message
         txtMessageAddOrDelete.text = addOrDeleteMessage
 
-        if (AppSharedPref.readQadaaPeriod(
-                "qadaa_period",
-                -1
-            ) == 0
+        if (AppSharedPref.readQadaaPeriod("qadaa_period", -1) == 0
+            && !AppSharedPref.readPrayerAndSonn("prayerAndSonn", false)
         ) { // check if qadaa period is finished or not
             AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
             AppSharedPref.writePrayerOnly("prayerOnly", true)
@@ -482,7 +535,8 @@ class PrayerDaysFragment : Fragment() {
                     "يجب أختيار سنة واحدة كبداية !",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
+            }
+            else {
                 if (isEndOfMonth) {
                     edit.putInt("nweek", 1)
                     edit.apply()

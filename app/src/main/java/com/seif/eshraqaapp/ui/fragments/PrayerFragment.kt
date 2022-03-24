@@ -77,7 +77,6 @@ class PrayerFragment : Fragment() {
         qadaaHashMap["q_esha"] = prayer.qadaaHashMap["q_esha"] ?: false
         // sonn
 
-
         binding.fagrCheck.isChecked = prayerHashMap["fagr"] ?: false
         binding.zuhrCheck.isChecked = prayerHashMap["zuhr"] ?: false
         binding.asrCheck.isChecked = prayerHashMap["asr"] ?: false
