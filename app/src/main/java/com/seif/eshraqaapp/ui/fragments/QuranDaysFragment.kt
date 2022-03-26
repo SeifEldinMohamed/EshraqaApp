@@ -1,5 +1,6 @@
 package com.seif.eshraqaapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -158,7 +159,18 @@ class QuranDaysFragment : Fragment() {
             numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
         Log.d("day", "vacationDays = $vacationDaysNumber")
 
-        val totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+        val totalValueOfWeek :Int =
+            if(numberOfSaveDays !=0 && numberOfReadDays!=0 && numberOfRevisionDays!=0){
+                numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+            }
+            else if((numberOfSaveDays ==0 && numberOfReadDays!=0 && numberOfRevisionDays!=0)
+                || numberOfReadDays==0 && numberOfSaveDays !=0 && numberOfRevisionDays!=0
+                || numberOfRevisionDays==0 && numberOfSaveDays !=0 && numberOfReadDays!=0) {
+                numberOfQuran - (vacationDaysNumber * 2)
+            }
+            else{
+                numberOfQuran - (vacationDaysNumber * 1)
+            }
 //        if (totalValueOfWeek <= 0)
 //            totalValueOfWeek = 1
 //
@@ -171,11 +183,14 @@ class QuranDaysFragment : Fragment() {
             val previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
             edit.putLong("totalNumberQuran", (previousTotalNumberQuran + numberOfQuran))
             edit.apply()
+
             val previousTotalScore = pref.getLong("totalScoreQuran", 0L)
             edit.putLong("totalScoreQuran", (previousTotalScore + numberOfQuran))
             edit.apply()
             return 100
         }
+        if (totalWeekScore > totalValueOfWeek && vacationDaysNumber != 7) // to keep percentage in range of 0 to 100
+            totalWeekScore = totalValueOfWeek
 
         Log.d("day", "totalValueOfWeek = $totalValueOfWeek")
         var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
@@ -198,6 +213,9 @@ class QuranDaysFragment : Fragment() {
 
         val scoreWeekPercentage =
             ((totalWeekScore.toDouble() / totalValueOfWeek.toDouble()) * 100).toInt() // using this week score(not previous)
+
+//        if(scoreWeekPercentage >100)
+//            scoreWeekPercentage = 100
 
         Log.d("day", "total week score  $totalWeekScore")
         Log.d("day", "percentage  $scoreWeekPercentage")
@@ -301,18 +319,34 @@ class QuranDaysFragment : Fragment() {
             numberOfSaveDays + numberOfReadDays + numberOfRevisionDays  // ex: 5+5+2 = 12
         Log.d("day", "vacationDays = $vacationDaysNumber")
 
-        val totalValueOfWeek = numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
-
-        if (vacationDaysNumber == 7){        // all week are vacation
-            val previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
-            edit.putLong("totalNumberQuran", (previousTotalNumberQuran + numberOfQuran))
-            edit.apply()
-            val previousTotalScore = pref.getLong("totalScoreQuran", 0L)
-            edit.putLong("totalScoreQuran", (previousTotalScore + numberOfQuran))
-            edit.apply()
-            return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+        val totalValueOfWeek :Int =
+            if(numberOfSaveDays !=0 && numberOfReadDays!=0 && numberOfRevisionDays!=0){
+            numberOfQuran - (vacationDaysNumber * 3)  // ex: 12
+        }
+            else if((numberOfSaveDays ==0 && numberOfReadDays!=0 && numberOfRevisionDays!=0)
+            || numberOfReadDays==0 && numberOfSaveDays !=0 && numberOfRevisionDays!=0
+            || numberOfRevisionDays==0 && numberOfSaveDays !=0 && numberOfReadDays!=0) {
+            numberOfQuran - (vacationDaysNumber * 2)
+        }
+            else{
+            numberOfQuran - (vacationDaysNumber * 1)
         }
 
+        if (vacationDaysNumber == 7){        // all week are vacation
+            var previousTotalNumberQuran = pref.getLong("totalNumberQuran", 0L)
+            edit.putLong("totalNumberQuran", (previousTotalNumberQuran + numberOfQuran))
+            edit.apply()
+            previousTotalNumberQuran+= numberOfQuran
+
+            var previousTotalScore = pref.getLong("totalScoreQuran", 0L)
+            edit.putLong("totalScoreQuran", (previousTotalScore + numberOfQuran))
+            edit.apply()
+            previousTotalScore+= numberOfQuran
+
+            val finalScore = ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+            Log.d("day", "totalScore = $previousTotalScore / totalNumber = $previousTotalNumberQuran  finalScore = $finalScore")
+            return  finalScore
+        }
 
         if (totalWeekScore > totalValueOfWeek && vacationDaysNumber != 7) // to keep percentage in range of 0 to 100
             totalWeekScore = totalValueOfWeek
@@ -336,11 +370,17 @@ class QuranDaysFragment : Fragment() {
         previousTotalScore += totalWeekScore
         Log.d("day", "previousTotalScore new = $previousTotalScore")
 
+
+        val scoreWeekPercentage = ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+//        if(scoreWeekPercentage >100)
+//            scoreWeekPercentage = 100
+
         Log.d(
             "day",
             "percentage = ${(previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100} %"
         )
-        return ((previousTotalScore.toDouble() / previousTotalNumberQuran.toDouble()) * 100).toInt()
+
+        return scoreWeekPercentage
     }
 
     // show message after end of week but not end of month
@@ -393,6 +433,7 @@ class QuranDaysFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showEndMonthCongratulationMessage(
         addOrDeleteMessage: String,
         message: String,
@@ -417,7 +458,9 @@ class QuranDaysFragment : Fragment() {
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
 
          val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
-         txtPercentage.text = "$scoreWeekPercentage%"
+         txtPercentage.text =
+                 "التقييم الشهري "+
+        "%$scoreWeekPercentage"
 
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)

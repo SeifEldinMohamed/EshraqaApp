@@ -77,11 +77,11 @@
                 android:id="@+id/txt_day_prayer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_36sdp"
                 android:text="@string/saturday"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_18ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/character_background"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/character_background"
                 app:layout_constraintTop_toTopOf="@+id/character_background"
                 tools:ignore="TextContrastCheck" />
@@ -523,6 +523,13 @@
                 </ScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="299dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

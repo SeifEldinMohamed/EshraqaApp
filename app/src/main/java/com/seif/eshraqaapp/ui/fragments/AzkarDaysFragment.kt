@@ -338,7 +338,8 @@ class AzkarDaysFragment : Fragment() {
         val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
 
         val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
-        txtPercentage.text = "${scoreWeekPercentage}%"
+        txtPercentage.text =       "التقييم الشهري "+
+                "%$scoreWeekPercentage"
 
         val txtMessageAddOrDelete =
             afterMonthDialog.findViewById<TextView>(R.id.txt_add_or_delete_message)

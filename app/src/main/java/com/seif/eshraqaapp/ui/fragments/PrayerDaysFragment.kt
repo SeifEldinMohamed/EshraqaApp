@@ -1,5 +1,6 @@
 package com.seif.eshraqaapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -359,6 +360,7 @@ class PrayerDaysFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showEndMonthCongratulationMessage(
         addOrDeleteMessage: String,
         message: String,
@@ -382,7 +384,8 @@ class PrayerDaysFragment : Fragment() {
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
 
          val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
-         txtPercentage.text = "$scoreWeekPercentage%"
+         txtPercentage.text = "التقييم الشهري "+
+                 "%$scoreWeekPercentage"
 
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)

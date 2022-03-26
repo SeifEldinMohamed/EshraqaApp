@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/img_frame_message"
-            android:layout_width="@dimen/_250sdp"
+            android:layout_width="@dimen/_260sdp"
             android:layout_height="@dimen/_385sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
@@ -106,14 +106,21 @@
             android:id="@+id/txt_month_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:text="95%"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
+            android:text="@string/monthly_percentage"
             android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="@+id/img_frame_message"
             app:layout_constraintTop_toTopOf="@+id/img_frame_message" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="166dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
