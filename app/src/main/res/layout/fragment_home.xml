@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="المسبحة"
+                android:text="@string/sebha"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20ssp"
                 app:layout_constraintBottom_toBottomOf="parent"

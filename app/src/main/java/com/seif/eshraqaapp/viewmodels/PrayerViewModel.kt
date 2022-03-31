@@ -245,12 +245,51 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     ): List<Prayer> {
         deleteAllPrayer()
 
-        val currentDate = Calendar.getInstance()
-        currentDate.set(
-            lastPrayerDay.currentYear,
-            lastPrayerDay.currentMonth,
-            lastPrayerDay.currentDay + 1
-        )
+        val currentDate:Calendar = Calendar.getInstance()
+        if(lastPrayerDay.currentDay == 31 ){
+            currentDate.set(
+                lastPrayerDay.currentYear,
+                lastPrayerDay.currentMonth,
+                lastPrayerDay.currentDay
+            )
+            Log.d("error", "31")
+        }
+        else if ((lastPrayerDay.currentMonth == 11 ||
+                    lastPrayerDay.currentMonth == 9 ||
+                    lastPrayerDay.currentMonth == 6 ||
+                    lastPrayerDay.currentMonth == 4)
+            && lastPrayerDay.currentDay == 30){
+            currentDate.set(
+                lastPrayerDay.currentYear,
+                lastPrayerDay.currentMonth,
+                lastPrayerDay.currentDay + 2
+            )
+            Log.d("error", "30")
+        }
+        else if(lastPrayerDay.currentMonth == 2 && lastPrayerDay.currentDay == 28){
+            currentDate.set(
+                lastPrayerDay.currentYear,
+                lastPrayerDay.currentMonth,
+                lastPrayerDay.currentDay + 4
+            )
+            Log.d("error", "28 / 2")
+        }
+        else if(lastPrayerDay.currentMonth == 2 && lastPrayerDay.currentDay == 29){
+            currentDate.set(
+                lastPrayerDay.currentYear,
+                lastPrayerDay.currentMonth,
+                lastPrayerDay.currentDay + 3
+            )
+            Log.d("error", "29 / 2")
+        }
+        else {
+            currentDate.set(
+                lastPrayerDay.currentYear,
+                lastPrayerDay.currentMonth,
+                lastPrayerDay.currentDay + 1
+            )
+        }
+
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
         currentDate.add(Calendar.MONTH, -1)
@@ -269,6 +308,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
             currentDate.add(Calendar.DATE, 1)
             // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
         }
+
+        Log.d("error", weekDate.toString())
+        Log.d("error", daysOfWeek.toString())
+
         val hashMap1 = HashMap<String, Boolean>()
         prayerOnlyHashMap.forEach { (key, value) ->
             hashMap1[key] = false

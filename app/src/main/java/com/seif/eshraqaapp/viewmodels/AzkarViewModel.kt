@@ -227,12 +227,50 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     ): List<Azkar> {
         deleteAllAzkar()
 
-        val currentDate = Calendar.getInstance()
-        currentDate.set(
-            lastAzkarDay.currentYear,
-            lastAzkarDay.currentMonth,
-            lastAzkarDay.currentDay + 1
-        )
+        val currentDate:Calendar = Calendar.getInstance()
+        if(lastAzkarDay.currentDay == 31 ){
+            currentDate.set(
+                lastAzkarDay.currentYear,
+                lastAzkarDay.currentMonth,
+                lastAzkarDay.currentDay
+            )
+            Log.d("error", "31")
+        }
+        else if ((lastAzkarDay.currentMonth == 11 ||
+                    lastAzkarDay.currentMonth == 9 ||
+                    lastAzkarDay.currentMonth == 6 ||
+                    lastAzkarDay.currentMonth == 4)
+            && lastAzkarDay.currentDay == 30){
+            currentDate.set(
+                lastAzkarDay.currentYear,
+                lastAzkarDay.currentMonth,
+                lastAzkarDay.currentDay + 2
+            )
+            Log.d("error", "30")
+        }
+        else if(lastAzkarDay.currentMonth == 2 && lastAzkarDay.currentDay == 28){
+            currentDate.set(
+                lastAzkarDay.currentYear,
+                lastAzkarDay.currentMonth,
+                lastAzkarDay.currentDay + 4
+            )
+            Log.d("error", "28 / 2")
+        }
+        else if(lastAzkarDay.currentMonth == 2 && lastAzkarDay.currentDay == 29){
+            currentDate.set(
+                lastAzkarDay.currentYear,
+                lastAzkarDay.currentMonth,
+                lastAzkarDay.currentDay + 3
+            )
+            Log.d("error", "29 / 2")
+        }
+        else {
+            currentDate.set(
+                lastAzkarDay.currentYear,
+                lastAzkarDay.currentMonth,
+                lastAzkarDay.currentDay + 1
+            )
+        }
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
         currentDate.add(Calendar.MONTH, -1)
@@ -241,16 +279,16 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
             val month = currentDate.get(Calendar.MONTH) + 1
             val year = currentDate.get(Calendar.YEAR).toString()
-            Log.d("debug", "day: $day")
-            Log.d("debug", "month: $month")
-            Log.d("debug", "year: $year")
-            Log.d("debug", currentDate.time.toString())
+
             weekDate.add(MyDate(day, month.toString(), year))
             daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-            Log.d("debug", daysOfWeek[i])
+
             currentDate.add(Calendar.DATE, 1)
             // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
         }
+        Log.d("error", weekDate.toString())
+        Log.d("error", daysOfWeek.toString())
+
         val hashMap = HashMap<String, Boolean>()
         newAzkarHashMap.forEach { (key, value) ->
             hashMap[key] = false

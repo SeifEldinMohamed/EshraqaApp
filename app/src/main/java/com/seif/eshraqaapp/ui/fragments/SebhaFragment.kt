@@ -54,7 +54,6 @@ private var score:Long = 0
         binding.btnSebha.setOnClickListener {
             score++
             if(score == 33L ||score == 100L){
-                cutSoundEffect.start()
                 Toast.makeText(requireContext(), "اللهم تقبل ❤", Toast.LENGTH_SHORT).show()
             }
             if(AppSharedPref.readSoundChoice("sound", true)){

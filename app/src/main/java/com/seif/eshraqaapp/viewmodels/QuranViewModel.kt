@@ -265,13 +265,66 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     ): List<Quran> {
         deleteAllQuran()
 
-        val currentDate = Calendar.getInstance()
-       // currentDate.set(Calendar.ERA, GregorianCalendar.AD)
-        currentDate.set(
-            lastQuranDay.currentYear,
-            lastQuranDay.currentMonth,
-            lastQuranDay.currentDay + 1
-        )
+ //       val currentDate:Calendar = Calendar.getInstance()
+//        if(lastQuranDay.currentDay == 31){
+//            currentDate.set(
+//                lastQuranDay.currentYear,
+//                lastQuranDay.currentMonth,
+//                lastQuranDay.currentDay
+//            )
+//        }
+//        else {
+//            currentDate.set(
+//                lastQuranDay.currentYear,
+//                lastQuranDay.currentMonth,
+//                lastQuranDay.currentDay + 1
+//            )
+//        }
+        val currentDate:Calendar = Calendar.getInstance()
+        if(lastQuranDay.currentDay == 31 ){
+            currentDate.set(
+                lastQuranDay.currentYear,
+                lastQuranDay.currentMonth,
+                lastQuranDay.currentDay
+            )
+            Log.d("error", "31")
+        }
+        else if ((lastQuranDay.currentMonth == 11 ||
+                    lastQuranDay.currentMonth == 9 ||
+                    lastQuranDay.currentMonth == 6 ||
+                    lastQuranDay.currentMonth == 4)
+            && lastQuranDay.currentDay == 30){
+            currentDate.set(
+                lastQuranDay.currentYear,
+                lastQuranDay.currentMonth,
+                lastQuranDay.currentDay + 2
+            )
+            Log.d("error", "30")
+        }
+        else if(lastQuranDay.currentMonth == 2 && lastQuranDay.currentDay == 28){
+            currentDate.set(
+                lastQuranDay.currentYear,
+                lastQuranDay.currentMonth,
+                lastQuranDay.currentDay + 4
+            )
+            Log.d("error", "28 / 2")
+        }
+        else if(lastQuranDay.currentMonth == 2 && lastQuranDay.currentDay == 29){
+            currentDate.set(
+                lastQuranDay.currentYear,
+                lastQuranDay.currentMonth,
+                lastQuranDay.currentDay + 3
+            )
+            Log.d("error", "29 / 2")
+        }
+        else {
+            currentDate.set(
+                lastQuranDay.currentYear,
+                lastQuranDay.currentMonth,
+                lastQuranDay.currentDay + 1
+            )
+        }
+
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
         currentDate.add(Calendar.MONTH, -1)
