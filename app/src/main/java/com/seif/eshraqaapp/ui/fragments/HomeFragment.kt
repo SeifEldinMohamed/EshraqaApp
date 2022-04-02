@@ -357,7 +357,7 @@ class HomeFragment : Fragment() {
         }
         bottomSheetView.findViewById<Button>(R.id.btn_save_counters).setOnClickListener {
             if (numberOfSaveDays.toInt() == 0 && numberOfReadDays.toInt() == 0 && numberOfRevisionDays.toInt() == 0){
-                Toast.makeText(requireContext(), "لا يمكن أن يكونوا الثلاثة أصفارا !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.cannot_be_empty), Toast.LENGTH_SHORT).show()
             }
             else{ // valid input
                 writeSharedPrefQuran()
