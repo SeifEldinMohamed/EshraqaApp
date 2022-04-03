@@ -15,6 +15,7 @@ import com.seif.eshraqaapp.data.repository.RepositoryImp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -220,6 +221,20 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return azkarHashMap
     }
 
+    private fun getDayNameInArabic(dayName:String): String {
+        var dayNameInArabic = ""
+        when(dayName){
+            "FRIDAY" -> dayNameInArabic = "الجمعة"
+            "SATURDAY" -> dayNameInArabic = "السبت"
+            "SUNDAY" -> dayNameInArabic = "الأحد"
+            "MONDAY" -> dayNameInArabic = "الاثنين"
+            "TUESDAY" -> dayNameInArabic = "الثلاثاء"
+            "WEDNESDAY" -> dayNameInArabic = "الأربعاء"
+            "THURSDAY" -> dayNameInArabic = "الخميس"
+        }
+        return dayNameInArabic
+    }
+
     fun createNewWeekSchedule(
         lastAzkarDay: Azkar,
         newAzkarHashMap: HashMap<String, Boolean>,
@@ -227,67 +242,25 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     ): List<Azkar> {
         deleteAllAzkar()
 
-        val currentDate:Calendar = Calendar.getInstance()
-        if(lastAzkarDay.currentDay == 31 ){
-            currentDate.set(
-                lastAzkarDay.currentYear,
-                lastAzkarDay.currentMonth,
-                lastAzkarDay.currentDay
-            )
-            Log.d("error", "31")
-        }
-        else if ((lastAzkarDay.currentMonth == 11 ||
-                    lastAzkarDay.currentMonth == 9 ||
-                    lastAzkarDay.currentMonth == 6 ||
-                    lastAzkarDay.currentMonth == 4)
-            && lastAzkarDay.currentDay == 30){
-            currentDate.set(
-                lastAzkarDay.currentYear,
-                lastAzkarDay.currentMonth,
-                lastAzkarDay.currentDay + 2
-            )
-            Log.d("error", "30")
-        }
-        else if(lastAzkarDay.currentMonth == 2 && lastAzkarDay.currentDay == 28){
-            currentDate.set(
-                lastAzkarDay.currentYear,
-                lastAzkarDay.currentMonth,
-                lastAzkarDay.currentDay + 4
-            )
-            Log.d("error", "28 / 2")
-        }
-        else if(lastAzkarDay.currentMonth == 2 && lastAzkarDay.currentDay == 29){
-            currentDate.set(
-                lastAzkarDay.currentYear,
-                lastAzkarDay.currentMonth,
-                lastAzkarDay.currentDay + 3
-            )
-            Log.d("error", "29 / 2")
-        }
-        else {
-            currentDate.set(
-                lastAzkarDay.currentYear,
-                lastAzkarDay.currentMonth,
-                lastAzkarDay.currentDay + 1
-            )
-        }
+        var date = LocalDate.of(lastAzkarDay.currentYear,
+            lastAzkarDay.currentMonth, lastAzkarDay.currentDay)
+        date = date.plusDays(1L)
+
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
-        currentDate.add(Calendar.MONTH, -1)
 
         for (i in 0..6 step 1) {
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
+            val day = date.dayOfMonth.toString()
+            val month = date.monthValue.toString()
+            val year = date.year.toString()
+            println("$day - $month - $year")
 
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-
-            currentDate.add(Calendar.DATE, 1)
-            // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
+            weekDate.add(MyDate(day, month, year))
+            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
+            date = date.plusDays(1L)
         }
-        Log.d("error", weekDate.toString())
-        Log.d("error", daysOfWeek.toString())
+        Log.d("test", weekDate.toString())
+        Log.d("test", daysOfWeek.toString())
 
         val hashMap = HashMap<String, Boolean>()
         newAzkarHashMap.forEach { (key, value) ->

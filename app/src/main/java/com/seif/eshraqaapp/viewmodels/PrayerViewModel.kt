@@ -16,6 +16,7 @@ import com.seif.eshraqaapp.ui.fragments.HomeFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -235,6 +236,19 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
         return qadaaHashMap
     }
 
+    private fun getDayNameInArabic(dayName:String): String {
+        var dayNameInArabic = ""
+        when(dayName){
+            "FRIDAY" -> dayNameInArabic = "الجمعة"
+            "SATURDAY" -> dayNameInArabic = "السبت"
+            "SUNDAY" -> dayNameInArabic = "الأحد"
+            "MONDAY" -> dayNameInArabic = "الاثنين"
+            "TUESDAY" -> dayNameInArabic = "الثلاثاء"
+            "WEDNESDAY" -> dayNameInArabic = "الأربعاء"
+            "THURSDAY" -> dayNameInArabic = "الخميس"
+        }
+        return dayNameInArabic
+    }
 
     fun createNewWeekSchedule(
         lastPrayerDay: Prayer,
@@ -245,72 +259,25 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     ): List<Prayer> {
         deleteAllPrayer()
 
-        val currentDate:Calendar = Calendar.getInstance()
-        if(lastPrayerDay.currentDay == 31 ){
-            currentDate.set(
-                lastPrayerDay.currentYear,
-                lastPrayerDay.currentMonth,
-                lastPrayerDay.currentDay
-            )
-            Log.d("error", "31")
-        }
-        else if ((lastPrayerDay.currentMonth == 11 ||
-                    lastPrayerDay.currentMonth == 9 ||
-                    lastPrayerDay.currentMonth == 6 ||
-                    lastPrayerDay.currentMonth == 4)
-            && lastPrayerDay.currentDay == 30){
-            currentDate.set(
-                lastPrayerDay.currentYear,
-                lastPrayerDay.currentMonth,
-                lastPrayerDay.currentDay + 2
-            )
-            Log.d("error", "30")
-        }
-        else if(lastPrayerDay.currentMonth == 2 && lastPrayerDay.currentDay == 28){
-            currentDate.set(
-                lastPrayerDay.currentYear,
-                lastPrayerDay.currentMonth,
-                lastPrayerDay.currentDay + 4
-            )
-            Log.d("error", "28 / 2")
-        }
-        else if(lastPrayerDay.currentMonth == 2 && lastPrayerDay.currentDay == 29){
-            currentDate.set(
-                lastPrayerDay.currentYear,
-                lastPrayerDay.currentMonth,
-                lastPrayerDay.currentDay + 3
-            )
-            Log.d("error", "29 / 2")
-        }
-        else {
-            currentDate.set(
-                lastPrayerDay.currentYear,
-                lastPrayerDay.currentMonth,
-                lastPrayerDay.currentDay + 1
-            )
-        }
+        var date = LocalDate.of(lastPrayerDay.currentYear,
+            lastPrayerDay.currentMonth, lastPrayerDay.currentDay)
+        date = date.plusDays(1L)
 
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
-        currentDate.add(Calendar.MONTH, -1)
 
         for (i in 0..6 step 1) {
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
-            Log.d("debug", "day: $day")
-            Log.d("debug", "month: $month")
-            Log.d("debug", "year: $year")
-            Log.d("debug", currentDate.time.toString())
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-            Log.d("debug", daysOfWeek[i])
-            currentDate.add(Calendar.DATE, 1)
-            // Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
-        }
+            val day = date.dayOfMonth.toString()
+            val month = date.monthValue.toString()
+            val year = date.year.toString()
+            println("$day - $month - $year")
 
-        Log.d("error", weekDate.toString())
-        Log.d("error", daysOfWeek.toString())
+            weekDate.add(MyDate(day, month, year))
+            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
+            date = date.plusDays(1L)
+        }
+        Log.d("test", weekDate.toString())
+        Log.d("test", daysOfWeek.toString())
 
         val hashMap1 = HashMap<String, Boolean>()
         prayerOnlyHashMap.forEach { (key, value) ->

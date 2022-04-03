@@ -16,6 +16,7 @@ import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -254,6 +255,19 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         }
         return totalWeekScore
     }
+    private fun getDayNameInArabic(dayName:String): String {
+        var dayNameInArabic = ""
+        when(dayName){
+            "FRIDAY" -> dayNameInArabic = "الجمعة"
+            "SATURDAY" -> dayNameInArabic = "السبت"
+            "SUNDAY" -> dayNameInArabic = "الأحد"
+            "MONDAY" -> dayNameInArabic = "الاثنين"
+            "TUESDAY" -> dayNameInArabic = "الثلاثاء"
+            "WEDNESDAY" -> dayNameInArabic = "الأربعاء"
+            "THURSDAY" -> dayNameInArabic = "الخميس"
+        }
+        return dayNameInArabic
+    }
 
     fun createNewWeekSchedule(
         lastQuranDay: Quran,
@@ -265,79 +279,27 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     ): List<Quran> {
         deleteAllQuran()
 
- //       val currentDate:Calendar = Calendar.getInstance()
-//        if(lastQuranDay.currentDay == 31){
-//            currentDate.set(
-//                lastQuranDay.currentYear,
-//                lastQuranDay.currentMonth,
-//                lastQuranDay.currentDay
-//            )
-//        }
-//        else {
-//            currentDate.set(
-//                lastQuranDay.currentYear,
-//                lastQuranDay.currentMonth,
-//                lastQuranDay.currentDay + 1
-//            )
-//        }
-        val currentDate:Calendar = Calendar.getInstance()
-        if(lastQuranDay.currentDay == 31 ){
-            currentDate.set(
-                lastQuranDay.currentYear,
-                lastQuranDay.currentMonth,
-                lastQuranDay.currentDay
-            )
-            Log.d("error", "31")
-        }
-        else if ((lastQuranDay.currentMonth == 11 ||
-                    lastQuranDay.currentMonth == 9 ||
-                    lastQuranDay.currentMonth == 6 ||
-                    lastQuranDay.currentMonth == 4)
-            && lastQuranDay.currentDay == 30){
-            currentDate.set(
-                lastQuranDay.currentYear,
-                lastQuranDay.currentMonth,
-                lastQuranDay.currentDay + 2
-            )
-            Log.d("error", "30")
-        }
-        else if(lastQuranDay.currentMonth == 2 && lastQuranDay.currentDay == 28){
-            currentDate.set(
-                lastQuranDay.currentYear,
-                lastQuranDay.currentMonth,
-                lastQuranDay.currentDay + 4
-            )
-            Log.d("error", "28 / 2")
-        }
-        else if(lastQuranDay.currentMonth == 2 && lastQuranDay.currentDay == 29){
-            currentDate.set(
-                lastQuranDay.currentYear,
-                lastQuranDay.currentMonth,
-                lastQuranDay.currentDay + 3
-            )
-            Log.d("error", "29 / 2")
-        }
-        else {
-            currentDate.set(
-                lastQuranDay.currentYear,
-                lastQuranDay.currentMonth,
-                lastQuranDay.currentDay + 1
-            )
-        }
+        var date = LocalDate.of(lastQuranDay.currentYear,
+            lastQuranDay.currentMonth, lastQuranDay.currentDay)
+        date = date.plusDays(1L)
 
         val weekDate = ArrayList<MyDate>()
         val daysOfWeek = ArrayList<String>()
-        currentDate.add(Calendar.MONTH, -1)
 
         for (i in 0..6 step 1) {
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH)+1
-            val year = currentDate.get(Calendar.YEAR)
-            weekDate.add(MyDate(day, month.toString(), year.toString()))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-            currentDate.add(Calendar.DATE, 1)
-            Log.d("day", weekDate.toString() + daysOfWeek.toString() + currentDate.toString())
+            val day = date.dayOfMonth.toString()
+            val month = date.monthValue.toString()
+            val year = date.year.toString()
+            println("$day - $month - $year")
+
+            weekDate.add(MyDate(day, month, year))
+            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
+            date = date.plusDays(1L)
         }
+        Log.d("test", weekDate.toString())
+        Log.d("test", daysOfWeek.toString())
+
+
         val hashMap = HashMap<String, String>()
         newQuranHashMap.forEach { (key, value) ->
             hashMap[key] = ""
