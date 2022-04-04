@@ -183,8 +183,6 @@ lateinit var binding: FragmentQuranBinding
             binding.textScore.text = "$score/$numberOfQuran"
         }
 
-
-
         binding.quranImageGheth.setOnClickListener {
             showEshrakaMessageDialog()
         }
@@ -236,7 +234,11 @@ lateinit var binding: FragmentQuranBinding
     }
 
     private fun updateCounters() {
-        if(quranHashMap["question1"] == "notFound"){
+        isSaveCounterNotFoundUsed = fromBundle(requireArguments()).quran.isSaveCounterNotFoundUsed
+        isReadCounterNotFoundUsed = fromBundle(requireArguments()).quran.isReadCounterNotFoundUsed
+        isRevisionCounterNotFoundUsed = fromBundle(requireArguments()).quran.isRevisionCounterNotFoundUsed
+        // i add this another check to handle if user click save for more than one time to avoid each time not found is counting
+        if(quranHashMap["question1"] == "notFound" && !isSaveCounterNotFoundUsed){
             isSaveCounterNotFoundUsed = true
             val saveCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfSaveDaysToWork
             var currentSaveCounter =  AppSharedPref.readSaveCounter("saveCounter",saveCounter)
@@ -254,7 +256,7 @@ lateinit var binding: FragmentQuranBinding
                 AppSharedPref.updateSaveCounter("saveCounter", currentSaveCounter)
             }
         }
-        if(quranHashMap["question2"] == "notFound"){
+        if(quranHashMap["question2"] == "notFound" && !isReadCounterNotFoundUsed){
             isReadCounterNotFoundUsed = true
             val readCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfReadDaysToWork
             var currentReadCounter =  AppSharedPref.readReadCounter("readCounter", readCounter)
@@ -273,7 +275,7 @@ lateinit var binding: FragmentQuranBinding
             }
         }
 
-        if(quranHashMap["question3"] == "notFound"){
+        if(quranHashMap["question3"] == "notFound" && !isRevisionCounterNotFoundUsed){
             isRevisionCounterNotFoundUsed = true
             val revisionCounter:Int = 7 - fromBundle(requireArguments()).quran.numberOfRevisionDaysToWork
             var currentRevisionCounter =  AppSharedPref.readRevisionCounter("revisionCounter", revisionCounter)
@@ -316,5 +318,4 @@ lateinit var binding: FragmentQuranBinding
         quranViewModel.updateQuran(quran)
         findNavController().navigate(R.id.action_quranFragment_to_quranDaysFragment)
     }
-
 }

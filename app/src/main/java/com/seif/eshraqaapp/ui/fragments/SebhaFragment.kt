@@ -30,7 +30,7 @@ private var score:Long = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val clickSoundEffect = MediaPlayer.create(requireContext(), R.raw.sebha_click_sound_effect)
-        val cutSoundEffect = MediaPlayer.create(requireContext(), R.raw.sebha_cut_sound_effect)
+        val cutSoundEffect = MediaPlayer.create(requireContext(), R.raw.sebha_cut_sound)
 
         binding.txtCounter.text = AppSharedPref.readSebhaScore("sebha_score", 0).toString()
         score = AppSharedPref.readSebhaScore("sebha_score", 0)
@@ -55,8 +55,9 @@ private var score:Long = 0
             score++
             if(score == 33L ||score == 100L){
                 Toast.makeText(requireContext(), "اللهم تقبل ❤", Toast.LENGTH_SHORT).show()
+                cutSoundEffect.start()
             }
-            if(AppSharedPref.readSoundChoice("sound", true)){
+            else if(AppSharedPref.readSoundChoice("sound", true)){
                     clickSoundEffect.start()
             }
             binding.txtCounter.text = score.toString()
