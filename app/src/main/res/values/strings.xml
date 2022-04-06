@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Eshraqh</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="eshraka_app_description">إشراقة.. هي فكرة دعوية وضعت لك حُبًّا وحرصًا و فريقٌ اجتمع ليشدّ أزرك، ويأخذ بمجامع قلبك لطريقٍ ارتضاهُ لنا ربُّنا وأفنى رسولنا -صلى اللّٰه عليه وسلم- عُمره في نشره، وأحيا فينا رابط الأُخوة لئلا يتيه عنّا أخٌ إلا أمسكنا بكلتا يديه وأرجعناه لطريقنا، رغبةً وأملًا في أن نصل سويًّا للفردوس</string>
+    <string name="eshraka_app_description">إشراقة.. هي فكرة دعوية وضعت لك حُبًّا وحرصًا وفريقٌ اجتمع ليشدّ أزرك، ويأخذ بمجامع قلبك لطريقٍ ارتضاهُ لنا ربُّنا وأفنى رسولنا -صلى اللّٰه عليه وسلم- عُمره في نشره، وأحيا فينا رابط الأُخوة لئلا يتيه عنّا أخٌ إلا أمسكنا بكلتا يديه وأرجعناه لطريقنا، رغبةً وأملًا في أن نصل سويًّا للفردوس</string>
     <string name="welcome">أهلًا بك في إشراقة</string>
     <string name="next">متابعة</string>
     <string name="quran">القرآن</string>
@@ -32,7 +32,7 @@
     <string name="yes">نعم</string>
     <string name="first_week_prayer_message">أول أسبوع لك في جدول الصلاة أسأل الله أن يوفقك</string>
     <string name="first_week_quran_message">أول أسبوع لك في جدول القرآن أسأل الله أن يوفقك</string>
-    <string name="first_week_azkar_message">أول شهر لك في جدول الأذكار أسأل الله أن يوفقك</string>
+    <string name="first_week_azkar_message">أول أسبوع لك في جدول الأذكار أسأل الله أن يوفقك</string>
     <string name="frame_image_for_dialog_message">frame image for dialog message description</string>
     <string name="image_for_message_dialog_description">image for message dialog description</string>
     <string name="ask_god_for_success">أسأل الله التوفيق</string>
@@ -62,12 +62,12 @@
     <string name="fail_message1_azkar">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيل! الله بعظمته يذكرك حين تذكره، فلا تهمل أذكارك.</string>
     <string name="fail_message2_azkar">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
     <string name="fail_message3_azkar">عندما تذهب لفراشك لا تدري على أي حال ستصبح، فاجعل روحك محصنة بأذكار نومك.</string>
-    <string name="fail_message4_azkar">مثل الذي يذكر الله و الذي لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره في قلبك وعلى لسانك.</string>
+    <string name="fail_message4_azkar">مثل الذي يذكر الله والذي لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره في قلبك وعلى لسانك.</string>
     <!--female-->
     <string name="fail_message1_azkar_female">قال تعالى:(فَاذْكُرُونِي أَذْكُرْكُم)، تخيلي! الله بعظمته يذكرك حين تذكرينه، فلا تهملي أذكارك.</string>
     <string name="fail_message2_azkar_female">وصانا النبي بمعقبات الصلاة، بشرنا في أحاديثه بالجنة، وبمغفرة الخطايا، أفلا يتعلق قلبك بها؟</string>
     <string name="fail_message3_azkar_female">عندما تذهبين لفراشك لا تدرين على أي حال ستصبحين، فاجعلي روحك محصنة بأذكار نومك.</string>
-    <string name="fail_message4_azkar_female">مثل الذي يذكر الله و الذي لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره في قلبك وعلى لسانك.</string>
+    <string name="fail_message4_azkar_female">مثل الذي يذكر الله والذي لا يذكر الله كمثل الحيّ والميت، فأحيي حب ربك وذكره في قلبك وعلى لسانك.</string>
 
 
     // quran
@@ -261,6 +261,7 @@
     <string name="monthly_percentage">التقييم الشهري %95</string>
     <string name="sebha">المسبحة</string>
 
-    <string name="cannot_be_empty">يرجي تحديد عدد الأيام</string>
+    <string name="cannot_be_empty">يرجى تحديد عدد الأيام</string>
+    <string name="at_least_one_sona_at_start">يجب اختيار سنة واحدة كبداية !</string>
 
 </resources>

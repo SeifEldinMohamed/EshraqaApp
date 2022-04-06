@@ -7,7 +7,7 @@
             android:title="@string/about_app" />
     </group>
     <group>
-        <item android:title="   أخري">
+        <item android:title="   أخرى">
             <menu>
                 <item
                     android:id="@+id/menu_share"

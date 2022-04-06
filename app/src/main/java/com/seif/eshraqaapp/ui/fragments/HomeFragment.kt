@@ -174,7 +174,7 @@ class HomeFragment : Fragment() {
 //                findNavController().navigate(action)
                 Toast.makeText(
                     requireContext(),
-                    "يجب أختيار سنة واحدة كبداية !",
+                    getString(R.string.at_least_one_sona_at_start),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {

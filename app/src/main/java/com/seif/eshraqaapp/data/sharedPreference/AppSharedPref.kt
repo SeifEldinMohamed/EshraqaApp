@@ -177,6 +177,34 @@ class AppSharedPref {
             prefsEditor.apply()
         }
 
+        fun readQuranDaysNumber(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writeQuranDaysNumber(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+        fun readAzkarDaysNumber(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writeAzkarDaysNumber(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+        fun readPrayerDaysNumber(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writePrayerDaysNumber(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)
 //        }

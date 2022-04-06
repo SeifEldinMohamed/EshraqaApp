@@ -237,6 +237,7 @@ lateinit var binding: FragmentQuranBinding
         isSaveCounterNotFoundUsed = fromBundle(requireArguments()).quran.isSaveCounterNotFoundUsed
         isReadCounterNotFoundUsed = fromBundle(requireArguments()).quran.isReadCounterNotFoundUsed
         isRevisionCounterNotFoundUsed = fromBundle(requireArguments()).quran.isRevisionCounterNotFoundUsed
+
         // i add this another check to handle if user click save for more than one time to avoid each time not found is counting
         if(quranHashMap["question1"] == "notFound" && !isSaveCounterNotFoundUsed){
             isSaveCounterNotFoundUsed = true

@@ -12,6 +12,7 @@ import com.seif.eshraqaapp.data.EshrakaDatabase
 import com.seif.eshraqaapp.data.models.MyDate
 import com.seif.eshraqaapp.data.models.Prayer
 import com.seif.eshraqaapp.data.repository.RepositoryImp
+import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import com.seif.eshraqaapp.ui.fragments.HomeFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,11 +28,13 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     val prayer: LiveData<List<Prayer>> = repository.getAllPrayerData()
     private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
+    private lateinit var restOfWeekDate: ArrayList<MyDate>
+    private lateinit var restOfWeekDaysName: ArrayList<String>
 
     // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
-    var message = application.getString(R.string.first_week_prayer_message)
+    private var message = application.getString(R.string.first_week_prayer_message)
     val vacationDaysNumber: LiveData<Int> = repository.getPrayerVacationDaysNumber()
 
     fun addPrayer(prayer: List<Prayer>) {
@@ -68,6 +71,8 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     fun isAppFirstTimeRun(context: Context): Boolean {
         shared = context.getSharedPreferences("isFirstTimePrayerDays", Context.MODE_PRIVATE)
         if (shared.getBoolean("checkPrayer", true)) {
+            // days
+                prepareDays()
             pref = context.getSharedPreferences("PrayerPrefs", Context.MODE_PRIVATE)
             edit = pref.edit()
             edit.putInt("nweek", 1)
@@ -79,6 +84,30 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
         }
         return false
     }
+
+    private fun prepareDays() {
+        var date = LocalDate.now()
+        // initialize
+        restOfWeekDate = ArrayList()
+        restOfWeekDaysName = ArrayList()
+
+        for (j in 0..600) {
+            for (i in 0..6 step 1) {
+                date = date.plusDays(1L)
+                val day = date.dayOfMonth.toString()
+                val month = date.monthValue.toString()
+                val year = date.year.toString()
+                Log.d("test", "$day - $month - $year")
+
+                restOfWeekDate.add(MyDate(day, month, year))
+                restOfWeekDaysName.add(getDayNameInArabic(date.dayOfWeek.toString()))
+            }
+        }
+        Log.d("test", restOfWeekDate.toString())
+        Log.d("test", restOfWeekDaysName.toString())
+
+    }
+
     fun getSevenDaysPrayerData(sonnHashMap: HomeFragment.SonnHashMap): List<Prayer> {
 
         val currentDate = Calendar.getInstance()
@@ -89,6 +118,7 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
             val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
             val month = currentDate.get(Calendar.MONTH) + 1
             val year = currentDate.get(Calendar.YEAR).toString()
+
             weekDate.add(MyDate(day, month.toString(), year))
             daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
             currentDate.add(Calendar.DATE, 1)
@@ -259,25 +289,28 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
     ): List<Prayer> {
         deleteAllPrayer()
 
-        var date = LocalDate.of(lastPrayerDay.currentYear,
-            lastPrayerDay.currentMonth, lastPrayerDay.currentDay)
-        date = date.plusDays(1L)
+//        var date = LocalDate.of(lastPrayerDay.currentYear,
+//            lastPrayerDay.currentMonth, lastPrayerDay.currentDay)
+//
+//        val weekDate = ArrayList<MyDate>()
+//        val daysOfWeek = ArrayList<String>()
+//
+//        for (i in 0..6 step 1) {
+//            date = date.plusDays(1L)
+//            val day = date.dayOfMonth.toString()
+//            val month = date.monthValue.toString()
+//            val year = date.year.toString()
+//            Log.d("test","$day - $month - $year")
+//
+//            weekDate.add(MyDate(day, month, year))
+//            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
+//        }
+//        Log.d("test", weekDate.toString())
+//        Log.d("test", daysOfWeek.toString())
 
-        val weekDate = ArrayList<MyDate>()
-        val daysOfWeek = ArrayList<String>()
+        val readPrayerDaysNumber =  AppSharedPref.readPrayerDaysNumber("days_prayer",6)
+        AppSharedPref.writePrayerDaysNumber("days_prayer", readPrayerDaysNumber + 7)
 
-        for (i in 0..6 step 1) {
-            val day = date.dayOfMonth.toString()
-            val month = date.monthValue.toString()
-            val year = date.year.toString()
-            println("$day - $month - $year")
-
-            weekDate.add(MyDate(day, month, year))
-            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
-            date = date.plusDays(1L)
-        }
-        Log.d("test", weekDate.toString())
-        Log.d("test", daysOfWeek.toString())
 
         val hashMap1 = HashMap<String, Boolean>()
         prayerOnlyHashMap.forEach { (key, value) ->
@@ -299,10 +332,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[0].day.toInt(),
-                weekDate[0].month.toInt(),
-                weekDate[0].year.toInt(),
-                daysOfWeek[0],
+                restOfWeekDate[readPrayerDaysNumber].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber],
                 0,
                 0,
                 0,
@@ -315,10 +348,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[1].day.toInt(),
-                weekDate[1].month.toInt(),
-                weekDate[1].year.toInt(),
-                daysOfWeek[1],
+                restOfWeekDate[readPrayerDaysNumber+1].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+1].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+1].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+1],
                 0,
                 0,
                 0,
@@ -331,10 +364,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[2].day.toInt(),
-                weekDate[2].month.toInt(),
-                weekDate[2].year.toInt(),
-                daysOfWeek[2],
+                restOfWeekDate[readPrayerDaysNumber+2].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+2].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+2].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+2],
                 0,
                 0,
                 0,
@@ -347,10 +380,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[3].day.toInt(),
-                weekDate[3].month.toInt(),
-                weekDate[3].year.toInt(),
-                daysOfWeek[3],
+                restOfWeekDate[readPrayerDaysNumber+3].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+3].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+3].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+3],
                 0,
                 0,
                 0,
@@ -363,10 +396,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[4].day.toInt(),
-                weekDate[4].month.toInt(),
-                weekDate[4].year.toInt(),
-                daysOfWeek[4],
+                restOfWeekDate[readPrayerDaysNumber+4].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+4].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+4].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+4],
                 0,
                 0,
                 0,
@@ -379,10 +412,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[5].day.toInt(),
-                weekDate[5].month.toInt(),
-                weekDate[5].year.toInt(),
-                daysOfWeek[5],
+                restOfWeekDate[readPrayerDaysNumber+5].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+5].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+5].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+5],
                 0,
                 0,
                 0,
@@ -395,10 +428,10 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[6].day.toInt(),
-                weekDate[6].month.toInt(),
-                weekDate[6].year.toInt(),
-                daysOfWeek[6],
+                restOfWeekDate[readPrayerDaysNumber+6].day.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+6].month.toInt(),
+                restOfWeekDate[readPrayerDaysNumber+6].year.toInt(),
+                restOfWeekDaysName[readPrayerDaysNumber+6],
                 0,
                 0,
                 0,
