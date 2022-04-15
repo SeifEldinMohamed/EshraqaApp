@@ -78,4 +78,5 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
         return eshrakaDatabaseDao.getPrayerVacationDaysNumber()
     }
 
+
 }

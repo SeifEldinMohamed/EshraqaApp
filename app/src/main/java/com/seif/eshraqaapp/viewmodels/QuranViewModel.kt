@@ -28,10 +28,7 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     val quran: LiveData<List<Quran>> = repository.getAllQuranData()
     private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
-    private lateinit var restOfWeekDate: ArrayList<MyDate>
-    private lateinit var restOfWeekDaysName: ArrayList<String>
 
-    // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     var message = application.getString(R.string.first_week_quran_message)
@@ -59,11 +56,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun isAppFirstTimeRun(context: Context): Boolean {
+
         shared = context.getSharedPreferences("isFirstTimeQuranDays", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             // days
-            prepareDays()
-
             pref = context.getSharedPreferences("quranPrefs", Context.MODE_PRIVATE)
             edit = pref.edit()
             edit.putInt("nweek", 1)
@@ -76,42 +72,20 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         return false
     }
 
-    private fun prepareDays() {
-        var date = LocalDate.now()
-        // initialize
-        restOfWeekDate = ArrayList()
-        restOfWeekDaysName = ArrayList()
 
-        for (j in 0..600) {
-            for (i in 0..6 step 1) {
-                date = date.plusDays(1L)
-                val day = date.dayOfMonth.toString()
-                val month = date.monthValue.toString()
-                val year = date.year.toString()
-                Log.d("test", "$day - $month - $year")
-
-                restOfWeekDate.add(MyDate(day, month, year))
-                restOfWeekDaysName.add(getDayNameInArabic(date.dayOfWeek.toString()))
-            }
-        }
-        Log.d("test", restOfWeekDate.toString())
-        Log.d("test", restOfWeekDaysName.toString())
-
-    }
-
-    fun readIsFirstTimeToEnter(context: Context): Boolean {
-        shared = context.getSharedPreferences("isFirstTimeEnterQuran", Context.MODE_PRIVATE)
-        if (shared.getBoolean("check", true)) {
-            return true
-        }
-        return false
-    }
-
-    fun writeIsFirstTimeToEnter() {
-        val editor = shared.edit()
-        editor.putBoolean("check", false)
-        editor.apply()
-    }
+//    fun readIsFirstTimeToEnter(context: Context): Boolean {
+//        shared = context.getSharedPreferences("isFirstTimeEnterQuran", Context.MODE_PRIVATE)
+//        if (shared.getBoolean("check", true)) {
+//            return true
+//        }
+//        return false
+//    }
+//
+//    fun writeIsFirstTimeToEnter() {
+//        val editor = shared.edit()
+//        editor.putBoolean("check", false)
+//        editor.apply()
+//    }
 
     fun getSevenDaysData(
         numberOfDaysToSave: Int,
@@ -327,9 +301,20 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
 //        Log.d("test", weekDate.toString())
 //        Log.d("test", daysOfWeek.toString())
 
+        weekDate = ArrayList<MyDate>()
+        val daysOfWeek = ArrayList<String>()
+        val month = lastQuranDay.currentMonth -1
+        for (i in 1..7 step 1) {
+            val currentDate = GregorianCalendar()
+            currentDate.set( lastQuranDay.currentYear, month, lastQuranDay.currentDay)
+            currentDate.add(Calendar.DATE, i)
+            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
+            val month = currentDate.get(Calendar.MONTH) + 1
+            val year = currentDate.get(Calendar.YEAR).toString()
 
-      val readQuranDaysNumber =  AppSharedPref.readQuranDaysNumber("days_quran",6)
-        AppSharedPref.writeQuranDaysNumber("days_quran", readQuranDaysNumber + 7)
+            weekDate.add(MyDate(day, month.toString(), year))
+            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+        }
 
         val hashMap = HashMap<String, String>()
         newQuranHashMap.forEach { (key, value) ->
@@ -347,10 +332,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 1,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber],
+                weekDate[0].day.toInt(),
+                weekDate[0].month.toInt(),
+                weekDate[0].year.toInt(),
+                daysOfWeek[0],
                 0,
                 weeklyMessage,
                 true,
@@ -365,10 +350,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 2,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+1].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+1].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+1].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+1],
+                weekDate[1].day.toInt(),
+                weekDate[1].month.toInt(),
+                weekDate[1].year.toInt(),
+                daysOfWeek[1],
                 0,
                 weeklyMessage,
                 true,
@@ -383,10 +368,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 3,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+2].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+2].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+2].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+2],
+                weekDate[2].day.toInt(),
+                weekDate[2].month.toInt(),
+                weekDate[2].year.toInt(),
+                daysOfWeek[2],
                 0,
                 weeklyMessage,
                 true,
@@ -401,10 +386,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 4,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+3].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+3].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+3].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+3],
+                weekDate[3].day.toInt(),
+                weekDate[3].month.toInt(),
+                weekDate[3].year.toInt(),
+                daysOfWeek[3],
                 0,
                 weeklyMessage,
                 true,
@@ -419,10 +404,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 5,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+4].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+4].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+4].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+4],
+                weekDate[4].day.toInt(),
+                weekDate[4].month.toInt(),
+                weekDate[4].year.toInt(),
+                daysOfWeek[4],
                 0,
                 weeklyMessage,
                 true,
@@ -437,10 +422,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 6,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+5].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+5].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+5].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+5],
+                weekDate[5].day.toInt(),
+                weekDate[5].month.toInt(),
+                weekDate[5].year.toInt(),
+                daysOfWeek[5],
                 0,
                 weeklyMessage,
                 true,
@@ -455,10 +440,10 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
             Quran(
                 7,
                 quranHashMap,
-                restOfWeekDate[readQuranDaysNumber+6].day.toInt(),
-                restOfWeekDate[readQuranDaysNumber+6].month.toInt(),
-                restOfWeekDate[readQuranDaysNumber+6].year.toInt(),
-                restOfWeekDaysName[readQuranDaysNumber+6],
+                weekDate[6].day.toInt(),
+                weekDate[6].month.toInt(),
+                weekDate[6].year.toInt(),
+                daysOfWeek[6],
                 0,
                 weeklyMessage,
                 true,

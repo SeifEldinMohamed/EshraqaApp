@@ -350,7 +350,7 @@ class PrayerDaysFragment : Fragment() {
                 currentPrayerHashMap,
                 currentQadaaHashMap,
                 currentSonnHashMap,
-                weeklyMessage
+                weeklyMessage,
             )
         )
         btnOk.setOnClickListener {

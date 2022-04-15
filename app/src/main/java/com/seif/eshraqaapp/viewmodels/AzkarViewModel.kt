@@ -28,9 +28,6 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
 
-    private lateinit var restOfWeekDate: ArrayList<MyDate>
-    private lateinit var restOfWeekDaysName: ArrayList<String>
-
     // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
@@ -57,10 +54,10 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun isAppFirstTimeRun(context: Context) {
+
         shared = context.getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             // days
-                prepareDays()
             val azkar = getSevenDaysData()
             pref = context.getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
             edit = pref.edit()
@@ -72,28 +69,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
             editor.apply()
         }
     }
-    private fun prepareDays() {
-        var date = LocalDate.now()
-        // initialize
-        restOfWeekDate = ArrayList()
-        restOfWeekDaysName = ArrayList()
 
-        for (j in 0..600) {
-            for (i in 0..6 step 1) {
-                date = date.plusDays(1L)
-                val day = date.dayOfMonth.toString()
-                val month = date.monthValue.toString()
-                val year = date.year.toString()
-                Log.d("test", "$day - $month - $year")
-
-                restOfWeekDate.add(MyDate(day, month, year))
-                restOfWeekDaysName.add(getDayNameInArabic(date.dayOfWeek.toString()))
-            }
-        }
-        Log.d("test", restOfWeekDate.toString())
-        Log.d("test", restOfWeekDaysName.toString())
-
-    }
 
     fun getSevenDaysData(): List<Azkar> {
 
@@ -249,19 +225,6 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return azkarHashMap
     }
 
-    private fun getDayNameInArabic(dayName:String): String {
-        var dayNameInArabic = ""
-        when(dayName){
-            "FRIDAY" -> dayNameInArabic = "الجمعة"
-            "SATURDAY" -> dayNameInArabic = "السبت"
-            "SUNDAY" -> dayNameInArabic = "الأحد"
-            "MONDAY" -> dayNameInArabic = "الاثنين"
-            "TUESDAY" -> dayNameInArabic = "الثلاثاء"
-            "WEDNESDAY" -> dayNameInArabic = "الأربعاء"
-            "THURSDAY" -> dayNameInArabic = "الخميس"
-        }
-        return dayNameInArabic
-    }
 
     fun createNewWeekSchedule(
         lastAzkarDay: Azkar,
@@ -292,8 +255,20 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
 //        Log.d("test", weekDate.toString())
 //        Log.d("test", daysOfWeek.toString())
 
-        val readAzkarDaysNumber =  AppSharedPref.readAzkarDaysNumber("days_azkar",6)
-        AppSharedPref.writeAzkarDaysNumber("days_azkar", readAzkarDaysNumber + 7)
+        weekDate = ArrayList<MyDate>()
+        val daysOfWeek = ArrayList<String>()
+        val month = lastAzkarDay.currentMonth -1
+        for (i in 1..7 step 1) {
+            val currentDate = GregorianCalendar()
+            currentDate.set( lastAzkarDay.currentYear, month, lastAzkarDay.currentDay)
+            currentDate.add(Calendar.DATE, i)
+            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
+            val month = currentDate.get(Calendar.MONTH) + 1
+            val year = currentDate.get(Calendar.YEAR).toString()
+
+            weekDate.add(MyDate(day, month.toString(), year))
+            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+        }
 
         val hashMap = HashMap<String, Boolean>()
         newAzkarHashMap.forEach { (key, value) ->
@@ -310,11 +285,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber].day} / " + "${restOfWeekDate[readAzkarDaysNumber].month} / " + restOfWeekDate[readAzkarDaysNumber].year,
-                restOfWeekDate[readAzkarDaysNumber].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber],
+                "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
+                weekDate[0].day.toInt(),
+                weekDate[0].month.toInt(),
+                weekDate[0].year.toInt(),
+                daysOfWeek[0],
                 0,
                 weeklyMessage
             ),
@@ -324,11 +299,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+1].day} / " + "${restOfWeekDate[readAzkarDaysNumber+1].month} / " + restOfWeekDate[readAzkarDaysNumber+1].year,
-                restOfWeekDate[readAzkarDaysNumber+1].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+1].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+1].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+1],
+                "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
+                weekDate[1].day.toInt(),
+                weekDate[1].month.toInt(),
+                weekDate[1].year.toInt(),
+                daysOfWeek[1],
                 0,
                 weeklyMessage
             ),
@@ -338,11 +313,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+2].day} / " + "${restOfWeekDate[readAzkarDaysNumber+2].month} / " + restOfWeekDate[readAzkarDaysNumber+2].year,
-                restOfWeekDate[readAzkarDaysNumber+2].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+2].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+2].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+2],
+                "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
+                weekDate[2].day.toInt(),
+                weekDate[2].month.toInt(),
+                weekDate[2].year.toInt(),
+                daysOfWeek[2],
                 0,
                 weeklyMessage
             ),
@@ -352,11 +327,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+3].day} / " + "${restOfWeekDate[readAzkarDaysNumber+3].month} / " + restOfWeekDate[readAzkarDaysNumber+3].year,
-                restOfWeekDate[readAzkarDaysNumber+3].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+3].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+3].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+3],
+                "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
+                weekDate[3].day.toInt(),
+                weekDate[3].month.toInt(),
+                weekDate[3].year.toInt(),
+                daysOfWeek[3],
                 0,
                 weeklyMessage
             ),
@@ -366,11 +341,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+4].day} / " + "${restOfWeekDate[readAzkarDaysNumber+4].month} / " + restOfWeekDate[readAzkarDaysNumber+4].year,
-                restOfWeekDate[readAzkarDaysNumber+4].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+4].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+4].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+4],
+                "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
+                weekDate[4].day.toInt(),
+                weekDate[4].month.toInt(),
+                weekDate[4].year.toInt(),
+                daysOfWeek[4],
                 0,
                 weeklyMessage
             ),
@@ -380,11 +355,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+5].day} / " + "${restOfWeekDate[readAzkarDaysNumber+5].month} / " + restOfWeekDate[readAzkarDaysNumber+5].year,
-                restOfWeekDate[readAzkarDaysNumber+5].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+5].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+5].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+5],
+                "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
+                weekDate[5].day.toInt(),
+                weekDate[5].month.toInt(),
+                weekDate[5].year.toInt(),
+                daysOfWeek[5],
                 0,
                 weeklyMessage
             ),
@@ -394,11 +369,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${restOfWeekDate[readAzkarDaysNumber+6].day} / " + "${restOfWeekDate[readAzkarDaysNumber+6].month} / " + restOfWeekDate[readAzkarDaysNumber+6].year,
-                restOfWeekDate[readAzkarDaysNumber+6].day.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+6].month.toInt(),
-                restOfWeekDate[readAzkarDaysNumber+6].year.toInt(),
-                restOfWeekDaysName[readAzkarDaysNumber+6],
+                "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
+                weekDate[6].day.toInt(),
+                weekDate[6].month.toInt(),
+                weekDate[6].year.toInt(),
+                daysOfWeek[6],
                 0,
                 weeklyMessage
             )
