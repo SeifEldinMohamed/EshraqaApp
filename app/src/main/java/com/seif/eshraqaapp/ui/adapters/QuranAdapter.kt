@@ -20,7 +20,7 @@ class QuranAdapter:RecyclerView.Adapter<QuranAdapter.MyViewHolder>() {
         fun bind(position: Int, quran: List<Quran>){
             binding.txtDay.text = quran[position].dayName
             binding.txtScore.text = "${quran[position].score}/${quran[position].quran.size}"
-            binding.txtDate.text = "${quran[position].currentDay} / ${quran[position].currentMonth} / ${quran[position].currentYear}  "
+            binding.txtDate.text = quran[position].date
             if(quran[position].isVacation)
                 binding.imgVacation.visibility = View.VISIBLE
             else

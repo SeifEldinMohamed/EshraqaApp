@@ -313,7 +313,8 @@ class AzkarDaysFragment : Fragment() {
             viewModel.createNewWeekSchedule(
                 lastAzkarDay,
                 currentAzkarHashMap,
-                weeklyMessage
+                weeklyMessage,
+                lastAzkarDay.mCalendar
             )
         )
         btnOk.setOnClickListener {
@@ -381,7 +382,8 @@ class AzkarDaysFragment : Fragment() {
                 viewModel.createNewWeekSchedule(
                     lastAzkarDay,
                     currentAzkarHashMap,
-                    weeklyMessage
+                    weeklyMessage,
+                    lastAzkarDay.mCalendar
                 )
             )
             afterMonthDialog.dismiss()
@@ -465,13 +467,12 @@ class AzkarDaysFragment : Fragment() {
             }
             edit.apply()
 
-
-
             viewModel.addZekr(
                 viewModel.createNewWeekSchedule(
                     lastAzkarDay,
                     currentAzkarHashMap,
-                    weeklyMessage
+                    weeklyMessage,
+                    lastAzkarDay.mCalendar
                 )
             )
             dialog.dismiss()

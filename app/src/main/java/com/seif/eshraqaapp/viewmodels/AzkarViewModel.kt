@@ -3,7 +3,6 @@ package com.seif.eshraqaapp.viewmodels
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -12,11 +11,9 @@ import com.seif.eshraqaapp.data.EshrakaDatabase
 import com.seif.eshraqaapp.data.models.Azkar
 import com.seif.eshraqaapp.data.models.MyDate
 import com.seif.eshraqaapp.data.repository.RepositoryImp
-import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -54,7 +51,6 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun isAppFirstTimeRun(context: Context) {
-
         shared = context.getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             // days
@@ -72,18 +68,19 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun getSevenDaysData(): List<Azkar> {
+        val mCalendar: Calendar = Calendar.getInstance()
 
-        val currentDate = Calendar.getInstance()
-        weekDate = ArrayList<MyDate>()
-        val daysOfWeek = ArrayList<String>()
+        val dateList = ArrayList<String>()
+        val dayNameList= ArrayList<String>()
+        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
-        for (i in 0..6 step 1) {
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-            currentDate.add(Calendar.DATE, 1)
+        for (i in 0..6) {
+            // Add name of day and date to array
+            val dateAndDayList: List<String> = mFormat.format(mCalendar.time).split(",")
+            dateList.add(dateAndDayList[1])
+            dayNameList.add(dateAndDayList[0])
+            // Move next day
+            mCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val azkarHashMap: HashMap<String, Boolean> = createAzkarHashMap()
@@ -96,13 +93,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
-                weekDate[0].day.toInt(),
-                weekDate[0].month.toInt(),
-                weekDate[0].year.toInt(),
-                daysOfWeek[0],
+                dateList[0],
+                dayNameList[0],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 2,
@@ -110,13 +105,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
-                weekDate[1].day.toInt(),
-                weekDate[1].month.toInt(),
-                weekDate[1].year.toInt(),
-                daysOfWeek[1],
+                dateList[1],
+                dayNameList[1],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 3,
@@ -124,13 +117,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
-                weekDate[2].day.toInt(),
-                weekDate[2].month.toInt(),
-                weekDate[2].year.toInt(),
-                daysOfWeek[2],
+                dateList[2],
+                dayNameList[2],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 4,
@@ -138,13 +129,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
-                weekDate[3].day.toInt(),
-                weekDate[3].month.toInt(),
-                weekDate[3].year.toInt(),
-                daysOfWeek[3],
+                dateList[3],
+                dayNameList[3],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 5,
@@ -152,13 +141,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
-                weekDate[4].day.toInt(),
-                weekDate[4].month.toInt(),
-                weekDate[4].year.toInt(),
-                daysOfWeek[4],
+                dateList[4],
+                dayNameList[4],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 6,
@@ -166,13 +153,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
-                weekDate[5].day.toInt(),
-                weekDate[5].month.toInt(),
-                weekDate[5].year.toInt(),
-                daysOfWeek[5],
+                dateList[5],
+                dayNameList[5],
                 0,
-                message
+                message,
+                mCalendar
             ),
             Azkar(
                 7,
@@ -180,13 +165,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
-                weekDate[6].day.toInt(),
-                weekDate[6].month.toInt(),
-                weekDate[6].year.toInt(),
-                daysOfWeek[6],
+                dateList[6],
+                dayNameList[6],
                 0,
-                message
+                message,
+                mCalendar
             )
         )
     }
@@ -229,7 +212,8 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     fun createNewWeekSchedule(
         lastAzkarDay: Azkar,
         newAzkarHashMap: HashMap<String, Boolean>,
-        weeklyMessage: String
+        weeklyMessage: String,
+        mCalendar:Calendar
     ): List<Azkar> {
         deleteAllAzkar()
 
@@ -255,19 +239,32 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
 //        Log.d("test", weekDate.toString())
 //        Log.d("test", daysOfWeek.toString())
 
-        weekDate = ArrayList<MyDate>()
-        val daysOfWeek = ArrayList<String>()
-        val month = lastAzkarDay.currentMonth -1
-        for (i in 1..7 step 1) {
-            val currentDate = GregorianCalendar()
-            currentDate.set( lastAzkarDay.currentYear, month, lastAzkarDay.currentDay)
-            currentDate.add(Calendar.DATE, i)
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
+//        weekDate = ArrayList<MyDate>()
+//        val daysOfWeek = ArrayList<String>()
+//        val month = lastAzkarDay.currentMonth -1
+//        for (i in 1..7 step 1) {
+//            val currentDate = GregorianCalendar()
+//            currentDate.set( lastAzkarDay.currentYear, month, lastAzkarDay.currentDay)
+//            currentDate.add(Calendar.DATE, i)
+//            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
+//            val month = currentDate.get(Calendar.MONTH) + 1
+//            val year = currentDate.get(Calendar.YEAR).toString()
+//
+//            weekDate.add(MyDate(day, month.toString(), year))
+//            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+//        }
 
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+        val dateList = ArrayList<String>()
+        val dayNameList= ArrayList<String>()
+        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
+
+        for (i in 0..6) {
+            // Add name of day and date to array
+            val dateAndDayList: List<String> = mFormat.format(mCalendar.time).split(",")
+            dateList.add(dateAndDayList[1])
+            dayNameList.add(dateAndDayList[0])
+            // Move next day
+            mCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val hashMap = HashMap<String, Boolean>()
@@ -285,13 +282,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[0].day} / " + "${weekDate[0].month} / " + weekDate[0].year,
-                weekDate[0].day.toInt(),
-                weekDate[0].month.toInt(),
-                weekDate[0].year.toInt(),
-                daysOfWeek[0],
+                dateList[0],
+                dayNameList[0],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 2,
@@ -299,13 +294,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[1].day} / " + "${weekDate[1].month} / " + weekDate[1].year,
-                weekDate[1].day.toInt(),
-                weekDate[1].month.toInt(),
-                weekDate[1].year.toInt(),
-                daysOfWeek[1],
+                dateList[1],
+                dayNameList[1],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 3,
@@ -313,13 +306,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[2].day} / " + "${weekDate[2].month} / " + weekDate[2].year,
-                weekDate[2].day.toInt(),
-                weekDate[2].month.toInt(),
-                weekDate[2].year.toInt(),
-                daysOfWeek[2],
+                dateList[2],
+                dayNameList[2],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 4,
@@ -327,13 +318,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[3].day} / " + "${weekDate[3].month} / " + weekDate[3].year,
-                weekDate[3].day.toInt(),
-                weekDate[3].month.toInt(),
-                weekDate[3].year.toInt(),
-                daysOfWeek[3],
+                dateList[3],
+                dayNameList[3],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 5,
@@ -341,13 +330,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[4].day} / " + "${weekDate[4].month} / " + weekDate[4].year,
-                weekDate[4].day.toInt(),
-                weekDate[4].month.toInt(),
-                weekDate[4].year.toInt(),
-                daysOfWeek[4],
+                dateList[4],
+                dayNameList[4],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 6,
@@ -355,13 +342,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[5].day} / " + "${weekDate[5].month} / " + weekDate[5].year,
-                weekDate[5].day.toInt(),
-                weekDate[5].month.toInt(),
-                weekDate[5].year.toInt(),
-                daysOfWeek[5],
+                dateList[5],
+                dayNameList[5],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             ),
             Azkar(
                 7,
@@ -369,13 +354,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 updateStatusDate.day,
                 updateStatusDate.month,
                 updateStatusDate.year,
-                "${weekDate[6].day} / " + "${weekDate[6].month} / " + weekDate[6].year,
-                weekDate[6].day.toInt(),
-                weekDate[6].month.toInt(),
-                weekDate[6].year.toInt(),
-                daysOfWeek[6],
+                dateList[6],
+                dayNameList[6],
                 0,
-                weeklyMessage
+                weeklyMessage,
+                mCalendar
             )
         )
     }

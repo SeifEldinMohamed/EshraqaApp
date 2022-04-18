@@ -60,9 +60,8 @@ lateinit var binding: FragmentQuranBinding
 
         }
 
-        val dayDate = "${fromBundle(requireArguments()).quran.currentDay} / " +
-                "${fromBundle(requireArguments()).quran.currentMonth} / " +
-                "${fromBundle(requireArguments()).quran.currentYear}"
+        val dayDate = fromBundle(requireArguments()).quran.date
+
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = dayDate
 
         score = fromBundle(requireArguments()).quran.score
@@ -301,10 +300,9 @@ lateinit var binding: FragmentQuranBinding
         val quran = Quran(
             fromBundle(requireArguments()).quran.id,
             quranHashMap,
-            fromBundle(requireArguments()).quran.currentDay,
-            fromBundle(requireArguments()).quran.currentMonth,
-            fromBundle(requireArguments()).quran.currentYear,
+            fromBundle(requireArguments()).quran.date,
             fromBundle(requireArguments()).quran.dayName,
+            fromBundle(requireArguments()).quran.mCalendar,
             score,
             fromBundle(requireArguments()).quran.weeklyUserMessage,
             false,

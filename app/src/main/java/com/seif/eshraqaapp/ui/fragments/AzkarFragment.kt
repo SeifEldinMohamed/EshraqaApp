@@ -241,12 +241,10 @@ class AzkarFragment : Fragment() {
             fromBundle(requireArguments()).azkar.checkMonth,
             fromBundle(requireArguments()).azkar.checkYear,
             fromBundle(requireArguments()).azkar.date,
-            fromBundle(requireArguments()).azkar.currentDay,
-            fromBundle(requireArguments()).azkar.currentMonth,
-            fromBundle(requireArguments()).azkar.currentYear,
             fromBundle(requireArguments()).azkar.dayName,
             score,
-            fromBundle(requireArguments()).azkar.weeklyUserMessage
+            fromBundle(requireArguments()).azkar.weeklyUserMessage,
+            fromBundle(requireArguments()).azkar.mCalendar,
         )
         viewModel.updateZekr(zekr)
         findNavController().navigate(R.id.action_azkarFragment_to_daysFragment)

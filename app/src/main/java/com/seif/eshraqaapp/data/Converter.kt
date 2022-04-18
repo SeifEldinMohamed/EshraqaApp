@@ -3,6 +3,8 @@ package com.seif.eshraqaapp.data
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
+import kotlin.collections.HashMap
 
 class Converter {
 
@@ -25,4 +27,13 @@ class Converter {
         return Gson().fromJson(azkar, listType)
     }
 
+    // calendar
+    @TypeConverter
+    fun fromCalendarToGson(mCalendar: Calendar): String {
+        return Gson().toJson(mCalendar)
+    }
+    @TypeConverter
+    fun fromJsonToCalendarQuran(mCalendar: String): Calendar {
+        return Gson().fromJson(mCalendar, Calendar::class.java)
+    }
 }

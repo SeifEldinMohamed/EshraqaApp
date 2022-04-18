@@ -20,8 +20,7 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(position: Int, prayerList: List<Prayer>) {
-            binding.txtDate.text =
-                "${prayerList[position].currentDay} / ${prayerList[position].currentMonth} / ${prayerList[position].currentYear} "
+            binding.txtDate.text = prayerList[position].date
            binding.txtDay.text = prayerList[position].dayName
 
             when {

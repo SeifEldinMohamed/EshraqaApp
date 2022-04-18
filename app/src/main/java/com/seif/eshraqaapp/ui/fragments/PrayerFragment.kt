@@ -50,10 +50,7 @@ class PrayerFragment : Fragment() {
         prayer = fromBundle(requireArguments()).prayer
 
         viewModel = ViewModelProvider(requireActivity())[PrayerViewModel::class.java]
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title =
-            "${prayer.currentDay} / " +
-                    "${prayer.currentMonth} / " +
-                    "${prayer.currentYear}"
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = prayer.date
 
         // vacation
         isVacation = prayer.isVacation
@@ -383,10 +380,9 @@ class PrayerFragment : Fragment() {
             prayerHashMap,
             qadaaHashMap,
             sonnHashMap,
-            prayer.currentDay,
-            prayer.currentMonth,
-            prayer.currentYear,
+            prayer.date,
             prayer.dayName,
+            prayer.mCalendar,
             prayerScore,
             qadaaScore,
             sonnScore,

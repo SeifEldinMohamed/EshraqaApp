@@ -3,7 +3,6 @@ package com.seif.eshraqaapp.viewmodels
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.*
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.EshrakaDatabase
@@ -15,7 +14,6 @@ import com.seif.eshraqaapp.ui.fragments.HomeFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -121,20 +119,20 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
 
     fun getSevenDaysPrayerData(sonnHashMap: HomeFragment.SonnHashMap): List<Prayer> {
 
-        val currentDate = Calendar.getInstance()
-        weekDate = ArrayList<MyDate>()
-        val daysOfWeek = ArrayList<String>()
+        val mCalendar: Calendar = Calendar.getInstance()
 
-        for (i in 0..6 step 1) {
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
+        val dateList = ArrayList<String>()
+        val dayNameList= ArrayList<String>()
+        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-            currentDate.add(Calendar.DATE, 1)
+        for (i in 0..6) {
+            // Add name of day and date to array
+            val dateAndDayList: List<String> = mFormat.format(mCalendar.time).split(",")
+            dateList.add(dateAndDayList[1])
+            dayNameList.add(dateAndDayList[0])
+            // Move next day
+            mCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
-
 
         val quranOnlyHashMap: HashMap<String, Boolean> = createQuranOnlyHashMap()
         val qadaaHashMap: HashMap<String, Boolean> = createQadaaHashMap()
@@ -146,10 +144,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[0].day.toInt(),
-                weekDate[0].month.toInt(),
-                weekDate[0].year.toInt(),
-                daysOfWeek[0],
+                dateList[0],
+                dayNameList[0],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -162,10 +159,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[1].day.toInt(),
-                weekDate[1].month.toInt(),
-                weekDate[1].year.toInt(),
-                daysOfWeek[1],
+                dateList[1],
+                dayNameList[1],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -178,10 +174,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[2].day.toInt(),
-                weekDate[2].month.toInt(),
-                weekDate[2].year.toInt(),
-                daysOfWeek[2],
+                dateList[2],
+                dayNameList[2],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -195,10 +190,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[3].day.toInt(),
-                weekDate[3].month.toInt(),
-                weekDate[3].year.toInt(),
-                daysOfWeek[3],
+                dateList[3],
+                dayNameList[3],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -211,10 +205,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[4].day.toInt(),
-                weekDate[4].month.toInt(),
-                weekDate[4].year.toInt(),
-                daysOfWeek[4],
+                dateList[4],
+                dayNameList[4],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -227,10 +220,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[5].day.toInt(),
-                weekDate[5].month.toInt(),
-                weekDate[5].year.toInt(),
-                daysOfWeek[5],
+                dateList[5],
+                dayNameList[5],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -243,10 +235,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 quranOnlyHashMap,
                 qadaaHashMap,
                 sonnHashMap,
-                weekDate[6].day.toInt(),
-                weekDate[6].month.toInt(),
-                weekDate[6].year.toInt(),
-                daysOfWeek[6],
+                dateList[6],
+                dayNameList[6],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -299,42 +290,23 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
         prayerAndQadaaHashMap: HashMap<String, Boolean>,
         sonnHashMap: HashMap<String, Boolean>,
         weeklyMessage: String,
+        mCalendar:Calendar
     ): List<Prayer> {
         deleteAllPrayer()
 
-//        var date = LocalDate.of(lastPrayerDay.currentYear,
-//            lastPrayerDay.currentMonth, lastPrayerDay.currentDay)
-//
-//        val weekDate = ArrayList<MyDate>()
-//        val daysOfWeek = ArrayList<String>()
-//
-//        for (i in 0..6 step 1) {
-//            date = date.plusDays(1L)
-//            val day = date.dayOfMonth.toString()
-//            val month = date.monthValue.toString()
-//            val year = date.year.toString()
-//            Log.d("test","$day - $month - $year")
-//
-//            weekDate.add(MyDate(day, month, year))
-//            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
-//        }
-//        Log.d("test", weekDate.toString())
-//        Log.d("test", daysOfWeek.toString())
+        val dateList = ArrayList<String>()
+        val dayNameList= ArrayList<String>()
+        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
-        weekDate = ArrayList<MyDate>()
-        val daysOfWeek = ArrayList<String>()
-        val month = lastPrayerDay.currentMonth -1
-        for (i in 1..7 step 1) {
-            val currentDate = GregorianCalendar()
-            currentDate.set( lastPrayerDay.currentYear, month, lastPrayerDay.currentDay)
-            currentDate.add(Calendar.DATE, i)
-            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-            val month = currentDate.get(Calendar.MONTH) + 1
-            val year = currentDate.get(Calendar.YEAR).toString()
-
-            weekDate.add(MyDate(day, month.toString(), year))
-            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
+        for (i in 0..6) {
+            // Add name of day and date to array
+            val dateAndDayList: List<String> = mFormat.format(mCalendar.time).split(",")
+            dateList.add(dateAndDayList[1])
+            dayNameList.add(dateAndDayList[0])
+            // Move next day
+            mCalendar.add(Calendar.DAY_OF_MONTH, 1)
         }
+
 
 //        val readPrayerDaysNumber =  AppSharedPref.readPrayerDaysNumber("days_prayer",6)
 //        AppSharedPref.writePrayerDaysNumber("days_prayer", readPrayerDaysNumber + 7)
@@ -360,10 +332,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[0].day.toInt(),
-                weekDate[0].month.toInt(),
-                weekDate[0].year.toInt(),
-                daysOfWeek[0],
+                dateList[0],
+                dayNameList[0],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -376,10 +347,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[1].day.toInt(),
-                weekDate[1].month.toInt(),
-                weekDate[1].year.toInt(),
-                daysOfWeek[1],
+                dateList[1],
+                dayNameList[1],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -392,10 +362,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[2].day.toInt(),
-                weekDate[2].month.toInt(),
-                weekDate[2].year.toInt(),
-                daysOfWeek[2],
+                dateList[2],
+                dayNameList[2],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -408,10 +377,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[3].day.toInt(),
-                weekDate[3].month.toInt(),
-                weekDate[3].year.toInt(),
-                daysOfWeek[3],
+                dateList[3],
+                dayNameList[3],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -424,10 +392,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[4].day.toInt(),
-                weekDate[4].month.toInt(),
-                weekDate[4].year.toInt(),
-                daysOfWeek[4],
+                dateList[4],
+                dayNameList[4],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -440,10 +407,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[5].day.toInt(),
-                weekDate[5].month.toInt(),
-                weekDate[5].year.toInt(),
-                daysOfWeek[5],
+                dateList[5],
+                dayNameList[5],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -456,10 +422,9 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
                 hashMap1,
                 hashMap2,
                 hashMap3,
-                weekDate[6].day.toInt(),
-                weekDate[6].month.toInt(),
-                weekDate[6].year.toInt(),
-                daysOfWeek[6],
+                dateList[6],
+                dayNameList[6],
+                mCalendar,
                 0,
                 0,
                 0,
@@ -470,3 +435,23 @@ class PrayerViewModel(application: Application): AndroidViewModel(application) {
         )
     }
 }
+
+
+//        var date = LocalDate.of(lastPrayerDay.currentYear,
+//            lastPrayerDay.currentMonth, lastPrayerDay.currentDay)
+//
+//        val weekDate = ArrayList<MyDate>()
+//        val daysOfWeek = ArrayList<String>()
+//
+//        for (i in 0..6 step 1) {
+//            date = date.plusDays(1L)
+//            val day = date.dayOfMonth.toString()
+//            val month = date.monthValue.toString()
+//            val year = date.year.toString()
+//            Log.d("test","$day - $month - $year")
+//
+//            weekDate.add(MyDate(day, month, year))
+//            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
+//        }
+//        Log.d("test", weekDate.toString())
+//        Log.d("test", daysOfWeek.toString())

@@ -398,7 +398,8 @@ class QuranDaysFragment : Fragment() {
                 weeklyMessage,
                 numberOfSaveDays,
                 numberOfReadDays,
-                numberOfRevisionDays
+                numberOfRevisionDays,
+                lastQuranDay.mCalendar
             )
         )
         btnOk.setOnClickListener {
@@ -470,7 +471,8 @@ class QuranDaysFragment : Fragment() {
                     weeklyMessage,
                     numberOfSaveDays,
                     numberOfReadDays,
-                    numberOfRevisionDays
+                    numberOfRevisionDays,
+                    lastQuranDay.mCalendar
                 )
             )
             afterMonthDialog.dismiss()
@@ -564,7 +566,8 @@ class QuranDaysFragment : Fragment() {
                         weeklyMessage,
                         numberOfSaveDays,
                         numberOfReadDays,
-                        numberOfRevisionDays
+                        numberOfRevisionDays,
+                        lastQuranDay.mCalendar
                     )
                 )
                 dialog.dismiss()

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.util.*
 import kotlin.collections.HashMap
 
 @Entity(tableName = "azkar_table")
@@ -16,10 +17,8 @@ data class Azkar(
     var checkMonth: String,
     var checkYear: String,
     var date: String,
-    var currentDay:Int,
-    var currentMonth:Int,
-    var currentYear:Int,
     var dayName: String,
     var score: Int,
-    var weeklyUserMessage: String
+    var weeklyUserMessage: String,
+    var mCalendar: Calendar
 ): Parcelable

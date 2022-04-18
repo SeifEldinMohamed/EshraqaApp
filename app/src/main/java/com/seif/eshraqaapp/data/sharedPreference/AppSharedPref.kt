@@ -204,6 +204,15 @@ class AppSharedPref {
             prefsEditor.putInt(key, value)
             prefsEditor.apply()
         }
+        fun readDayOfYearPrayer(key:String?, defValue:Int): Int{
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+        fun writeDayOfYearPrayer(key:String?, value:Int){
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
 
 //        fun readPersonalInfo(key: String?, defValue: String?): String? {
 //            return mSharedPref!!.getString(key, defValue)
