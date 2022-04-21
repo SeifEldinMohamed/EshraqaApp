@@ -1,5 +1,6 @@
 package com.seif.eshraqaapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +13,6 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.seif.eshraqaapp.viewmodels.AzkarViewModel
 import com.seif.eshraqaapp.R
@@ -51,26 +51,27 @@ class AzkarDaysFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[AzkarViewModel::class.java]
         setHasOptionsMenu(true)
+
         viewModel.azkar.observe(viewLifecycleOwner) {
-            Log.d("day", it.toString())
-            myAdapter.addAzkar(it!!)
             if (it.isNotEmpty()) {
+                Log.d("day", it.size.toString())
                 numberOfAzkar = it[0].azkar.size
                 currentAzkarHashMap = it[0].azkar
-                if (it.size == 7)
-                    lastAzkarDay = it[6]
+            }
+            if (it.size == 7) {  // to avoid drop down of recycler view items
+                lastAzkarDay = it[6]
+                myAdapter.addAzkar(it)
             }
         }
-        viewModel.getAllWeekScore().observe(viewLifecycleOwner, Observer {
+        viewModel.getAllWeekScore().observe(viewLifecycleOwner) {
             totalWeekScore = viewModel.getSumOfWeekScore(it)
-        })
+        }
         viewModel.isAppFirstTimeRun(requireContext())
 
         binding.rvAzkarDays.adapter = myAdapter
         binding.rvAzkarDays.itemAnimator = ScaleInTopAnimator().apply {
             addDuration = 200
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -95,7 +96,6 @@ class AzkarDaysFragment : Fragment() {
     }
 
     private fun showConfirmationDialog(isEndOfMonth: Boolean) {
-
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.confirmation_dialog)
@@ -103,21 +103,19 @@ class AzkarDaysFragment : Fragment() {
         val btnBack = dialog.findViewById<Button>(R.id.btn_back_counters)
 
         val txtNewWeek = dialog.findViewById<TextView>(R.id.txt_new_week)
-         if(IntroSharedPref.readGander("Male", false)) {
-                txtNewWeek.text = getString(R.string.end_of_week_confirmation)
-         }
-        else{
-             txtNewWeek.text = getString(R.string.end_of_week_confirmation_female)
-         }
+        if (IntroSharedPref.readGander("Male", false)) {
+            txtNewWeek.text = getString(R.string.end_of_week_confirmation)
+        } else {
+            txtNewWeek.text = getString(R.string.end_of_week_confirmation_female)
+        }
 
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
-            val scoreWeekPercentage:Int
-            if (isEndOfMonth){
+            val scoreWeekPercentage: Int
+            if (isEndOfMonth) {
                 scoreWeekPercentage = calculateScore()
                 Log.d("azkar", scoreWeekPercentage.toString())
-            }
-            else{ // normal weeks
+            } else { // normal weeks
                 scoreWeekPercentage = calculateNoramlWeekScore()
                 Log.d("azkar", scoreWeekPercentage.toString())
             }
@@ -161,18 +159,17 @@ class AzkarDaysFragment : Fragment() {
     }
 
     private fun showDialogAccordingToPercentage(scoreWeekPercentage: Int, isEndOfMonth: Boolean) {
-        val image :Int
-        val addNewAzkarToYourSchedule :String = if(IntroSharedPref.readGander("Male", false)){
+        val image: Int
+        val addNewAzkarToYourSchedule: String = if (IntroSharedPref.readGander("Male", false)) {
             getString(R.string.add_new_azkar_to_your_schedule)
-        }
-        else{
+        } else {
             getString(R.string.add_new_azkar_to_your_schedule_female)
         }
         when (scoreWeekPercentage) {
             in 80..100 -> {
-                image = if(IntroSharedPref.readGander("Male", false)){
+                image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_happy
-                } else{
+                } else {
                     R.drawable.zahra_happy
                 }
                 weeklyMessage = generateRandomSuccessMessage()
@@ -194,12 +191,11 @@ class AzkarDaysFragment : Fragment() {
                 Log.d("days", "success")
             }
             in 65..79 -> { // handle adding
-                image = if(IntroSharedPref.readGander("Male", false)){
+                image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_normal
-                }else{
+                } else {
                     R.drawable.zahra_normal
                 }
-
                 weeklyMessage = generateRandomMediumMessage()
                 if (isEndOfMonth) {
                     edit.putLong("totalScore", 0L)
@@ -212,20 +208,19 @@ class AzkarDaysFragment : Fragment() {
                         isEndOfMonth,
                         scoreWeekPercentage
                     )
-                }else{
+                } else {
                     showNormalCongratulationMessage(
                         weeklyMessage,
                         image,
                         isEndOfMonth
                     )
                 }
-
                 Log.d("days", "medium")
             }
             in 0..64 -> {
-                image = if(IntroSharedPref.readGander("Male", false)){
+                image = if (IntroSharedPref.readGander("Male", false)) {
                     R.drawable.gheth_sad
-                }else{
+                } else {
                     R.drawable.zahra_sad
                 }
                 weeklyMessage = generateRandomFailMessage()
@@ -251,7 +246,6 @@ class AzkarDaysFragment : Fragment() {
     }
 
     private fun calculateScore(): Int {
-
         Log.d("days", "number of azkar $numberOfAzkar")
         val totalValueOfWeek = numberOfAzkar * 7
 
@@ -282,7 +276,11 @@ class AzkarDaysFragment : Fragment() {
 
 
     // show message after end of week but not end of month
-    private fun showNormalCongratulationMessage(message: String, image: Int, isEndOfMonth: Boolean) {
+    private fun showNormalCongratulationMessage(
+        message: String,
+        image: Int,
+        isEndOfMonth: Boolean
+    ) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.zahra_message_dialog)
@@ -290,14 +288,14 @@ class AzkarDaysFragment : Fragment() {
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
-        if(IntroSharedPref.readGander("Male", false)) {
+        if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
-        }else{
+        } else {
             frameImage.setImageResource(R.drawable.zahra_frame_dialog)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
         }
-            characterImage.setImageResource(image)
+        characterImage.setImageResource(image)
         txtMessage.text = message
 
         if (isEndOfMonth) {
@@ -309,13 +307,11 @@ class AzkarDaysFragment : Fragment() {
         }
 
         // logic to start new week and save score of prev week
-        viewModel.addZekr(
-            viewModel.createNewWeekSchedule(
-                lastAzkarDay,
-                currentAzkarHashMap,
-                weeklyMessage,
-                lastAzkarDay.mCalendar
-            )
+        viewModel.createNewWeekSchedule(
+            lastAzkarDay,
+            currentAzkarHashMap,
+            weeklyMessage,
+            lastAzkarDay.mCalendar,
         )
         btnOk.setOnClickListener {
             dialog.dismiss()
@@ -323,6 +319,7 @@ class AzkarDaysFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showEndMonthCongratulationMessage(
         addOrDeleteMessage: String,
         message: String,
@@ -330,7 +327,6 @@ class AzkarDaysFragment : Fragment() {
         isEndOfMonth: Boolean,
         scoreWeekPercentage: Int
     ) {
-
         afterMonthDialog = Dialog(requireContext())
         afterMonthDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         afterMonthDialog.setContentView(R.layout.zahra_message_end_of_month)
@@ -339,7 +335,7 @@ class AzkarDaysFragment : Fragment() {
         val txtMessage = afterMonthDialog.findViewById<TextView>(R.id.txt_message_end_of_month)
 
         val txtPercentage = afterMonthDialog.findViewById<TextView>(R.id.txt_month_percentage)
-        txtPercentage.text =       "التقييم الشهري "+
+        txtPercentage.text = "التقييم الشهري " +
                 "%$scoreWeekPercentage"
 
         val txtMessageAddOrDelete =
@@ -349,11 +345,11 @@ class AzkarDaysFragment : Fragment() {
         characterImage.setImageResource(image)
 
         val frameImage = afterMonthDialog.findViewById<ImageView>(R.id.img_frame_message)
-        if(IntroSharedPref.readGander("Male", false)) {
+        if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
             btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
-        }else{
+        } else {
             frameImage.setImageResource(R.drawable.zahra_frame_dialog)
             btnYes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
             btnNo.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
@@ -378,22 +374,18 @@ class AzkarDaysFragment : Fragment() {
             edit.putLong("totalNumberAzkar", 0L)
             edit.apply()
 
-            viewModel.addZekr(
-                viewModel.createNewWeekSchedule(
-                    lastAzkarDay,
-                    currentAzkarHashMap,
-                    weeklyMessage,
-                    lastAzkarDay.mCalendar
-                )
+            viewModel.createNewWeekSchedule(
+                lastAzkarDay,
+                currentAzkarHashMap,
+                weeklyMessage,
+                lastAzkarDay.mCalendar
             )
             afterMonthDialog.dismiss()
         }
-
         afterMonthDialog.show()
     }
 
     private fun showAddAzkarDialog(isEndOfMonth: Boolean) {
-
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.add_azkar_dialog)
@@ -406,13 +398,12 @@ class AzkarDaysFragment : Fragment() {
         val estghCheck = dialog.findViewById<CheckBox>(R.id.estghphar_check)
 
         val txtChooseZekr = dialog.findViewById<TextView>(R.id.txt_choose_zekr)
-        if(IntroSharedPref.readGander("Male", false)) {
+        if (IntroSharedPref.readGander("Male", false)) {
             txtChooseZekr.text = getString(R.string.choose_akar_to_add_message)
-        }
-        else{
+        } else {
             txtChooseZekr.text = getString(R.string.choose_akar_to_add_message_female)
         }
-            pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
+        pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
         hamdCheck.isChecked = pref.getBoolean("hamd", false)
         tsbehCheck.isChecked = pref.getBoolean("tsbeh", false)
         tkberCheck.isChecked = pref.getBoolean("tkber", false)
@@ -467,13 +458,11 @@ class AzkarDaysFragment : Fragment() {
             }
             edit.apply()
 
-            viewModel.addZekr(
-                viewModel.createNewWeekSchedule(
-                    lastAzkarDay,
-                    currentAzkarHashMap,
-                    weeklyMessage,
-                    lastAzkarDay.mCalendar
-                )
+            viewModel.createNewWeekSchedule(
+                lastAzkarDay,
+                currentAzkarHashMap,
+                weeklyMessage,
+                lastAzkarDay.mCalendar
             )
             dialog.dismiss()
             afterMonthDialog.dismiss()
@@ -491,14 +480,12 @@ class AzkarDaysFragment : Fragment() {
             strings.add(getString(R.string.success_message2_azkar))
             strings.add(getString(R.string.success_message3_azkar))
             strings.add(getString(R.string.success_message4_azkar))
-        }
-        else{ // female
+        } else { // female
             strings.add(getString(R.string.success_message1_azkar_female))
             strings.add(getString(R.string.success_message2_azkar_female))
             strings.add(getString(R.string.success_message3_azkar_female))
             strings.add(getString(R.string.success_message4_azkar_female))
         }
-
         return strings.random()
     }
 
@@ -509,14 +496,12 @@ class AzkarDaysFragment : Fragment() {
             strings.add(getString(R.string.medium_message2_azkar))
             strings.add(getString(R.string.medium_message3_azkar))
             strings.add(getString(R.string.medium_message4_azkar))
-        }
-        else{ // female
+        } else { // female
             strings.add(getString(R.string.medium_message1_azkar_female))
             strings.add(getString(R.string.medium_message2_azkar_female))
             strings.add(getString(R.string.medium_message3_azkar_female))
             strings.add(getString(R.string.medium_message4_azkar_female))
         }
-
         return strings.random()
     }
 
@@ -527,15 +512,12 @@ class AzkarDaysFragment : Fragment() {
             strings.add(getString(R.string.fail_message2_azkar))
             strings.add(getString(R.string.fail_message3_azkar))
             strings.add(getString(R.string.fail_message4_azkar))
-        }
-        else{ // female
+        } else { // female
             strings.add(getString(R.string.fail_message1_azkar_female))
             strings.add(getString(R.string.fail_message2_azkar_female))
             strings.add(getString(R.string.fail_message3_azkar_female))
             strings.add(getString(R.string.fail_message4_azkar_female))
         }
-
         return strings.random()
     }
-
 }

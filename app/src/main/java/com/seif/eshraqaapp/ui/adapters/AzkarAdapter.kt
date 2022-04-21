@@ -3,6 +3,7 @@ package com.seif.eshraqaapp.ui.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -46,9 +47,9 @@ class AzkarAdapter: RecyclerView.Adapter<AzkarAdapter.MyViewHolder>() {
     }
 
     fun addAzkar(days:List<Azkar>){
-        val diffUtilCallBack = AzkarDiffUtil(this.azkar, days)
-        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallBack)
-        this.azkar = days
-        diffUtilResult.dispatchUpdatesTo(this)
+            val diffUtilCallBack = AzkarDiffUtil(this.azkar, days)
+            val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallBack)
+            this.azkar = days
+            diffUtilResult.dispatchUpdatesTo(this)
     }
 }

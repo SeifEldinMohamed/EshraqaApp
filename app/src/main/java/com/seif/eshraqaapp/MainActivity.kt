@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,9 +19,9 @@ import com.seif.eshraqaapp.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private var appBarConfiguration: AppBarConfiguration? = null
-private lateinit var navController :NavController
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,7 +32,10 @@ private lateinit var navController :NavController
             navController.graph,
             binding.drawerLayout,
         )
-        setupActionBarWithNavController(navController, appBarConfiguration!!) //the most important part
+        setupActionBarWithNavController(
+            navController,
+            appBarConfiguration!!
+        ) //the most important part
         binding.navDraw.setNavigationItemSelectedListener(this)
 
         binding.imgFacebook.setOnClickListener {
@@ -41,7 +43,7 @@ private lateinit var navController :NavController
                 Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(
-                       "https://www.facebook.com/Eshraqh228/?ti=as"
+                        "https://www.facebook.com/Eshraqh228/?ti=as"
                     )
                 )
             )
@@ -66,11 +68,10 @@ private lateinit var navController :NavController
                 )
             )
         }
-        
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration!!)||
+        return navController.navigateUp(appBarConfiguration!!) ||
                 super.onSupportNavigateUp()
     }
 
@@ -85,7 +86,7 @@ private lateinit var navController :NavController
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menu_about_app -> aboutApp()
             R.id.menu_share -> shareApp()
             R.id.menu_rate -> rateApp()
@@ -101,7 +102,6 @@ private lateinit var navController :NavController
         navController.navigate(R.id.action_homeFragment_to_aboutAppFragment)
     }
 
-
     private fun shareApp() {
         val sendIntent = Intent(Intent.ACTION_SEND)
         sendIntent.putExtra(
@@ -112,6 +112,7 @@ private lateinit var navController :NavController
         sendIntent.type = "text/plain"
         startActivity(Intent.createChooser(sendIntent, "Choose the app you want to share with:"))
     }
+
     private fun rateApp() {
         startActivity(
             Intent(
@@ -122,6 +123,7 @@ private lateinit var navController :NavController
             )
         )
     }
+
     private fun reviewApp() {
         startActivity(
             Intent(
@@ -133,16 +135,7 @@ private lateinit var navController :NavController
             )
         )
     }
-//    private fun ourApps() {
-//        startActivity(
-//            Intent(
-//                Intent.ACTION_VIEW,
-//                Uri.parse(
-//                    "https://play.google.com/store/apps/dev?id=8697500693164992079"
-//                )
-//            )
-//        )
-//    }
+
     private fun aboutDeveloper() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

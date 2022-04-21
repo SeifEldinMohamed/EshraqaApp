@@ -3,21 +3,17 @@ package com.seif.eshraqaapp.viewmodels
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.EshrakaDatabase
-import com.seif.eshraqaapp.data.models.MyDate
 import com.seif.eshraqaapp.data.models.Quran
 import com.seif.eshraqaapp.data.repository.RepositoryImp
 import com.seif.eshraqaapp.data.sharedPreference.AppSharedPref
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -26,20 +22,15 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
     private val eshrakaDatabaseDao = EshrakaDatabase.getInstance(application).myDao()
     private val repository = RepositoryImp(eshrakaDatabaseDao)
     val quran: LiveData<List<Quran>> = repository.getAllQuranData()
-    private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
-
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     var message = application.getString(R.string.first_week_quran_message)
     val vacationDaysNumber: LiveData<Int> = repository.getVacationDaysNumber()
 
-
-    fun addQuran(quran: List<Quran>) {
+    fun addQuran(quran: Quran) {
         viewModelScope.launch(Dispatchers.IO) {
-            quran.forEach {
-                repository.addQuran(it)
-            }
+            repository.addQuran(quran)
         }
     }
 
@@ -49,14 +40,13 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteAllQuran() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllQuran()
-        }
-    }
+//    fun deleteAllQuran() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.deleteAllQuran()
+//        }
+//    }
 
     fun isAppFirstTimeRun(context: Context): Boolean {
-
         shared = context.getSharedPreferences("isFirstTimeQuranDays", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             // days
@@ -72,32 +62,15 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         return false
     }
 
-
-//    fun readIsFirstTimeToEnter(context: Context): Boolean {
-//        shared = context.getSharedPreferences("isFirstTimeEnterQuran", Context.MODE_PRIVATE)
-//        if (shared.getBoolean("check", true)) {
-//            return true
-//        }
-//        return false
-//    }
-//
-//    fun writeIsFirstTimeToEnter() {
-//        val editor = shared.edit()
-//        editor.putBoolean("check", false)
-//        editor.apply()
-//    }
-
     fun getSevenDaysData(
         numberOfDaysToSave: Int,
         numberOfDaysToRead: Int,
         numberOfDaysToRevision: Int
-    ): List<Quran> {
-
+    ) {
         val mCalendar: Calendar = Calendar.getInstance()
-
         val dateList = ArrayList<String>()
-        val dayNameList= ArrayList<String>()
-        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
+        val dayNameList = ArrayList<String>()
+        val mFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
         for (i in 0..6) {
             // Add name of day and date to array
@@ -109,9 +82,8 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         val quranHashMap: HashMap<String, String> = createQuranHashMap()
-     //   val updateStatusDate = getUpdateStatusDate()
 
-        return listOf(
+        addQuran(
             Quran(
                 1,
                 quranHashMap,
@@ -128,7 +100,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 2,
                 quranHashMap,
@@ -145,7 +119,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 3,
                 quranHashMap,
@@ -162,7 +138,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 4,
                 quranHashMap,
@@ -179,7 +157,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 5,
                 quranHashMap,
@@ -196,7 +176,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 6,
                 quranHashMap,
@@ -213,7 +195,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 7,
                 quranHashMap,
@@ -253,53 +237,18 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         }
         return totalWeekScore
     }
-    private fun getDayNameInArabic(dayName:String): String {
-        var dayNameInArabic = ""
-        when(dayName){
-            "FRIDAY" -> dayNameInArabic = "الجمعة"
-            "SATURDAY" -> dayNameInArabic = "السبت"
-            "SUNDAY" -> dayNameInArabic = "الأحد"
-            "MONDAY" -> dayNameInArabic = "الاثنين"
-            "TUESDAY" -> dayNameInArabic = "الثلاثاء"
-            "WEDNESDAY" -> dayNameInArabic = "الأربعاء"
-            "THURSDAY" -> dayNameInArabic = "الخميس"
-        }
-        return dayNameInArabic
-    }
 
     fun createNewWeekSchedule(
-        lastQuranDay: Quran,
         newQuranHashMap: HashMap<String, String>,
         weeklyMessage: String,
         numberOfDaysToSave: Int,
         numberOfDaysToRead: Int,
         numberOfDaysToRevision: Int,
-        mCalendar:Calendar
-    ): List<Quran> {
-        deleteAllQuran()
-
-//        var date = LocalDate.of(lastQuranDay.currentYear,
-//            lastQuranDay.currentMonth, lastQuranDay.currentDay)
-//
-//        val weekDate = ArrayList<MyDate>()
-//        val daysOfWeek = ArrayList<String>()
-//
-//        for (i in 0..6 step 1) {
-//            date = date.plusDays(1L)
-//            val day = date.dayOfMonth.toString()
-//            val month = date.monthValue.toString()
-//            val year = date.year.toString()
-//            Log.d("test","$day - $month - $year")
-//
-//            weekDate.add( MyDate(day, month, year))
-//            daysOfWeek.add( getDayNameInArabic(date.dayOfWeek.toString()))
-//        }
-//        Log.d("test", weekDate.toString())
-//        Log.d("test", daysOfWeek.toString())
-
+        mCalendar: Calendar
+    ) {
         val dateList = ArrayList<String>()
-        val dayNameList= ArrayList<String>()
-        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
+        val dayNameList = ArrayList<String>()
+        val mFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
         for (i in 0..6) {
             // Add name of day and date to array
@@ -317,12 +266,11 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
         val quranHashMap: HashMap<String, String> = hashMap
 
         // to handle "laa yogd" to appear in next
-        AppSharedPref.updateSaveCounter("saveCounter", 7-numberOfDaysToSave)
-        AppSharedPref.updateReadCounter("readCounter", 7-numberOfDaysToRead)
-        AppSharedPref.updateRevisionCounter("revisionCounter", 7-numberOfDaysToRevision)
+        AppSharedPref.updateSaveCounter("saveCounter", 7 - numberOfDaysToSave)
+        AppSharedPref.updateReadCounter("readCounter", 7 - numberOfDaysToRead)
+        AppSharedPref.updateRevisionCounter("revisionCounter", 7 - numberOfDaysToRevision)
 
-
-        return listOf(
+        addQuran(
             Quran(
                 1,
                 quranHashMap,
@@ -339,7 +287,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 2,
                 quranHashMap,
@@ -356,7 +306,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 3,
                 quranHashMap,
@@ -373,7 +325,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 4,
                 quranHashMap,
@@ -390,7 +344,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 5,
                 quranHashMap,
@@ -407,7 +363,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 6,
                 quranHashMap,
@@ -424,7 +382,9 @@ class QuranViewModel(application: Application) : AndroidViewModel(application) {
                 false,
                 false,
                 false
-            ),
+            )
+        )
+        addQuran(
             Quran(
                 7,
                 quranHashMap,

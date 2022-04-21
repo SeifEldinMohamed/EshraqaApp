@@ -3,6 +3,7 @@ package com.seif.eshraqaapp.viewmodels
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -22,21 +23,18 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     private val eshrakaDatabaseDao = EshrakaDatabase.getInstance(application).myDao()
     val repository = RepositoryImp(eshrakaDatabaseDao)
     val azkar: LiveData<List<Azkar>> = repository.getAllData()
-    private lateinit var weekDate: ArrayList<MyDate>
     private lateinit var shared: SharedPreferences
-
-    // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     var message = application.getString(R.string.first_week_azkar_message)
 
-    fun addZekr(azkar: List<Azkar>) {
+    fun addZekr(azkar: Azkar) {
         viewModelScope.launch(Dispatchers.IO) {
-            azkar.forEach {
-                repository.addZekr(it)
-            }
+            Log.d("day", "entered : $azkar")
+            repository.addZekr(azkar)
         }
     }
+
 
     fun updateZekr(azkar: Azkar) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,22 +42,22 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteAllAzkar() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllAzkar()
-        }
-    }
+//    fun deleteAllAzkar() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repository.deleteAllAzkar()
+//        }
+//    }
 
     fun isAppFirstTimeRun(context: Context) {
         shared = context.getSharedPreferences("isFirstTime", Context.MODE_PRIVATE)
         if (shared.getBoolean("check", true)) {
             // days
-            val azkar = getSevenDaysData()
+            getSevenDaysData()
             pref = context.getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
             edit = pref.edit()
             edit.putInt("nweek", 1)
             edit.apply()
-            addZekr(azkar)
+            // addZekr(azkar)
             val editor = shared.edit()
             editor.putBoolean("check", false)
             editor.apply()
@@ -67,12 +65,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getSevenDaysData(): List<Azkar> {
+    fun getSevenDaysData() {
         val mCalendar: Calendar = Calendar.getInstance()
-
         val dateList = ArrayList<String>()
-        val dayNameList= ArrayList<String>()
-        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
+        val dayNameList = ArrayList<String>()
+        val mFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
         for (i in 0..6) {
             // Add name of day and date to array
@@ -86,7 +83,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         val azkarHashMap: HashMap<String, Boolean> = createAzkarHashMap()
         val updateStatusDate = getUpdateStatusDate()
 
-        return listOf(
+        addZekr(
             Azkar(
                 1,
                 azkarHashMap,
@@ -98,7 +95,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 2,
                 azkarHashMap,
@@ -110,7 +109,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 3,
                 azkarHashMap,
@@ -122,7 +123,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 4,
                 azkarHashMap,
@@ -134,7 +137,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 5,
                 azkarHashMap,
@@ -146,7 +151,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 6,
                 azkarHashMap,
@@ -158,7 +165,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 message,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 7,
                 azkarHashMap,
@@ -186,7 +195,6 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         return totalWeekScore
     }
 
-
     private fun getUpdateStatusDate(): MyDate {
         val currentDate = Calendar.getInstance()
         // update date after 30 days from start date of the schedule
@@ -213,50 +221,11 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         lastAzkarDay: Azkar,
         newAzkarHashMap: HashMap<String, Boolean>,
         weeklyMessage: String,
-        mCalendar:Calendar
-    ): List<Azkar> {
-        deleteAllAzkar()
-
-//        var date = LocalDate.of(
-//            lastAzkarDay.currentYear,
-//            lastAzkarDay.currentMonth,
-//            lastAzkarDay.currentDay
-//        )
-//
-//        val weekDate = ArrayList<MyDate>()
-//        val daysOfWeek = ArrayList<String>()
-//
-//        for (i in 0..6 step 1) {
-//            date = date.plusDays(1L)
-//            val day = date.dayOfMonth.toString()
-//            val month = date.monthValue.toString()
-//            val year = date.year.toString()
-//            Log.d("test","$day - $month - $year")
-//
-//            weekDate.add( MyDate(day, month, year))
-//            daysOfWeek.add(getDayNameInArabic(date.dayOfWeek.toString()))
-//        }
-//        Log.d("test", weekDate.toString())
-//        Log.d("test", daysOfWeek.toString())
-
-//        weekDate = ArrayList<MyDate>()
-//        val daysOfWeek = ArrayList<String>()
-//        val month = lastAzkarDay.currentMonth -1
-//        for (i in 1..7 step 1) {
-//            val currentDate = GregorianCalendar()
-//            currentDate.set( lastAzkarDay.currentYear, month, lastAzkarDay.currentDay)
-//            currentDate.add(Calendar.DATE, i)
-//            val day = currentDate.get(Calendar.DAY_OF_MONTH).toString()
-//            val month = currentDate.get(Calendar.MONTH) + 1
-//            val year = currentDate.get(Calendar.YEAR).toString()
-//
-//            weekDate.add(MyDate(day, month.toString(), year))
-//            daysOfWeek.add(SimpleDateFormat("EEEE", Locale("ar")).format(currentDate.time))
-//        }
-
+        mCalendar: Calendar
+    ) {
         val dateList = ArrayList<String>()
-        val dayNameList= ArrayList<String>()
-        val mFormat: SimpleDateFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
+        val dayNameList = ArrayList<String>()
+        val mFormat = SimpleDateFormat("EEE,yyyy/MM/dd", Locale("ar"))
 
         for (i in 0..6) {
             // Add name of day and date to array
@@ -275,7 +244,7 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
         val updateStatusDate =
             MyDate(lastAzkarDay.checkDay, lastAzkarDay.checkMonth, lastAzkarDay.checkYear)
 
-        return listOf(
+        addZekr(
             Azkar(
                 1,
                 azkarHashMap,
@@ -287,7 +256,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 2,
                 azkarHashMap,
@@ -299,7 +270,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 3,
                 azkarHashMap,
@@ -311,7 +284,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 4,
                 azkarHashMap,
@@ -323,7 +298,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 5,
                 azkarHashMap,
@@ -335,7 +312,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 6,
                 azkarHashMap,
@@ -347,7 +326,9 @@ class AzkarViewModel(application: Application) : AndroidViewModel(application) {
                 0,
                 weeklyMessage,
                 mCalendar
-            ),
+            )
+        )
+        addZekr(
             Azkar(
                 7,
                 azkarHashMap,

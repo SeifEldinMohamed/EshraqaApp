@@ -21,7 +21,7 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(position: Int, prayerList: List<Prayer>) {
             binding.txtDate.text = prayerList[position].date
-           binding.txtDay.text = prayerList[position].dayName
+            binding.txtDay.text = prayerList[position].dayName
 
             when {
                 AppSharedPref.readPrayerOnly("prayerOnly", false) -> {
@@ -35,7 +35,6 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
                         "${prayerList[position].totalScore}/10"
                 }
                 AppSharedPref.readPrayerAndSonn("prayerAndSonn", false) -> {
-
                     binding.txtScore.text =
                         "${prayerList[position].totalScore}/${prayerList[position].sonnHashMap.size + 5}"
                 }
@@ -75,7 +74,6 @@ class PrayerAdapter : RecyclerView.Adapter<PrayerAdapter.MyViewHolder>() {
         val diffUtilCallBack = PrayerDiffUtil(this.prayerList, prayers)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallBack)
         this.prayerList = prayers
-        diffUtilResult.dispatchUpdatesTo(this)
-
+         diffUtilResult.dispatchUpdatesTo(this)
     }
 }

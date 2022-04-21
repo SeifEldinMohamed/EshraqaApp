@@ -11,7 +11,6 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.seif.eshraqaapp.R
@@ -23,7 +22,6 @@ import com.seif.eshraqaapp.ui.adapters.PrayerAdapter
 import com.seif.eshraqaapp.ui.fragments.PrayerDaysFragmentArgs.fromBundle
 import com.seif.eshraqaapp.viewmodels.PrayerViewModel
 import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -37,7 +35,6 @@ class PrayerDaysFragment : Fragment() {
     private var numberOfPrayer = 0
     private var totalWeekScore = 0
     lateinit var lastPrayerDay: Prayer
-    private lateinit var shared: SharedPreferences
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     private var numberOfWeeks: Int = 1
@@ -64,32 +61,28 @@ class PrayerDaysFragment : Fragment() {
         setHasOptionsMenu(true)
 
         if (prayerViewModel.isAppFirstTimeRun(requireContext())) {
-            prayerViewModel.addPrayer(
-                prayerViewModel.getSevenDaysPrayerData(
-                    fromBundle(requireArguments()).sonnHashMap
-                )
+            prayerViewModel.getSevenDaysPrayerData(
+                fromBundle(requireArguments()).sonnHashMap
             )
         }
-        prayerViewModel.prayer.observe(viewLifecycleOwner, Observer { it ->
-            myAdapter.addPrayerList(it)
+        prayerViewModel.prayer.observe(viewLifecycleOwner) { it ->
             if (it.isNotEmpty()) {
                 //  numberOfQuran = it[0].quran.size
                 currentPrayerHashMap = it[0].prayersHashMap
                 currentQadaaHashMap = it[0].qadaaHashMap
                 currentSonnHashMap = it[0].sonnHashMap
-
-                if (it.size == 7){
-                    lastPrayerDay = it[6]
-                }
-
             }
-        })
-        prayerViewModel.getAllPrayerWeekScore().observe(viewLifecycleOwner, Observer {
+            if (it.size == 7) {
+                lastPrayerDay = it[6]
+                myAdapter.addPrayerList(it)
+            }
+        }
+        prayerViewModel.getAllPrayerWeekScore().observe(viewLifecycleOwner) {
             totalWeekScore = prayerViewModel.getSumOfPrayerWeekScore(it)
-        })
-        prayerViewModel.vacationDaysNumber.observe(viewLifecycleOwner, Observer {
+        }
+        prayerViewModel.vacationDaysNumber.observe(viewLifecycleOwner) {
             prayerVacationDaysNumber = it ?: 0
-        })
+        }
 
         prayerViewModel.isAppFirstTimeRun(requireContext())
         binding.rvPrayer.adapter = myAdapter
@@ -252,12 +245,6 @@ class PrayerDaysFragment : Fragment() {
                     edit.putLong("totalNumberPrayer", 0L)
                     edit.apply()
 
-//                    showEndMonthCongratulationMessage(
-//                        getString(R.string.update_prayer_schedule),
-//                        weeklyMessage,
-//                        image,
-//                        false
-//                    )
                 }
                 showNormalCongratulationMessage(
                     weeklyMessage,
@@ -321,8 +308,7 @@ class PrayerDaysFragment : Fragment() {
         val txtMessage = dialog.findViewById<TextView>(R.id.txt_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
-        //val txtScore = dialog.findViewById<TextView>(R.id.txt_score_percentage_normal)
-        //txtScore.text = "$scorePercentage %"
+
         if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
@@ -348,25 +334,13 @@ class PrayerDaysFragment : Fragment() {
             edit.apply()
         }
 
-
-
-     //   if(checkNextWeekSchedule()){
-            prayerViewModel.addPrayer(
-                prayerViewModel.createNewWeekSchedule(
-                    lastPrayerDay,
-                    currentPrayerHashMap,
-                    currentQadaaHashMap,
-                    currentSonnHashMap,
-                    weeklyMessage,
-                    lastPrayerDay.mCalendar
-                )
-            )
-       // }
-//        else{
-//            val currentDayOfYear = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
-//            Toast.makeText(requireContext(), "لم ينتهي الأسبوع بعد !", Toast.LENGTH_SHORT).show()
-//            return
-//        }
+        prayerViewModel.createNewWeekSchedule(
+            currentPrayerHashMap,
+            currentQadaaHashMap,
+            currentSonnHashMap,
+            weeklyMessage,
+            lastPrayerDay.mCalendar
+        )
 
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
@@ -374,17 +348,6 @@ class PrayerDaysFragment : Fragment() {
         }
         dialog.show()
     }
-
-//    private fun checkNextWeekSchedule(): Boolean {
-//        val currentDayOfYear = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
-//       // Toast.makeText(requireContext(), "prev Day of Year = ${AppSharedPref.readDayOfYearPrayer("prayerDayOfYear", 1)}", Toast.LENGTH_SHORT).show()
-//
-//        return if(AppSharedPref.readDayOfYearPrayer("prayerDayOfYear", 1) < currentDayOfYear){
-//            AppSharedPref.writeDayOfYearPrayer("prayerDayOfYear", currentDayOfYear+6) // save last week dayOfYear
-//            true
-//        } else
-//            false
-//    }
 
     @SuppressLint("SetTextI18n")
     private fun showEndMonthCongratulationMessage(
@@ -435,7 +398,6 @@ class PrayerDaysFragment : Fragment() {
 
         btnYes.setOnClickListener {
             // logic to start new week and save score of prev week
-            //  showUpdateQuranCountersDialog()
             if (AppSharedPref.readPrayerOnly("prayerOnly", false)) {
                 // start ask from qadaa
                 showQadaaBottomSheetDialog(isEndOfMonth)
@@ -454,28 +416,18 @@ class PrayerDaysFragment : Fragment() {
                 edit.putInt("nweek", numberOfWeeks + 1)
                 edit.apply()
             }
-
             edit.putLong("totalScorePrayer", 0L)
             edit.putLong("totalNumberPrayer", 0L)
             edit.apply()
 
-          //  if(checkNextWeekSchedule()){
-                prayerViewModel.addPrayer(
-                    prayerViewModel.createNewWeekSchedule(
-                        lastPrayerDay,
-                        currentPrayerHashMap,
-                        currentQadaaHashMap,
-                        currentSonnHashMap,
-                        weeklyMessage,
-                        lastPrayerDay.mCalendar
-                    )
-                )
-      //      }
-//            else{
-//                val currentDayOfYear = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
-//                Toast.makeText(requireContext(), "لم ينتهي الأسبوع بعد !", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
+            prayerViewModel.createNewWeekSchedule(
+                currentPrayerHashMap,
+                currentQadaaHashMap,
+                currentSonnHashMap,
+                weeklyMessage,
+                lastPrayerDay.mCalendar
+            )
+
             afterMonthDialog.dismiss()
         }
         afterMonthDialog.show()
@@ -638,23 +590,14 @@ class PrayerDaysFragment : Fragment() {
                     sonnHashMap.remove("s_keyam")
                 }
 
-         //       if(checkNextWeekSchedule()){
-                    prayerViewModel.addPrayer(
-                        prayerViewModel.createNewWeekSchedule(
-                            lastPrayerDay,
-                            currentPrayerHashMap,
-                            currentQadaaHashMap,
-                            currentSonnHashMap,
-                            weeklyMessage,
-                            lastPrayerDay.mCalendar
-                        )
-                    )
-         //       }
-//                else{
-//                    val currentDayOfYear = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
-//                    Toast.makeText(requireContext(), "لم ينتهي الأسبوع بعد !", Toast.LENGTH_SHORT).show()
-//                    return@setOnClickListener
-//                }
+                prayerViewModel.createNewWeekSchedule(
+                    currentPrayerHashMap,
+                    currentQadaaHashMap,
+                    currentSonnHashMap,
+                    weeklyMessage,
+                    lastPrayerDay.mCalendar
+                )
+
                 bottomSheetDialog.dismiss()
             }
         }
@@ -703,23 +646,13 @@ class PrayerDaysFragment : Fragment() {
                         numberOfWeeksEditText.text.toString().toInt()
                     )
 
-                  //  if(checkNextWeekSchedule()){
-                        prayerViewModel.addPrayer(
-                            prayerViewModel.createNewWeekSchedule(
-                                lastPrayerDay,
-                                currentPrayerHashMap,
-                                currentQadaaHashMap,
-                                currentSonnHashMap,
-                                weeklyMessage,
-                                lastPrayerDay.mCalendar
-                            )
-                        )
-                   // }
-//                    else{
-//                        val currentDayOfYear = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
-//                        Toast.makeText(requireContext(), "لم ينتهي الأسبوع بعد !", Toast.LENGTH_SHORT).show()
-//                        return@setOnClickListener
-//                    }
+                    prayerViewModel.createNewWeekSchedule(
+                        currentPrayerHashMap,
+                        currentQadaaHashMap,
+                        currentSonnHashMap,
+                        weeklyMessage,
+                        lastPrayerDay.mCalendar
+                    )
 
                     bottomSheetDialog.dismiss()
                 }
@@ -730,6 +663,5 @@ class PrayerDaysFragment : Fragment() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
     }
 }

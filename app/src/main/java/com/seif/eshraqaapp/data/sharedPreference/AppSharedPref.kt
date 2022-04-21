@@ -6,221 +6,196 @@ import android.content.SharedPreferences
 
 class AppSharedPref {
     companion object {
-        private var  mSharedPref: SharedPreferences? = null
+        private var mSharedPref: SharedPreferences? = null
         fun init(context: Context) {
             if (mSharedPref == null)
                 mSharedPref = context.getSharedPreferences("appSharedPref", Activity.MODE_PRIVATE)
         }
-        fun readCheckFirstTime(key: String?, defValue: Boolean): Boolean {
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeCheckFirstTime(key:String?,value:Boolean) {
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
+
         // quran
-        fun readSaveCounter(key:String?, defValue:Int): Int{
+        fun readSaveCounter(key: String?, defValue: Int): Int {
             return mSharedPref!!.getInt(key, defValue)
         }
-        fun updateSaveCounter(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-        fun readReadCounter(key:String?, defValue:Int): Int{
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun updateReadCounter(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-        fun readRevisionCounter(key:String?, defValue:Int): Int{
 
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun updateRevisionCounter(key:String?, value:Int){
+        fun updateSaveCounter(key: String?, value: Int) {
             val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putInt(key, value)
             prefsEditor.apply()
         }
 
-       // prayer
-       fun readPrayerOnly(key:String?, defValue:Boolean): Boolean{
-
-           return mSharedPref!!.getBoolean(key, defValue)
-       }
-        fun writePrayerOnly(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readPrayerAndQadaa(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writePrayerAndQadaa(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readPrayerAndSonn(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writePrayerAndSonn(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-
-        fun readSontFagr(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontFagr(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontZuhr(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontZuhr(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontMaghreb(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontMaghreb(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontEsha(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontEsha(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontWetr(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontWetr(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontDoha(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontDoha(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-        fun readSontKeyam(key:String?, defValue:Boolean): Boolean{
-
-            return mSharedPref!!.getBoolean(key, defValue)
-        }
-        fun writeSontKeyam(key:String?, value:Boolean){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putBoolean(key, value)
-            prefsEditor.apply()
-        }
-
-        fun readQadaaPeriod(key:String?, defValue:Int): Int{
-
+        fun readReadCounter(key: String?, defValue: Int): Int {
             return mSharedPref!!.getInt(key, defValue)
         }
-        fun writeQadaaPeriod(key:String?, value:Int){
+
+        fun updateReadCounter(key: String?, value: Int) {
             val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putInt(key, value)
             prefsEditor.apply()
         }
 
-        fun readSoundChoice(key:String?, defValue:Boolean): Boolean{
+        fun readRevisionCounter(key: String?, defValue: Int): Int {
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+
+        fun updateRevisionCounter(key: String?, value: Int) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+
+        // prayer
+        fun readPrayerOnly(key: String?, defValue: Boolean): Boolean {
+
             return mSharedPref!!.getBoolean(key, defValue)
         }
-        fun writeSoundChoice(key:String?, value:Boolean){
+
+        fun writePrayerOnly(key: String?, value: Boolean) {
             val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putBoolean(key, value)
             prefsEditor.apply()
         }
 
-        fun readSebhaScore(key:String?, defValue:Long): Long{
+        fun readPrayerAndQadaa(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writePrayerAndQadaa(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readPrayerAndSonn(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writePrayerAndSonn(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontFagr(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontFagr(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontZuhr(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontZuhr(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontMaghreb(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontMaghreb(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontEsha(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontEsha(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontWetr(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontWetr(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontDoha(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontDoha(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSontKeyam(key: String?, defValue: Boolean): Boolean {
+
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSontKeyam(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readQadaaPeriod(key: String?, defValue: Int): Int {
+
+            return mSharedPref!!.getInt(key, defValue)
+        }
+
+        fun writeQadaaPeriod(key: String?, value: Int) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putInt(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSoundChoice(key: String?, defValue: Boolean): Boolean {
+            return mSharedPref!!.getBoolean(key, defValue)
+        }
+
+        fun writeSoundChoice(key: String?, value: Boolean) {
+            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
+            prefsEditor.putBoolean(key, value)
+            prefsEditor.apply()
+        }
+
+        fun readSebhaScore(key: String?, defValue: Long): Long {
 
             return mSharedPref!!.getLong(key, defValue)
         }
-        fun writeSebhaScore(key:String?, value:Long){
+
+        fun writeSebhaScore(key: String?, value: Long) {
             val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putLong(key, value)
             prefsEditor.apply()
         }
-        fun readSebhaMessage(key:String?, defValue:Int): Int{
+
+        fun readSebhaMessage(key: String?, defValue: Int): Int {
 
             return mSharedPref!!.getInt(key, defValue)
         }
-        fun writeSebhaMessage(key:String?, value:Int){
+
+        fun writeSebhaMessage(key: String?, value: Int) {
             val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
             prefsEditor.putInt(key, value)
             prefsEditor.apply()
         }
-
-        fun readQuranDaysNumber(key:String?, defValue:Int): Int{
-
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun writeQuranDaysNumber(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-        fun readAzkarDaysNumber(key:String?, defValue:Int): Int{
-
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun writeAzkarDaysNumber(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-        fun readPrayerDaysNumber(key:String?, defValue:Int): Int{
-
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun writePrayerDaysNumber(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-        fun readDayOfYearPrayer(key:String?, defValue:Int): Int{
-
-            return mSharedPref!!.getInt(key, defValue)
-        }
-        fun writeDayOfYearPrayer(key:String?, value:Int){
-            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-            prefsEditor.putInt(key, value)
-            prefsEditor.apply()
-        }
-
-//        fun readPersonalInfo(key: String?, defValue: String?): String? {
-//            return mSharedPref!!.getString(key, defValue)
-//        }
-//        fun writePersonalInfo(key:String?,value:String?) {
-//            val prefsEditor: SharedPreferences.Editor = mSharedPref!!.edit()
-//            prefsEditor.putString(key, value)
-//            prefsEditor.apply()
-//        }
     }
 }

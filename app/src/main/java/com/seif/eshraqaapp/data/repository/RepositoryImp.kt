@@ -12,15 +12,15 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
     }
 
     override fun getAllData(): LiveData<List<Azkar>> {
-      return  eshrakaDatabaseDao.getAllData()
+        return eshrakaDatabaseDao.getAllData()
     }
 
     override suspend fun updateZekr(zekr: Azkar) {
         eshrakaDatabaseDao.updateZekr(zekr)
     }
 
-    override  fun getAllWeekScore(): LiveData<List<Int>> {
-       return eshrakaDatabaseDao.getAllWeekScore()
+    override fun getAllWeekScore(): LiveData<List<Int>> {
+        return eshrakaDatabaseDao.getAllWeekScore()
     }
 
     override suspend fun deleteAllAzkar() {
@@ -42,7 +42,7 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
     }
 
     override fun getAllQuranWeekScore(): LiveData<List<Int>> {
-        return  eshrakaDatabaseDao.getAllQuranWeekScore()
+        return eshrakaDatabaseDao.getAllQuranWeekScore()
     }
 
     override suspend fun deleteAllQuran() {
@@ -55,7 +55,7 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
 
     // prayer
     override suspend fun addPrayer(prayer: Prayer) {
-         eshrakaDatabaseDao.addPrayer(prayer)
+        eshrakaDatabaseDao.addPrayer(prayer)
     }
 
     override fun getAllPrayerData(): LiveData<List<Prayer>> {
@@ -77,6 +77,5 @@ class RepositoryImp(private val eshrakaDatabaseDao: EshrakaDatabaseDao) : Reposi
     override fun getPrayerVacationDaysNumber(): LiveData<Int> {
         return eshrakaDatabaseDao.getPrayerVacationDaysNumber()
     }
-
 
 }

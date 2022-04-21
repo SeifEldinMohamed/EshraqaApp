@@ -27,7 +27,4 @@ interface Repository {
     fun getAllPrayerWeekScore(): LiveData<List<Int>>
     suspend fun deleteAllPrayer()
     fun getPrayerVacationDaysNumber(): LiveData<Int>
-
-
-
 }

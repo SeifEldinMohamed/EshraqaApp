@@ -9,8 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.databinding.FragmentIntroBinding
 
-//var _binding:FragmentIntroBinding?=null
-//private val binding get() = _binding!!
+
 class IntroFragment : Fragment() {
     lateinit var binding: FragmentIntroBinding
     override fun onCreateView(

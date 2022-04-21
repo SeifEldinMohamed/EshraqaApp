@@ -27,12 +27,10 @@ private const val maxNumberOfWeeks: Int = 500
 var sonnHashMap: HomeFragment.SonnHashMap = HomeFragment.SonnHashMap()
 
 class HomeFragment : Fragment() {
-
     lateinit var binding: FragmentHomeBinding
     lateinit var homeViewModel: HomeViewModel
     private lateinit var shared: SharedPreferences
 
-    // private lateinit var  scoreList:List<Int>
     private lateinit var pref: SharedPreferences
     private lateinit var edit: SharedPreferences.Editor
     override fun onCreateView(
@@ -51,8 +49,7 @@ class HomeFragment : Fragment() {
                 "${IntroSharedPref.readPersonalInfo("Username", "")}"
 
         AppSharedPref.init(requireContext())
-
-        // ackar card
+        // azkar card
         binding.azkarCardView.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_daysFragment)
         }
@@ -87,23 +84,24 @@ class HomeFragment : Fragment() {
         val question = bottomSheetView.findViewById<TextView>(R.id.txt_prayer_question)
         if (IntroSharedPref.readGander("Male", false)) {
             question.text = getString(R.string.prayer_question1)
-        }
-        else{
+        } else {
             question.text = getString(R.string.prayer_question1_female)
         }
-            bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
+        bottomSheetView.findViewById<Button>(R.id.btn_yes_prayer).setOnClickListener {
             showQadaaBottomSheetDialog()
             bottomSheetDialog.dismiss()
         }
-        bottomSheetView.findViewById<Button>(R.id.btn_no_prayer).setOnClickListener { // create only prayer schedule
-            writeSharedPrefPrayer()
-            AppSharedPref.writePrayerOnly("prayerOnly", true)
-            AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
-            AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
-            val action = HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
-            findNavController().navigate(action)
-            bottomSheetDialog.dismiss()
-        }
+        bottomSheetView.findViewById<Button>(R.id.btn_no_prayer)
+            .setOnClickListener { // create only prayer schedule
+                writeSharedPrefPrayer()
+                AppSharedPref.writePrayerOnly("prayerOnly", true)
+                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
+                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
+                findNavController().navigate(action)
+                bottomSheetDialog.dismiss()
+            }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
 
@@ -150,13 +148,11 @@ class HomeFragment : Fragment() {
         val txtChooseSonn = bottomSheetView.findViewById<TextView>(R.id.txt_choose_sonn)
         if (IntroSharedPref.readGander("Male", false)) {
             txtChooseSonn.text = getString(R.string.choose_sonn_text)
-        }
-        else{
+        } else {
             txtChooseSonn.text = getString(R.string.choose_sonn_text_female)
         }
 
-
-            bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
+        bottomSheetView.findViewById<Button>(R.id.btn_save_sonn).setOnClickListener {
             /** also used in alert dialog when user can add sonn to his schedule**/
             if (!sontWetrCheckBox.isChecked &&
                 !sontDohaCheckBox.isChecked &&
@@ -166,12 +162,6 @@ class HomeFragment : Fragment() {
                 !sontfagrCheckBox.isChecked &&
                 !sontEshaCheckBox.isChecked
             ) { // check if there is no sonn choosed
-//                AppSharedPref.writePrayerOnly("prayerOnly", true )
-//                AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", false)
-//                AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
-//                sonnHashMap = SonnHashMap() // make it empty to know that the user didn't choose any sonn so the system will create prayers only schedule
-//                val action = HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
-//                findNavController().navigate(action)
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.at_least_one_sona_at_start),
@@ -260,7 +250,7 @@ class HomeFragment : Fragment() {
                 numberOfWeeksEditText.text.toString().toInt() > maxNumberOfWeeks -> {
                     numberOfWeeksEditText.error = "أقصي عدد 500" + " !"
                 }
-                numberOfWeeksEditText.text.toString().toInt() <=0 -> {
+                numberOfWeeksEditText.text.toString().toInt() <= 0 -> {
                     numberOfWeeksEditText.error = " أقل عدد 1" + " !"
                 }
                 else -> {
@@ -269,7 +259,10 @@ class HomeFragment : Fragment() {
                     AppSharedPref.writePrayerAndQadaa("prayerAndQadaa", true)
                     AppSharedPref.writePrayerAndSonn("prayerAndSonn", false)
 
-                    AppSharedPref.writeQadaaPeriod("qadaa_period", numberOfWeeksEditText.text.toString().toInt())
+                    AppSharedPref.writeQadaaPeriod(
+                        "qadaa_period",
+                        numberOfWeeksEditText.text.toString().toInt()
+                    )
                     val action =
                         HomeFragmentDirections.actionHomeFragmentToPrayerDaysFragment(sonnHashMap)
                     findNavController().navigate(action)
@@ -305,15 +298,13 @@ class HomeFragment : Fragment() {
             txtReadCounter.text = getString(R.string.enter_number_of_days_read)
             txtSaveCounter.text = getString(R.string.enter_number_of_days_save)
             txtRevisionCounter.text = getString(R.string.enter_number_of_days_revision)
-        }
-        else{
+        } else {
             txtReadCounter.text = getString(R.string.enter_number_of_days_read_female)
             txtSaveCounter.text = getString(R.string.enter_number_of_days_save_female)
             txtRevisionCounter.text = getString(R.string.enter_number_of_days_revision_female)
 
         }
-
-            saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        saveSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -323,9 +314,7 @@ class HomeFragment : Fragment() {
                 numberOfSaveDays = parent?.getItemAtPosition(position).toString()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         readSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -337,9 +326,7 @@ class HomeFragment : Fragment() {
                 numberOfReadDays = parent?.getItemAtPosition(position).toString()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         revisionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -351,15 +338,16 @@ class HomeFragment : Fragment() {
                 numberOfRevisionDays = parent?.getItemAtPosition(position).toString()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         bottomSheetView.findViewById<Button>(R.id.btn_save_counters).setOnClickListener {
-            if (numberOfSaveDays.toInt() == 0 && numberOfReadDays.toInt() == 0 && numberOfRevisionDays.toInt() == 0){
-                Toast.makeText(requireContext(), getString(R.string.cannot_be_empty), Toast.LENGTH_SHORT).show()
-            }
-            else{ // valid input
+            if (numberOfSaveDays.toInt() == 0 && numberOfReadDays.toInt() == 0 && numberOfRevisionDays.toInt() == 0) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.cannot_be_empty),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else { // valid input
                 writeSharedPrefQuran()
                 val action = HomeFragmentDirections.actionHomeFragmentToQuranDaysFragment(
                     numberOfSaveDays.toInt(),
@@ -395,5 +383,4 @@ class HomeFragment : Fragment() {
         editor.putBoolean("checkPrayer", false)
         editor.apply()
     }
-
 }

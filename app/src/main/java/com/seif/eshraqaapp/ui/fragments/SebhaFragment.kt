@@ -16,8 +16,8 @@ import com.seif.eshraqaapp.databinding.FragmentSebhaBinding
 
 
 class SebhaFragment : Fragment() {
-lateinit var binding: FragmentSebhaBinding
-private var score:Long = 0
+    lateinit var binding: FragmentSebhaBinding
+    private var score: Long = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,15 +35,15 @@ private var score:Long = 0
         binding.txtCounter.text = AppSharedPref.readSebhaScore("sebha_score", 0).toString()
         score = AppSharedPref.readSebhaScore("sebha_score", 0)
 
-        when(AppSharedPref.readSebhaMessage("message", 8)){
-            1-> binding.txtSebhaMessage.text = getString(R.string.tsbeh1)
-            2-> binding.txtSebhaMessage.text = getString(R.string.tsbeh2)
-            3-> binding.txtSebhaMessage.text = getString(R.string.tsbeh3)
-            4-> binding.txtSebhaMessage.text = getString(R.string.tsbeh4)
-            5-> binding.txtSebhaMessage.text = getString(R.string.tsbeh5)
-            6-> binding.txtSebhaMessage.text = getString(R.string.tsbeh6)
-            7-> binding.txtSebhaMessage.text = getString(R.string.tsbeh7)
-            8-> binding.txtSebhaMessage.text = getString(R.string.tsbeh8)
+        when (AppSharedPref.readSebhaMessage("message", 8)) {
+            1 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh1)
+            2 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh2)
+            3 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh3)
+            4 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh4)
+            5 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh5)
+            6 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh6)
+            7 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh7)
+            8 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh8)
         }
 
         if (AppSharedPref.readSoundChoice("sound", true))
@@ -53,12 +53,11 @@ private var score:Long = 0
 
         binding.btnSebha.setOnClickListener {
             score++
-            if(score == 33L ||score == 100L){
+            if (score == 33L || score == 100L) {
                 Toast.makeText(requireContext(), "اللهم تقبل ❤", Toast.LENGTH_SHORT).show()
                 cutSoundEffect.start()
-            }
-            else if(AppSharedPref.readSoundChoice("sound", true)){
-                    clickSoundEffect.start()
+            } else if (AppSharedPref.readSoundChoice("sound", true)) {
+                clickSoundEffect.start()
             }
             binding.txtCounter.text = score.toString()
         }
@@ -67,11 +66,10 @@ private var score:Long = 0
             binding.txtCounter.text = score.toString()
         }
         binding.btnSound.setOnClickListener {
-            if(AppSharedPref.readSoundChoice("sound", true)){
+            if (AppSharedPref.readSoundChoice("sound", true)) {
                 binding.btnSound.setImageResource(R.drawable.ic_sound_mute)
                 AppSharedPref.writeSoundChoice("sound", false)
-            }
-            else{
+            } else {
                 binding.btnSound.setImageResource(R.drawable.ic_sound)
                 AppSharedPref.writeSoundChoice("sound", true)
             }
@@ -92,12 +90,10 @@ private var score:Long = 0
         val txtChoose = dialog.findViewById<TextView>(R.id.txt_choose_sebha)
         if (IntroSharedPref.readGander("Male", false)) {
             txtChoose.text = getString(R.string.choose)
-        }
-        else{
+        } else {
             txtChoose.text = getString(R.string.choose_female)
         }
-
-            when(AppSharedPref.readSebhaMessage("message", 8)){
+        when (AppSharedPref.readSebhaMessage("message", 8)) {
             1 -> radioGroup.check(R.id.tsbeh1_radio)
             2 -> radioGroup.check(R.id.tsbeh2_radio)
             3 -> radioGroup.check(R.id.tsbeh3_radio)
@@ -109,7 +105,7 @@ private var score:Long = 0
         }
 
         btnSave.setOnClickListener {
-            when(radioGroup.checkedRadioButtonId){
+            when (radioGroup.checkedRadioButtonId) {
                 R.id.tsbeh1_radio -> AppSharedPref.writeSebhaMessage("message", 1)
                 R.id.tsbeh2_radio -> AppSharedPref.writeSebhaMessage("message", 2)
                 R.id.tsbeh3_radio -> AppSharedPref.writeSebhaMessage("message", 3)
@@ -120,15 +116,15 @@ private var score:Long = 0
                 R.id.tsbeh8_radio -> AppSharedPref.writeSebhaMessage("message", 8)
             }
 
-            when(AppSharedPref.readSebhaMessage("message", 8)){
-                1-> binding.txtSebhaMessage.text = getString(R.string.tsbeh1)
-                2-> binding.txtSebhaMessage.text = getString(R.string.tsbeh2)
-                3-> binding.txtSebhaMessage.text = getString(R.string.tsbeh3)
-                4-> binding.txtSebhaMessage.text = getString(R.string.tsbeh4)
-                5-> binding.txtSebhaMessage.text = getString(R.string.tsbeh5)
-                6-> binding.txtSebhaMessage.text = getString(R.string.tsbeh6)
-                7-> binding.txtSebhaMessage.text = getString(R.string.tsbeh7)
-                8-> binding.txtSebhaMessage.text = getString(R.string.tsbeh8)
+            when (AppSharedPref.readSebhaMessage("message", 8)) {
+                1 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh1)
+                2 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh2)
+                3 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh3)
+                4 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh4)
+                5 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh5)
+                6 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh6)
+                7 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh7)
+                8 -> binding.txtSebhaMessage.text = getString(R.string.tsbeh8)
             }
 
             dialog.dismiss()

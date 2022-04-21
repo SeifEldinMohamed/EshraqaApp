@@ -16,7 +16,7 @@ class QuranDiffUtil(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition] === newList[newItemPosition]
     }
 
     override fun areContentsTheSame(

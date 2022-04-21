@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.seif.eshraqaapp.R
 import com.seif.eshraqaapp.data.models.Quran
@@ -57,36 +56,34 @@ class QuranDaysFragment : Fragment() {
         setHasOptionsMenu(true)
 
         if (quranViewModel.isAppFirstTimeRun(requireContext())) {
-            quranViewModel.addQuran(
-                quranViewModel.getSevenDaysData(
-                    fromBundle(requireArguments()).numberOfSaveDays,
-                    fromBundle(requireArguments()).numberOfReadDays,
-                    fromBundle(requireArguments()).numberOfRevisionDays
-                )
+            quranViewModel.getSevenDaysData(
+                fromBundle(requireArguments()).numberOfSaveDays,
+                fromBundle(requireArguments()).numberOfReadDays,
+                fromBundle(requireArguments()).numberOfRevisionDays
             )
             Log.d("quran", "${fromBundle(requireArguments()).numberOfSaveDays}")
             Log.d("quran", "${fromBundle(requireArguments()).numberOfReadDays}")
             Log.d("quran", "${fromBundle(requireArguments()).numberOfRevisionDays}")
         }
-        quranViewModel.quran.observe(viewLifecycleOwner, Observer { it ->
-            myAdapter.addQuran(it)
-            if (it.isNotEmpty()) {
-                //  numberOfQuran = it[0].quran.size
-                currentQuranHashMap = it[0].quran
-                if (it.size == 7)
-                    lastQuranDay = it[6]
 
+        quranViewModel.quran.observe(viewLifecycleOwner, { it ->
+            if (it.isNotEmpty()) {
+                currentQuranHashMap = it[0].quran
                 numberOfSaveDays = it[0].numberOfSaveDaysToWork
                 numberOfReadDays = it[0].numberOfReadDaysToWork
                 numberOfRevisionDays = it[0].numberOfRevisionDaysToWork
             }
+            if (it.size == 7) {
+                lastQuranDay = it[6]
+                myAdapter.addQuran(it)
+            }
         })
-        quranViewModel.getAllQuranWeekScore().observe(viewLifecycleOwner, Observer {
+        quranViewModel.getAllQuranWeekScore().observe(viewLifecycleOwner) {
             totalWeekScore = quranViewModel.getSumOfQuranWeekScore(it)
-        })
-        quranViewModel.vacationDaysNumber.observe(viewLifecycleOwner, Observer {
+        }
+        quranViewModel.vacationDaysNumber.observe(viewLifecycleOwner) {
             vacationDaysNumber = it ?: 0
-        })
+        }
 
         quranViewModel.isAppFirstTimeRun(requireContext())
         binding.rvQuranDays.adapter = myAdapter
@@ -391,17 +388,16 @@ class QuranDaysFragment : Fragment() {
             edit.apply()
         }
 
-        quranViewModel.addQuran(
-            quranViewModel.createNewWeekSchedule(
-                lastQuranDay,
-                currentQuranHashMap,
-                weeklyMessage,
-                numberOfSaveDays,
-                numberOfReadDays,
-                numberOfRevisionDays,
-                lastQuranDay.mCalendar
-            )
+        //  quranViewModel.addQuran(
+        quranViewModel.createNewWeekSchedule(
+            currentQuranHashMap,
+            weeklyMessage,
+            numberOfSaveDays,
+            numberOfReadDays,
+            numberOfRevisionDays,
+            lastQuranDay.mCalendar
         )
+        //)
         btnOk.setOnClickListener {
             // logic to start new week and save score of prev week
             dialog.dismiss()
@@ -464,16 +460,13 @@ class QuranDaysFragment : Fragment() {
             edit.putLong("totalNumberQuran", 0L)
             edit.apply()
 
-            quranViewModel.addQuran(
-                quranViewModel.createNewWeekSchedule(
-                    lastQuranDay,
-                    currentQuranHashMap,
-                    weeklyMessage,
-                    numberOfSaveDays,
-                    numberOfReadDays,
-                    numberOfRevisionDays,
-                    lastQuranDay.mCalendar
-                )
+            quranViewModel.createNewWeekSchedule(
+                currentQuranHashMap,
+                weeklyMessage,
+                numberOfSaveDays,
+                numberOfReadDays,
+                numberOfRevisionDays,
+                lastQuranDay.mCalendar
             )
             afterMonthDialog.dismiss()
         }
@@ -481,7 +474,6 @@ class QuranDaysFragment : Fragment() {
     }
 
     private fun showUpdateQuranCountersDialog(isEndOfMonth: Boolean) {
-
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.update_counters_dialog)
@@ -506,9 +498,7 @@ class QuranDaysFragment : Fragment() {
                 numberOfSaveDays = parent?.getItemAtPosition(position).toString().toInt()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         readSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -520,9 +510,7 @@ class QuranDaysFragment : Fragment() {
                 numberOfReadDays = parent?.getItemAtPosition(position).toString().toInt()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         revisionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -534,9 +522,7 @@ class QuranDaysFragment : Fragment() {
                 numberOfRevisionDays = parent?.getItemAtPosition(position).toString().toInt()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         btnSave.setOnClickListener {
@@ -554,21 +540,17 @@ class QuranDaysFragment : Fragment() {
                     edit.putInt("nweek", numberOfWeeks + 1)
                     edit.apply()
                 }
-
                 edit.putLong("totalScoreQuran", 0L)
                 edit.putLong("totalNumberQuran", 0L)
                 edit.apply()
 
-                quranViewModel.addQuran(
-                    quranViewModel.createNewWeekSchedule(
-                        lastQuranDay,
-                        currentQuranHashMap,
-                        weeklyMessage,
-                        numberOfSaveDays,
-                        numberOfReadDays,
-                        numberOfRevisionDays,
-                        lastQuranDay.mCalendar
-                    )
+                quranViewModel.createNewWeekSchedule(
+                    currentQuranHashMap,
+                    weeklyMessage,
+                    numberOfSaveDays,
+                    numberOfReadDays,
+                    numberOfRevisionDays,
+                    lastQuranDay.mCalendar
                 )
                 dialog.dismiss()
                 afterMonthDialog.dismiss()
@@ -591,7 +573,6 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.success_message2_quran_female))
             strings.add(getString(R.string.success_message3_quran_female))
         }
-
         return strings.random()
     }
 
@@ -606,7 +587,6 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.medium_message2_quran_female))
             strings.add(getString(R.string.medium_message3_quran_female))
         }
-
         return strings.random()
     }
 
@@ -621,7 +601,6 @@ class QuranDaysFragment : Fragment() {
             strings.add(getString(R.string.fail_message2_quran_female))
             strings.add(getString(R.string.fail_message3_quran_female))
         }
-
         return strings.random()
     }
 }

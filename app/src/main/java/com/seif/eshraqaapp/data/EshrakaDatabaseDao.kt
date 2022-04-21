@@ -9,7 +9,7 @@ import com.seif.eshraqaapp.data.models.Quran
 @Dao
 interface EshrakaDatabaseDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addZekr(zekr: Azkar)
 
     @Query("SELECT * FROM azkar_table")
@@ -25,7 +25,7 @@ interface EshrakaDatabaseDao {
     suspend fun deleteAllAzkar()
 
     // quran
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addQuran(quran: Quran)
 
     @Query("SELECT * FROM Quran")
@@ -44,7 +44,7 @@ interface EshrakaDatabaseDao {
     fun getVacationDaysNumber(): LiveData<Int>
 
     // prayer
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPrayer(prayer: Prayer)
 
     @Query("SELECT * FROM Prayer")

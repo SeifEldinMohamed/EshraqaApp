@@ -32,7 +32,6 @@ class PrayerFragment : Fragment() {
     private var prayerHashMap = HashMap<String, Boolean>()
     private var qadaaHashMap = HashMap<String, Boolean>()
     private var sonnHashMap = HashMap<String, Boolean>()
-    private lateinit var pref: SharedPreferences
     private var isVacation = false
 
     override fun onCreateView(
@@ -327,8 +326,7 @@ class PrayerFragment : Fragment() {
             binding.zahraHeadPrayer.visibility = View.GONE
             binding.ghethHeadPrayer.visibility = View.VISIBLE
             binding.checkVacationPrayer.visibility = View.GONE
-        }
-        else { // female
+        } else { // female
             binding.zahraHeadPrayer.visibility = View.VISIBLE
             binding.ghethHeadPrayer.visibility = View.GONE
             binding.checkVacationPrayer.visibility = View.VISIBLE
@@ -393,5 +391,4 @@ class PrayerFragment : Fragment() {
         viewModel.updatePrayer(newPrayer)
         findNavController().navigate(R.id.action_prayerFragment_to_prayerDaysFragment)
     }
-
 }

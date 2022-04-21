@@ -47,10 +47,14 @@ class AzkarFragment : Fragment() {
 
         score = fromBundle(requireArguments()).azkar.score
         // copy values to azkarHashMap so i can use in update azkar
-        azkarHashMap["أذكار الصباح"] = fromBundle(requireArguments()).azkar.azkar["أذكار الصباح"] ?: false
-        azkarHashMap["أذكار المساء"] = fromBundle(requireArguments()).azkar.azkar["أذكار المساء"] ?: false
-        azkarHashMap["أذكار النوم"] = fromBundle(requireArguments()).azkar.azkar["أذكار النوم"] ?: false
-        azkarHashMap["أذكار بعد الصلاة"] = fromBundle(requireArguments()).azkar.azkar["أذكار بعد الصلاة"] ?: false
+        azkarHashMap["أذكار الصباح"] =
+            fromBundle(requireArguments()).azkar.azkar["أذكار الصباح"] ?: false
+        azkarHashMap["أذكار المساء"] =
+            fromBundle(requireArguments()).azkar.azkar["أذكار المساء"] ?: false
+        azkarHashMap["أذكار النوم"] =
+            fromBundle(requireArguments()).azkar.azkar["أذكار النوم"] ?: false
+        azkarHashMap["أذكار بعد الصلاة"] =
+            fromBundle(requireArguments()).azkar.azkar["أذكار بعد الصلاة"] ?: false
 
         // first initialization for check boxes
         binding.sabahCheck.isChecked = azkarHashMap["أذكار الصباح"] ?: false
@@ -59,29 +63,32 @@ class AzkarFragment : Fragment() {
         binding.afterPrayerCheck.isChecked = azkarHashMap["أذكار بعد الصلاة"] ?: false
 
         pref = requireContext().getSharedPreferences("settingPrefs", Context.MODE_PRIVATE)
-       if(pref.getBoolean("hamd",false)){
-           binding.wrdHamdCheck.visibility = View.VISIBLE
-           azkarHashMap["ورد حمد"] = fromBundle(requireArguments()).azkar.azkar["ورد حمد"] ?: false
-           binding.wrdHamdCheck.isChecked = azkarHashMap["ورد حمد"]?: false
+        if (pref.getBoolean("hamd", false)) {
+            binding.wrdHamdCheck.visibility = View.VISIBLE
+            azkarHashMap["ورد حمد"] = fromBundle(requireArguments()).azkar.azkar["ورد حمد"] ?: false
+            binding.wrdHamdCheck.isChecked = azkarHashMap["ورد حمد"] ?: false
 
-       }
-        if(pref.getBoolean("tsbeh",false)){
-            azkarHashMap["ورد تسبيح"] = fromBundle(requireArguments()).azkar.azkar["ورد تسبيح"] ?: false
+        }
+        if (pref.getBoolean("tsbeh", false)) {
+            azkarHashMap["ورد تسبيح"] =
+                fromBundle(requireArguments()).azkar.azkar["ورد تسبيح"] ?: false
             binding.wrdTsbe7Check.visibility = View.VISIBLE
-            binding.wrdTsbe7Check.isChecked = azkarHashMap["ورد تسبيح"]?: false
+            binding.wrdTsbe7Check.isChecked = azkarHashMap["ورد تسبيح"] ?: false
         }
-        if(pref.getBoolean("tkber",false)){
+        if (pref.getBoolean("tkber", false)) {
             binding.wrdTkberCheck.visibility = View.VISIBLE
-            azkarHashMap["ورد تكبير"] = fromBundle(requireArguments()).azkar.azkar["ورد تكبير"] ?: false
-            binding.wrdTkberCheck.isChecked = azkarHashMap["ورد تكبير"]?: false
+            azkarHashMap["ورد تكبير"] =
+                fromBundle(requireArguments()).azkar.azkar["ورد تكبير"] ?: false
+            binding.wrdTkberCheck.isChecked = azkarHashMap["ورد تكبير"] ?: false
 
         }
-        if(pref.getBoolean("estgh",false)){
+        if (pref.getBoolean("estgh", false)) {
             binding.wrdEstegpharCheck.visibility = View.VISIBLE
-            azkarHashMap["ورد استغفار"] = fromBundle(requireArguments()).azkar.azkar["ورد استغفار"] ?: false
-            binding.wrdEstegpharCheck.isChecked = azkarHashMap["ورد استغفار"]?: false
+            azkarHashMap["ورد استغفار"] =
+                fromBundle(requireArguments()).azkar.azkar["ورد استغفار"] ?: false
+            binding.wrdEstegpharCheck.isChecked = azkarHashMap["ورد استغفار"] ?: false
         }
-/////////////////////////////////////////////////////////
+
         // set Menu
         setHasOptionsMenu(true)
         // show text day and score from coming data
@@ -90,88 +97,80 @@ class AzkarFragment : Fragment() {
         binding.textScore.text = "${fromBundle(requireArguments()).azkar.score}/$numberOfAzkar"
 
         binding.sabahCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["أذكار الصباح"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["أذكار الصباح"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.masaaCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["أذكار المساء"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["أذكار المساء"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.sleepCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["أذكار النوم"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["أذكار النوم"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.afterPrayerCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["أذكار بعد الصلاة"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["أذكار بعد الصلاة"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdHamdCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["ورد حمد"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["ورد حمد"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdTkberCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["ورد تكبير"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["ورد تكبير"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdTsbe7Check.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["ورد تسبيح"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["ورد تسبيح"] = false
             }
             binding.textScore.text = "$score/$numberOfAzkar"
         }
         binding.wrdEstegpharCheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 score++
                 azkarHashMap["ورد استغفار"] = true
-            }
-            else{
+            } else {
                 score--
                 azkarHashMap["ورد استغفار"] = false
             }
@@ -180,11 +179,10 @@ class AzkarFragment : Fragment() {
 
         IntroSharedPref.init(requireContext())
 
-        if(IntroSharedPref.readGander("Male", false)){
+        if (IntroSharedPref.readGander("Male", false)) {
             binding.azkarImageZahra.visibility = View.GONE
             binding.azkarImageGheth.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             binding.azkarImageZahra.visibility = View.VISIBLE
             binding.azkarImageGheth.visibility = View.GONE
         }
@@ -206,12 +204,11 @@ class AzkarFragment : Fragment() {
         txtMessage.text = fromBundle(requireArguments()).azkar.weeklyUserMessage
         val frameImage = dialog.findViewById<ImageView>(R.id.img_frame_message)
         val characterImage = dialog.findViewById<ImageView>(R.id.characterImage)
-        if(IntroSharedPref.readGander("Male", false)){
+        if (IntroSharedPref.readGander("Male", false)) {
             frameImage.setImageResource(R.drawable.gheth_frame_dialog)
             characterImage.setImageResource(R.drawable.gheth_normal)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkBlue))
-        }
-        else{ // female
+        } else { // female
             frameImage.setImageResource(R.drawable.zahra_frame_dialog)
             characterImage.setImageResource(R.drawable.zahra_normal)
             btnOk.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
