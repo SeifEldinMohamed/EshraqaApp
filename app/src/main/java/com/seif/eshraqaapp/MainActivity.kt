@@ -17,7 +17,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.seif.eshraqaapp.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var binding: ActivityMainBinding
     private var appBarConfiguration: AppBarConfiguration? = null
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val sendIntent = Intent(Intent.ACTION_SEND)
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
-            "Download Eshraka app from here:\n" +
+            "Download Eshraqh app from here:\n" +
                     "https://play.google.com/store/apps/details?id=com.seif.eshraqaapp"
         )
         sendIntent.type = "text/plain"
@@ -130,7 +129,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Intent.ACTION_VIEW,
                 Uri.parse(
                     "mailto:" + "eshraqh228@gmail.com"
-                            + "?subject=" + "Message from Eshraka App"
+                            + "?subject=" + "Message from Eshraqh App"
                 )
             )
         )
