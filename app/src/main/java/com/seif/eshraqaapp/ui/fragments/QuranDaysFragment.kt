@@ -234,11 +234,11 @@ class QuranDaysFragment : Fragment() {
             }
             in 65..79 -> { // handle adding
                 if (IntroSharedPref.readGander("Male", false)) {
-                    image = R.drawable.gheth_normal
+                    image = R.drawable.gheth_normal_yellow
                     addOrDeleteMessage = getString(R.string.updateWorkCounter)
 
                 } else { // female
-                    image = R.drawable.zahra_normal
+                    image = R.drawable.zahra_normal_yellow
                     addOrDeleteMessage = getString(R.string.updateWorkCounter_female)
                 }
                 weeklyMessage = generateRandomMediumMessageQuran()

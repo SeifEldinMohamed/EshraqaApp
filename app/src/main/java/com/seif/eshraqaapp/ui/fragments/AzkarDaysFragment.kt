@@ -192,9 +192,9 @@ class AzkarDaysFragment : Fragment() {
             }
             in 65..79 -> { // handle adding
                 image = if (IntroSharedPref.readGander("Male", false)) {
-                    R.drawable.gheth_normal
+                    R.drawable.gheth_normal_yellow
                 } else {
-                    R.drawable.zahra_normal
+                    R.drawable.zahra_normal_yellow
                 }
                 weeklyMessage = generateRandomMediumMessage()
                 if (isEndOfMonth) {

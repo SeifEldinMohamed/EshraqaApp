@@ -207,9 +207,6 @@ class PrayerDaysFragment : Fragment() {
                 }
                 weeklyMessage = generateRandomSuccessMessagePrayer()
                 if (isEndOfMonth && AppSharedPref.readQadaaPeriod("qadaa_period", -1) <= 0) {
-//                    edit.putLong("totalScorePrayer", 0L)
-//                    edit.putLong("totalNumberPrayer", 0L)
-//                    edit.apply()
                     showEndMonthCongratulationMessage(
                         addOrDeleteMessage,
                         weeklyMessage,
