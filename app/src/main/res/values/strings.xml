@@ -102,7 +102,7 @@
     <!--female-->
     <string name="success_message1_prayer_female">أبشري، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
     <string name="success_message2_prayer_female">أبشري، فالله يحبك، و عسی أن يبني لك بيتًا في الجنة كل يوم.</string>
-    <string name="success_message3_prayer_female">كُلمَا حَرصتِ عَلى الصَلاْة ، كُلمَا شَعرتِ أنَ الدُنيَا ازدَادتّْ يُسراً !♥</string>
+    <string name="success_message3_prayer_female">كُلمَا حَرصتِ عَلى الصَلاْة ، كُلمَا شَعرتِ أنَ الدُنيَا ازدَادتْ يُسراً !♥</string>
 
     <string name="fail_message1_prayer"> لا بأس، جاهد مرة أخرى وإشراقة ستساعدك على الالتزام بالفروض.</string>
     <string name="fail_message2_prayer">النفس تتخبط بين ذنب واستقامة، فجاهد ألا تغلبك نفسك مرة أخرى، فصلاتك هي أول ما تحاسب عليه.</string>
@@ -196,7 +196,6 @@
 
     // not used
     <string name="qadaa_period_finished_message">لقد نم الانتهاء من جدول القضاء بفضل الله، أسأل الله أن يجعل حفاظك على الصلاة نورًا وبرهانًا ونجاة من النار.</string>
-
 
     <string-array name="numbersOfDays">
         <item>0</item>
